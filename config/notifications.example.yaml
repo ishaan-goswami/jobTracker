@@ -1,0 +1,5 @@
+notifications:
+  provider: discord
+  discord:
+    # Store the actual value only as the DISCORD_WEBHOOK_URL GitHub Actions secret.
+    webhook_env: DISCORD_WEBHOOK_URL

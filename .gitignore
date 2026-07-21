@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.py[cod]
+.env
+generated/resumes/
+private/
+docs/private/
+docs/resumes/
+docs/referrals/
+data/referrals*.json
+data/resume*.json
+main.py

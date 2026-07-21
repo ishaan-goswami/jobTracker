@@ -1,0 +1,17 @@
+# Add companies here. Prefer a verified public ATS identifier; use `generic_html`
+# only for a public careers page where structured access is not confirmed.
+companies:
+  - {id: netflix, name: Netflix, enabled: true, careers_url: "https://jobs.netflix.com/", source_type: generic_html, source_identifier: ""}
+  - {id: openai, name: OpenAI, enabled: true, careers_url: "https://openai.com/careers/search/", source_type: generic_html, source_identifier: ""}
+  - {id: linkedin, name: LinkedIn, enabled: true, careers_url: "https://careers.linkedin.com/", source_type: generic_html, source_identifier: ""}
+  - {id: millennium-management, name: Millennium Management, enabled: true, careers_url: "https://careers.ml.com/", source_type: generic_html, source_identifier: ""}
+  - {id: hubspot, name: HubSpot, enabled: true, careers_url: "https://www.hubspot.com/careers/jobs", source_type: generic_html, source_identifier: ""}
+  - {id: doordash, name: DoorDash, enabled: true, careers_url: "https://careersatdoordash.com/", source_type: generic_html, source_identifier: ""}
+  - {id: uber, name: Uber, enabled: true, careers_url: "https://www.uber.com/us/en/careers/", source_type: generic_html, source_identifier: ""}
+  - {id: google, name: Google, enabled: true, careers_url: "https://www.google.com/about/careers/applications/jobs/results/", source_type: generic_html, source_identifier: ""}
+  - {id: amazon, name: Amazon, enabled: true, careers_url: "https://www.amazon.jobs/", source_type: generic_html, source_identifier: ""}
+  - {id: databricks, name: Databricks, enabled: true, careers_url: "https://www.databricks.com/company/careers/open-positions", source_type: generic_html, source_identifier: ""}
+  - {id: stripe, name: Stripe, enabled: true, careers_url: "https://stripe.com/jobs/search", source_type: generic_html, source_identifier: ""}
+  - {id: meta, name: Meta, enabled: true, careers_url: "https://www.metacareers.com/jobs/", source_type: generic_html, source_identifier: ""}
+  - {id: ramp, name: Ramp, enabled: true, careers_url: "https://ramp.com/careers", source_type: generic_html, source_identifier: ""}
+  - {id: tiktok, name: TikTok, enabled: true, careers_url: "https://lifeattiktok.com/search/", source_type: generic_html, source_identifier: ""}

@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "new-grad-job-watcher"
+version = "0.1.0"
+description = "Privacy-safe monitor for 2027 new-grad software engineering roles"
+requires-python = ">=3.11"
+dependencies = ["beautifulsoup4>=4.12", "httpx>=0.27", "pydantic>=2.7", "PyYAML>=6.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[project.scripts]
+job-watcher = "job_watcher.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
