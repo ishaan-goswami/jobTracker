@@ -1,26 +1,56 @@
 name: Check jobs
+
 on:
   workflow_dispatch:
   schedule:
     - cron: "17 * * * *"
-permissions: {contents: write}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: check-jobs
+  cancel-in-progress: false
+
 jobs:
   monitor:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: {python-version: '3.11'}
-      - run: pip install -e .
-      - run: job-watcher monitor
-        env: {DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}}
-      - run: |
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install project
+        run: python -m pip install -e .
+
+      - name: Monitor jobs
+        run: job-watcher monitor
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+      - name: Prepare dashboard data
+        run: |
           mkdir -p docs/data
-          cp data/jobs.json data/check_status.json data/forecasts.json docs/data/
+          cp data/jobs.json docs/data/jobs.json
+          cp data/check_status.json docs/data/check_status.json
+          cp data/forecasts.json docs/data/forecasts.json
           python scripts/validate_pages_privacy.py
-      - run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data docs/data
-          git diff --cached --quiet || git commit -m 'chore: update public job data'
-          git push
+
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+          else
+            git commit -m "chore(data): update job monitoring results [skip ci]"
+            git push
+          fi
