@@ -13,25 +13,40 @@ def score_job(job: RawJob, rules: dict) -> tuple[float, list[str]]:
     keywords, weights = rules["positive_keywords"], rules["weights"]
     score, reasons = 0.0, []
     if _contains(title, keywords["engineering"]):
-        score += weights["engineering_title"]; reasons.append("Relevant software-engineering title")
+        score += weights["engineering_title"]
+        reasons.append("Relevant software-engineering title")
     else:
-        score += weights["non_engineering"]; reasons.append("No relevant software-engineering title")
+        score += weights["non_engineering"]
+        reasons.append("No relevant software-engineering title")
     if _contains(title, keywords["new_grad"]):
-        score += weights["new_grad_title"]; reasons.append("Explicit new-graduate title")
+        score += weights["new_grad_title"]
+        reasons.append("Explicit new-graduate title")
     elif _contains(title, keywords["early_career"]):
-        score += weights["early_career_title"]; reasons.append("Early-career title")
+        score += weights["early_career_title"]
+        reasons.append("Early-career title")
     if _contains(description, keywords["new_grad"] + keywords["early_career"]):
-        score += weights["new_grad_description"]; reasons.append("Early-career wording in description")
-    if _contains(all_text, keywords["start_date"]) or re.search(r"\b(2026|2027)\s+(graduate|grad)\b", all_text):
-        score += weights["graduation_or_start_year"]; reasons.append("Matches December 2026 / 2027 start timing")
+        score += weights["new_grad_description"]
+        reasons.append("Early-career wording in description")
+    if _contains(all_text, keywords["start_date"]) or re.search(
+        r"\b(2026|2027)\s+(graduate|grad)\b", all_text
+    ):
+        score += weights["graduation_or_start_year"]
+        reasons.append("Matches December 2026 / 2027 start timing")
     if re.search(r"(?:0|1|2)\s*(?:-|to)?\s*(?:2)?\s*years?(?: of experience)?", description):
-        score += weights["zero_to_two_years"]; reasons.append("0–2 years experience")
+        score += weights["zero_to_two_years"]
+        reasons.append("0–2 years experience")
     elif re.search(r"\b3\+?\s+years?", description):
-        score += weights["three_years"]; reasons.append("Three years experience")
-    if _contains(title, ["senior", "staff", "principal", "lead", "manager", "director", "architect"]):
-        score += weights["senior_title"]; reasons.append("Senior indicator in title")
+        score += weights["three_years"]
+        reasons.append("Three years experience")
+    if _contains(
+        title, ["senior", "staff", "principal", "lead", "manager", "director", "architect"]
+    ):
+        score += weights["senior_title"]
+        reasons.append("Senior indicator in title")
     if _contains(title, ["intern", "internship"]):
-        score += weights["internship_title"]; reasons.append("Internship title")
+        score += weights["internship_title"]
+        reasons.append("Internship title")
     if re.search(r"\b(?:4|5|6|7|8|9|[1-9][0-9])\+?\s+years?", description):
-        score += weights["four_plus_years"]; reasons.append("Four or more years required")
+        score += weights["four_plus_years"]
+        reasons.append("Four or more years required")
     return max(0, min(100, score)), reasons

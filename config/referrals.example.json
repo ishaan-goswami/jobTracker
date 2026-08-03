@@ -1,0 +1,34 @@
+{
+  "referrals": [
+    {
+      "company_name": "Example Company",
+      "relevant_roles": [
+        "Software Engineer, University Graduate"
+      ],
+      "application_deadline": null,
+      "referral_status": "Not started",
+      "contact_name": "",
+      "contact_role": "",
+      "contact_profile_url": "",
+      "relationship_type": "",
+      "date_contacted": null,
+      "follow_up_date": null,
+      "response_status": "",
+      "referral_submitted": false,
+      "notes": ""
+    }
+  ],
+  "allowed_statuses": [
+    "Not started",
+    "Potential contact identified",
+    "Connection request sent",
+    "Message sent",
+    "Follow-up needed",
+    "Responded",
+    "Referral offered",
+    "Referral submitted",
+    "Declined",
+    "No response",
+    "Applied without referral"
+  ]
+}

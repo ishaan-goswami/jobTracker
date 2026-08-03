@@ -1,4 +1,5 @@
 """Fail a Pages build if private artifacts are copied into docs/."""
+
 from pathlib import Path
 import sys
 

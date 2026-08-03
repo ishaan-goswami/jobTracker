@@ -7,12 +7,89 @@ import re
 from pathlib import Path
 
 
+def _keyword_match_rate(tex: str, keywords: list[str]) -> float:
+    if not keywords:
+        return 0.0
+    found = sum(1 for word in keywords if word.lower() in tex.lower())
+    return round(found / len(keywords), 3)
+
+
 def analyze(tex: str, job_description: str) -> dict:
-    words = sorted({word.lower() for word in re.findall(r"[A-Za-z][A-Za-z+#.-]{2,}", job_description)})
+    stop_words = {
+        "and",
+        "are",
+        "for",
+        "from",
+        "have",
+        "need",
+        "that",
+        "the",
+        "this",
+        "with",
+        "you",
+        "your",
+    }
+
+    original_words = re.findall(
+        r"[A-Za-z][A-Za-z0-9+#.-]{2,}",
+        job_description,
+    )
+
+    keywords: list[str] = []
+    seen: set[str] = set()
+
+    for word in original_words:
+        normalized = word.lower()
+
+        if normalized in stop_words or normalized in seen:
+            continue
+
+        seen.add(normalized)
+        keywords.append(word)
+
     existing = tex.lower()
-    present = [word for word in words if word in existing]
-    missing = [word for word in words if word not in existing]
-    return {"important_keywords": words[:80], "resume_evidence": present, "unsupported_or_missing": missing, "warning": "Missing terms are not qualifications. Add only facts you can substantiate.", "method": "Local lexical evidence analysis; no claims are generated."}
+
+    present = [
+        word
+        for word in keywords
+        if word.lower() in existing
+    ]
+    missing = [
+        word
+        for word in keywords
+        if word.lower() not in existing
+    ]
+
+    match_rate = _keyword_match_rate(tex, keywords[:80])
+
+    return {
+        "match_analysis": {
+            "summary": (
+                "Conservative local keyword analysis. The generated LaTeX is "
+                "unchanged unless a future rule can trace every edit to the "
+                "original resume."
+            ),
+            "before_keyword_match": match_rate,
+            "after_keyword_match": match_rate,
+        },
+        "important_keywords": keywords[:80],
+        "resume_evidence": present,
+        "unsupported_or_missing": missing,
+        "recommended_bullet_order": [],
+        "proposed_bullet_edits": [],
+        "traceability": {
+            "resume_source": "Uploaded/passed local LaTeX only",
+            "job_source": "Selected public job description or local job-description file",
+        },
+        "warning": (
+            "Every unsupported keyword is only a prompt for user evidence. "
+            "Do not add it unless it is already true and supportable."
+        ),
+        "method": (
+            "Local lexical evidence analysis; "
+            "no claims are generated."
+        ),
+    }
 
 
 def tailor(tex_path: Path, job_slug: str, job_description: str, output_root: Path = Path("generated/resumes")) -> Path:

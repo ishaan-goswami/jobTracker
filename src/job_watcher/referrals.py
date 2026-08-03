@@ -1,4 +1,16 @@
-STATUSES = ["Not started", "Potential contact identified", "Connection request sent", "Message sent", "Follow-up needed", "Responded", "Referral offered", "Referral submitted", "Declined", "No response", "Applied without referral"]
+STATUSES = [
+    "Not started",
+    "Potential contact identified",
+    "Connection request sent",
+    "Message sent",
+    "Follow-up needed",
+    "Responded",
+    "Referral offered",
+    "Referral submitted",
+    "Declined",
+    "No response",
+    "Applied without referral",
+]
 
 
 def draft(kind: str, candidate: dict, recipient_name: str, facts: str) -> str:

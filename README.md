@@ -23,6 +23,8 @@ Create a private Discord channel webhook and add its full URL as repository secr
 
 ## Résumé tailoring — local only
 
+The public dashboard includes a browser-only analysis panel. Pasted LaTeX is processed in memory by your browser and is not stored in `docs/data`, uploaded to GitHub, or committed.
+
 Do not commit a résumé. Put it anywhere outside this repository (or in ignored `private/`) and run:
 
 ```bash
@@ -33,7 +35,14 @@ Output is written under ignored `generated/resumes/<job-slug>/`: `tailored_resum
 
 ## Referrals — local only
 
-Store referral tracking in ignored `private/referrals.json` or another private system. Use the documented statuses in the dashboard. The project provides local draft templates only; it does not scrape LinkedIn, send messages, or make connection requests.
+Store referral tracking in ignored `private/referrals.json` or another private system. `config/referrals.example.json` documents the public-safe schema without real contacts. Use the documented statuses in the dashboard. The project provides local draft templates only; it does not scrape LinkedIn, send messages, or make connection requests.
+
+```bash
+job-watcher draft-referral-message \
+  --kind referral \
+  --recipient-name Alex \
+  --facts "I saw the early-career software engineer role on your careers page."
+```
 
 ## Forecasts
 

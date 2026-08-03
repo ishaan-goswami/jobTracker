@@ -1,4 +1,3 @@
-from datetime import datetime
 import httpx
 from .base import JobSource
 from ..models import CompanyConfig, RawJob
@@ -11,4 +10,13 @@ class GreenhouseSource(JobSource):
         url = f"https://boards-api.greenhouse.io/v1/boards/{company.source_identifier}/jobs?content=true"
         response = httpx.get(url, timeout=20, headers={"User-Agent": "NewGradJobWatcher/0.1"})
         response.raise_for_status()
-        return [RawJob(source_id=str(item["id"]), title=item["title"], official_url=item["absolute_url"], location=item.get("location", {}).get("name"), description=item.get("content")) for item in response.json()["jobs"]]
+        return [
+            RawJob(
+                source_id=str(item["id"]),
+                title=item["title"],
+                official_url=item["absolute_url"],
+                location=item.get("location", {}).get("name"),
+                description=item.get("content"),
+            )
+            for item in response.json()["jobs"]
+        ]
