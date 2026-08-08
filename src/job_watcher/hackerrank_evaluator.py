@@ -170,11 +170,11 @@ def evaluate_hackerrank_rules(resume_text: str, job_description: str = "") -> di
         deductions_total += 3
         deduction_reasons.append("-3 pts: Simple tutorial-based project titles detected")
 
-    total_score = max(0, min(120, os_score + proj_score + prod_score + skills_score + bonus_score - deductions_total))
+    total_score = max(0, min(100, os_score + proj_score + prod_score + skills_score + bonus_score - deductions_total))
 
     return {
         "score_total": total_score,
-        "max_possible": 120,
+        "max_possible": 100,
         "hacker_rank_grade": "Pass / Strong Candidate" if total_score >= 70 else ("Review Candidate" if total_score >= 50 else "Needs Enhancement"),
         "github_profile": gh_data,
         "categories": {

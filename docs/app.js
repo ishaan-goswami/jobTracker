@@ -467,7 +467,7 @@ function hydrateResume() {
     if (!hasLinks) deductions += 5;
     if (/todo list|calculator app/i.test(resumeText)) deductions += 3;
 
-    const totalHackerRank = Math.max(0, Math.min(120, osScore + projScore + prodScore + skillsScore + bonus - deductions));
+    const totalHackerRank = Math.max(0, Math.min(100, osScore + projScore + prodScore + skillsScore + bonus - deductions));
 
     result.innerHTML = `
       <p style="margin-bottom: 0.75rem;"><strong>Keyword Alignment:</strong> <span style="font-size: 1.25rem; font-weight: 800; color: #60a5fa;">${rate}%</span></p>
@@ -475,7 +475,7 @@ function hydrateResume() {
       <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 0.5rem; padding: 0.85rem; margin-bottom: 1rem;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <strong style="color: #f8fafc; font-size: 1rem;">HackerRank ATS Scorecard</strong>
-          <span style="font-size: 1.2rem; font-weight: 800; color: ${totalHackerRank >= 70 ? '#34d399' : '#fbbf24'};">${totalHackerRank} / 120 pts</span>
+          <span style="font-size: 1.2rem; font-weight: 800; color: ${totalHackerRank >= 70 ? '#34d399' : '#fbbf24'};">${totalHackerRank} / 100 pts</span>
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.65rem; font-size: 0.8rem; color: #cbd5e1;">
           <div>• Open Source: <strong>${osScore}/35</strong></div>

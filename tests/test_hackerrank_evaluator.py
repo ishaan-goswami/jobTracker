@@ -15,7 +15,7 @@ def test_evaluate_hackerrank_rules_scores_categories():
     """
     eval_result = evaluate_hackerrank_rules(resume_text)
     
-    assert eval_result["max_possible"] == 120
+    assert eval_result["max_possible"] == 100
     assert eval_result["categories"]["open_source"]["score"] >= 5
     assert eval_result["categories"]["self_projects"]["score"] >= 20
     assert eval_result["categories"]["production"]["score"] >= 15
