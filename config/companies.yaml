@@ -1,17 +1,151 @@
-# Add companies here. Prefer a verified public ATS identifier. Use
-# `unsupported` when no reliable official public adapter has been verified.
 companies:
-  - {id: netflix, name: Netflix, enabled: true, careers_url: "https://jobs.netflix.com/", source_type: unsupported, source_identifier: ""}
-  - {id: openai, name: OpenAI, enabled: true, careers_url: "https://openai.com/careers/search/", source_type: ashby, source_identifier: "openai"}
-  - {id: linkedin, name: LinkedIn, enabled: true, careers_url: "https://careers.linkedin.com/", source_type: greenhouse, source_identifier: "linkedin"}
-  - {id: millennium-management, name: Millennium Management, enabled: true, careers_url: "https://careers.ml.com/", source_type: unsupported, source_identifier: ""}
-  - {id: hubspot, name: HubSpot, enabled: true, careers_url: "https://www.hubspot.com/careers/jobs", source_type: greenhouse, source_identifier: "hubspotjobs"}
-  - {id: doordash, name: DoorDash, enabled: true, careers_url: "https://careersatdoordash.com/", source_type: unsupported, source_identifier: ""}
-  - {id: uber, name: Uber, enabled: true, careers_url: "https://www.uber.com/us/en/careers/", source_type: unsupported, source_identifier: ""}
-  - {id: google, name: Google, enabled: true, careers_url: "https://www.google.com/about/careers/applications/jobs/results/", source_type: unsupported, source_identifier: ""}
-  - {id: amazon, name: Amazon, enabled: true, careers_url: "https://www.amazon.jobs/", source_type: amazon, source_identifier: "amazon"}
-  - {id: databricks, name: Databricks, enabled: true, careers_url: "https://www.databricks.com/company/careers/open-positions", source_type: greenhouse, source_identifier: "databricks"}
-  - {id: stripe, name: Stripe, enabled: true, careers_url: "https://stripe.com/jobs/search", source_type: greenhouse, source_identifier: "stripe"}
-  - {id: meta, name: Meta, enabled: true, careers_url: "https://www.metacareers.com/jobs/", source_type: unsupported, source_identifier: ""}
-  - {id: ramp, name: Ramp, enabled: true, careers_url: "https://ramp.com/careers", source_type: ashby, source_identifier: "ramp"}
-  - {id: tiktok, name: TikTok, enabled: true, careers_url: "https://lifeattiktok.com/search/", source_type: unsupported, source_identifier: ""}
+- id: netflix
+  name: Netflix
+  enabled: true
+  careers_url: https://jobs.netflix.com/
+  source_type: unsupported
+  source_identifier: ''
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: openai
+  name: OpenAI
+  enabled: true
+  careers_url: https://openai.com/careers/search/
+  source_type: ashby
+  source_identifier: openai
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: linkedin
+  name: LinkedIn
+  enabled: true
+  careers_url: https://careers.linkedin.com/
+  source_type: greenhouse
+  source_identifier: linkedin
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: millennium-management
+  name: Millennium Management
+  enabled: true
+  careers_url: https://careers.ml.com/
+  source_type: unsupported
+  source_identifier: ''
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: hubspot
+  name: HubSpot
+  enabled: true
+  careers_url: https://www.hubspot.com/careers/jobs
+  source_type: greenhouse
+  source_identifier: hubspotjobs
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: doordash
+  name: DoorDash
+  enabled: true
+  careers_url: https://careersatdoordash.com/
+  source_type: unsupported
+  source_identifier: ''
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: uber
+  name: Uber
+  enabled: true
+  careers_url: https://www.uber.com/us/en/careers/
+  source_type: unsupported
+  source_identifier: ''
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: google
+  name: Google
+  enabled: true
+  careers_url: https://www.google.com/about/careers/applications/jobs/results/
+  source_type: unsupported
+  source_identifier: ''
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: amazon
+  name: Amazon
+  enabled: true
+  careers_url: https://www.amazon.jobs/
+  source_type: amazon
+  source_identifier: amazon
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: databricks
+  name: Databricks
+  enabled: true
+  careers_url: https://www.databricks.com/company/careers/open-positions
+  source_type: greenhouse
+  source_identifier: databricks
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: stripe
+  name: Stripe
+  enabled: true
+  careers_url: https://stripe.com/jobs/search
+  source_type: greenhouse
+  source_identifier: stripe
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: meta
+  name: Meta
+  enabled: true
+  careers_url: https://www.metacareers.com/jobs/
+  source_type: unsupported
+  source_identifier: ''
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: ramp
+  name: Ramp
+  enabled: true
+  careers_url: https://ramp.com/careers
+  source_type: ashby
+  source_identifier: ramp
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: tiktok
+  name: TikTok
+  enabled: true
+  careers_url: https://lifeattiktok.com/search/
+  source_type: unsupported
+  source_identifier: ''
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: anthropic
+  name: Anthropic
+  enabled: true
+  careers_url: https://www.anthropic.com/careers
+  source_type: unsupported
+  source_identifier: ''
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []

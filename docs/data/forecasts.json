@@ -1,1 +1,50 @@
-[]
+[
+  {
+    "company_id": "google",
+    "company_name": "Google",
+    "expected_opening_window": "August \u2013 September",
+    "historical_cycle": "Dec 2026 Grad / 2027 FT role window typically opens mid-August.",
+    "confidence": "High",
+    "last_updated": "2026-08-08T06:32:02.743430+00:00"
+  },
+  {
+    "company_id": "meta",
+    "company_name": "Meta",
+    "expected_opening_window": "September \u2013 October",
+    "historical_cycle": "University Graduate roles open early September.",
+    "confidence": "High",
+    "last_updated": "2026-08-08T06:32:02.743430+00:00"
+  },
+  {
+    "company_id": "stripe",
+    "company_name": "Stripe",
+    "expected_opening_window": "September",
+    "historical_cycle": "New grad postings traditionally open mid-September.",
+    "confidence": "High",
+    "last_updated": "2026-08-08T06:32:02.743430+00:00"
+  },
+  {
+    "company_id": "openai",
+    "company_name": "OpenAI",
+    "expected_opening_window": "September \u2013 October",
+    "historical_cycle": "Early career positions open in Q3/Q4.",
+    "confidence": "Medium",
+    "last_updated": "2026-08-08T06:32:02.743430+00:00"
+  },
+  {
+    "company_id": "amazon",
+    "company_name": "Amazon",
+    "expected_opening_window": "Rolling / Currently Active",
+    "historical_cycle": "SDE I & University Graduate positions posted continuously.",
+    "confidence": "Active",
+    "last_updated": "2026-08-08T06:32:02.743430+00:00"
+  },
+  {
+    "company_id": "databricks",
+    "company_name": "Databricks",
+    "expected_opening_window": "August \u2013 October",
+    "historical_cycle": "University recruiting opens early autumn.",
+    "confidence": "Medium",
+    "last_updated": "2026-08-08T06:32:02.743430+00:00"
+  }
+]
