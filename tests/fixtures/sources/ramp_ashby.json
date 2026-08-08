@@ -1,0 +1,22 @@
+{
+  "jobs": [
+    {
+      "id": "34413f8d-26bf-4bbc-8ade-eb309a0e2245",
+      "title": "Security Engineer, Cloud",
+      "department": "Engineering",
+      "team": "Backend",
+      "employmentType": "FullTime",
+      "location": "New York, NY (HQ)",
+      "jobUrl": "https://jobs.ashbyhq.com/ramp/34413f8d-26bf-4bbc-8ade-eb309a0e2245"
+    },
+    {
+      "id": "be496b52-cfbf-494e-b862-61fb4a188b24",
+      "title": "Software Engineer, Production Engineering",
+      "department": "Engineering",
+      "team": "Production Engineering",
+      "employmentType": "FullTime",
+      "location": "New York, NY (HQ)",
+      "jobUrl": "https://jobs.ashbyhq.com/ramp/be496b52-cfbf-494e-b862-61fb4a188b24"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "jobs": [
+    {
+      "id": 7954688,
+      "title": "Account Executive, AI Sales",
+      "absolute_url": "https://stripe.com/jobs/search?gh_jid=7954688",
+      "location": {
+        "name": "San Francisco, CA"
+      },
+      "content": "<p>Sales role.</p>"
+    },
+    {
+      "id": 7921234,
+      "title": "Software Engineer, Backend",
+      "absolute_url": "https://stripe.com/jobs/search?gh_jid=7921234",
+      "location": {
+        "name": "New York, NY"
+      },
+      "content": "<p>Engineering role.</p>"
+    }
+  ]
+}

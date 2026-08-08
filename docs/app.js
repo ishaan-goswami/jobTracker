@@ -79,17 +79,24 @@ function companies() {
   return `
     <h2>Companies</h2>
     <table>
-      <tr><th>Company ID</th><th>Status</th><th>Checked</th><th>Fetched</th><th>Matches</th><th>Error</th></tr>
+      <tr><th>Company ID</th><th>Status</th><th>Source</th><th>Checked</th><th>Records</th><th>Matches</th><th>Warning</th></tr>
       ${state.statuses.map((status) => `
         <tr>
           <td>${escapeHtml(status.company_id)}</td>
-          <td>${escapeHtml(status.status)}</td>
+          <td>${escapeHtml(statusLabel(status))}</td>
+          <td>${escapeHtml(status.source_type || "-")}<br><small>${escapeHtml(status.parser_version || "-")}</small></td>
           <td>${escapeHtml(status.checked_at)}</td>
-          <td>${escapeHtml(status.fetched_jobs)}</td>
+          <td>${escapeHtml(status.records_parsed ?? 0)} / ${escapeHtml(status.records_received ?? 0)}</td>
           <td>${escapeHtml(status.matching_jobs)}</td>
-          <td>${escapeHtml(status.error || "")}</td>
+          <td>${escapeHtml(status.warning || status.error || "")}</td>
         </tr>`).join("")}
     </table>`;
+}
+
+function statusLabel(status) {
+  if (status.status === "unsupported") return "Source not verified";
+  if (status.source_type === "generic_html" && (status.records_parsed ?? 0) === 0) return "Source not verified";
+  return status.status || "-";
 }
 
 function forecast() {

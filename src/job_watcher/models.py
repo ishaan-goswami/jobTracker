@@ -27,6 +27,18 @@ class RawJob(BaseModel):
     posted_at: datetime | None = None
 
 
+class SourceResult(BaseModel):
+    jobs: list[RawJob] = Field(default_factory=list)
+    source_url: str
+    http_status: int | None = None
+    content_type: str | None = None
+    records_received: int = 0
+    records_parsed: int = 0
+    parser_version: str
+    warning: str | None = None
+    partial_errors: list[str] = Field(default_factory=list)
+
+
 class Job(BaseModel):
     id: str
     company_id: str
@@ -52,6 +64,12 @@ class CheckStatus(BaseModel):
     company_id: str
     checked_at: datetime
     status: str
+    source_type: str
+    source_url: str
     jobs_found: int = 0
+    records_received: int = 0
+    records_parsed: int = 0
     matching_jobs: int = 0
+    parser_version: str | None = None
+    warning: str | None = None
     error: str | None = None

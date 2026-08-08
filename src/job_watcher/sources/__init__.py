@@ -1,5 +1,11 @@
+from .ashby import AshbySource
 from .greenhouse import GreenhouseSource
-from .lever import LeverSource
 from .generic_html import GenericHTMLSource
+from .lever import LeverSource
 
-SOURCES = {"greenhouse": GreenhouseSource, "lever": LeverSource, "generic_html": GenericHTMLSource}
+SOURCES = {
+    "ashby": AshbySource,
+    "greenhouse": GreenhouseSource,
+    "lever": LeverSource,
+    "generic_html": GenericHTMLSource,
+}

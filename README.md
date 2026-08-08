@@ -15,7 +15,30 @@ job-watcher monitor
 pytest && ruff check .
 ```
 
-Configure companies in `config/companies.yaml` and matching/candidate timing in `config/filters.yaml`. The scheduled GitHub Actions workflow checks enabled companies every six hours. Generic pages deliberately return no jobs until a verified structured adapter is configured; a successful status only means the public careers page was reachable.
+Configure companies in `config/companies.yaml` and matching/candidate timing in `config/filters.yaml`. The scheduled GitHub Actions workflow checks enabled companies every six hours.
+
+Source status rules:
+
+- `success`: a supported source schema was parsed. Zero jobs is valid only when the structured source reports zero records.
+- `partial`: the URL loaded but access was blocked, no reliable job structure was found, or some records failed parsing.
+- `failed`: DNS failure, timeout, invalid config, malformed response, or total source failure.
+- `unsupported`: no reliable official public adapter is configured.
+
+Operational sources currently verified:
+
+- Ramp: Ashby public job board API, board `ramp`.
+- HubSpot: Greenhouse public job board API, board `hubspotjobs`.
+- Stripe: Greenhouse public job board API, board `stripe`.
+
+OpenAI, DoorDash, Uber, Millennium Management, and other unverified companies are marked `unsupported` until a legitimate official structured source is verified. The monitor does not bypass 403/406 responses, CAPTCHAs, authentication, or platform restrictions.
+
+Diagnostics:
+
+```bash
+job-watcher diagnose
+job-watcher diagnose --company ramp
+JOB_WATCHER_LIVE_SOURCE_TESTS=1 pytest tests/test_sources.py
+```
 
 ## Discord notifications
 
