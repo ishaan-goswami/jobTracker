@@ -8,7 +8,7 @@ candidate:
 
 positive_keywords:
   new_grad: ["new grad", "new graduate", "university graduate", "university grad", "recent graduate", "2027 graduate", "class of 2027", "december 2026 graduate", "winter 2026 graduate", "2026 graduate", "class of 2026"]
-  early_career: ["early career", "entry level", "entry-level", "software engineer i", "software engineer 1", "associate software engineer", "graduate software engineer", "campus", "emerging talent", "students and graduates"]
+  early_career: ["early career", "early-career", "early career software engineer", "early career engineer", "early career swe", "early talent", "entry level", "entry-level", "software engineer i", "software engineer 1", "sde i", "sde 1", "swe i", "swe 1", "associate software engineer", "associate engineer", "graduate software engineer", "campus", "emerging talent", "students and graduates"]
   start_date: ["start in 2027", "2027 start", "early 2027", "winter 2027", "spring 2027", "january 2027", "february 2027", "new graduate 2027"]
   engineering: ["software engineer", "software developer", "backend engineer", "frontend engineer", "front-end engineer", "full stack engineer", "full-stack engineer", "mobile engineer", "ios engineer", "android engineer", "machine learning engineer", "infrastructure engineer", "platform engineer", "site reliability engineer", "systems engineer"]
 
