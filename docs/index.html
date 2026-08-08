@@ -1,4 +1,38 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>New Grad Job Watcher</title><link rel="stylesheet" href="styles.css"></head><body>
-<header><h1>New Grad Job Watcher</h1><p>December 2026 graduate · early 2027 full-time start</p></header>
-<nav id="nav"><button data-view="overview">Overview</button><button data-view="jobs">Open Jobs</button><button data-view="companies">Companies</button><button data-view="forecast">Opening Forecast</button><button data-view="resume">Résumé Tailoring</button><button data-view="referrals">Referrals</button><button data-view="settings">Settings</button></nav>
-<main id="app" aria-live="polite"></main><template id="notice"><p class="notice"></p></template><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2027 New Grad Job Watcher — Software Engineering</title>
+  <meta name="description" content="Personal automated job-monitoring dashboard tracking 2027 new-grad and early-career software engineering roles.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-brand">
+        <h1>2027 SWE Job Watcher</h1>
+        <p>Dec 2026 Graduate Target · Early 2027 Full-Time SWE Roles</p>
+      </div>
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        <span>Automated Monitoring Active</span>
+      </div>
+    </header>
+
+    <nav id="nav" aria-label="Main Navigation">
+      <button data-view="overview" class="active">Overview</button>
+      <button data-view="jobs">Open Jobs (<span id="jobs-count-badge">0</span>)</button>
+      <button data-view="companies">Companies (<span id="companies-count-badge">0</span>)</button>
+      <button data-view="forecast">Opening Forecast</button>
+      <button data-view="resume">Resume Tailoring</button>
+      <button data-view="referrals">Referrals</button>
+      <button data-view="settings">Settings</button>
+    </nav>
+
+    <main id="app" aria-live="polite"></main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

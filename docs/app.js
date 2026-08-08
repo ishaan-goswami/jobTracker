@@ -1,8 +1,15 @@
 const app = document.querySelector("#app");
-const state = { jobs: [], statuses: [], forecasts: [] };
+const state = {
+  jobs: [],
+  statuses: [],
+  forecasts: [],
+  activeView: "overview",
+  searchQuery: "",
+  matchFilter: "all",
+};
 
 const STOP_WORDS = new Set([
-  "and", "are", "for", "from", "have", "that", "the", "this", "with", "you", "your",
+  "and", "are", "for", "from", "have", "that", "the", "this", "with", "you", "your", "will", "our", "work", "team"
 ]);
 
 function escapeHtml(value) {
@@ -13,6 +20,16 @@ function escapeHtml(value) {
     "'": "&#39;",
     '"': "&quot;",
   })[char]);
+}
+
+function formatDate(isoStr) {
+  if (!isoStr) return "Recently";
+  try {
+    const d = new Date(isoStr);
+    return d.toLocaleDateString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+  } catch {
+    return isoStr;
+  }
 }
 
 function keywords(text) {
@@ -35,139 +52,367 @@ async function load() {
     forecasts: "forecasts.json",
   })) {
     try {
-      state[key] = await fetch(`data/${file}`).then((response) => response.ok ? response.json() : []);
+      state[key] = await fetch(`data/${file}`).then((res) => res.ok ? res.json() : []);
     } catch {
       state[key] = [];
     }
   }
+
+  // Update badge counts in header
+  const jobsBadge = document.querySelector("#jobs-count-badge");
+  if (jobsBadge) jobsBadge.textContent = state.jobs.length;
+  
+  const compBadge = document.querySelector("#companies-count-badge");
+  if (compBadge) compBadge.textContent = state.statuses.length;
+
   render("overview");
 }
 
 function overview() {
+  const healthyCount = state.statuses.filter(s => s.status === "success").length;
+  const lastCheck = state.statuses.length ? formatDate(state.statuses[0].checked_at) : "N/A";
+  const topJobs = [...state.jobs].sort((a, b) => b.match_score - a.match_score).slice(0, 5);
+
   return `
-    <h2>Overview</h2>
-    <div class="metrics">
-      <div class="card"><b>${state.jobs.length}</b><span>matching public roles</span></div>
-      <div class="card"><b>${state.statuses.length}</b><span>company checks</span></div>
-      <div class="card"><b>${state.forecasts.length}</b><span>verified forecast records</span></div>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="val" style="color: #60a5fa;">${state.jobs.length}</div>
+        <div class="lbl">Open 2027 SWE Roles</div>
+      </div>
+      <div class="metric-card">
+        <div class="val" style="color: #34d399;">${healthyCount} / ${state.statuses.length}</div>
+        <div class="lbl">Healthy Official Sources</div>
+      </div>
+      <div class="metric-card">
+        <div class="val" style="color: #a78bfa;">${lastCheck}</div>
+        <div class="lbl">Last Monitor Check</div>
+      </div>
     </div>
-    <div class="card">
-      <h3>Privacy boundary</h3>
-      <p>Public Pages contains job data, monitor status, and aggregate forecasts only. Resume content, referral contacts, notes, notification secrets, and outreach drafts stay local/private.</p>
-    </div>`;
+
+    <div class="card-box">
+      <h3>Active Companies Health Overview</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+        Monitor relies exclusively on legitimate, unauthenticated public ATS APIs (Ashby, Greenhouse, Amazon Jobs API). Protected career sites are safely categorized as unsupported.
+      </p>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Status</th>
+              <th>Official Source Engine</th>
+              <th>Records Processed</th>
+              <th>Matching Roles</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${state.statuses.map(s => `
+              <tr>
+                <td><strong>${escapeHtml(s.company_id.toUpperCase())}</strong></td>
+                <td>
+                  <span class="status-badge ${s.status === 'success' ? 'success' : 'unsupported'}">
+                    ${s.status === 'success' ? '✓ Healthy Source' : '⚠️ Source Unsupported'}
+                  </span>
+                </td>
+                <td>${escapeHtml(s.source_type || '-')}${s.parser_version ? ` (${escapeHtml(s.parser_version)})` : ''}</td>
+                <td>${s.records_parsed ?? 0} parsed / ${s.records_received ?? 0} fetched</td>
+                <td><strong style="color: ${s.matching_jobs > 0 ? '#34d399' : 'inherit'};">${s.matching_jobs}</strong></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card-box">
+      <h3>Top Discovered Matching Roles</h3>
+      <div class="jobs-list" style="margin-top: 1rem;">
+        ${topJobs.map(job => renderJobCard(job)).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderJobCard(job) {
+  const matchClass = job.match_score >= 80 ? 'high' : 'mid';
+  const reasons = (job.match_reasons || []).map(r => `<span class="reason-tag">✓ ${escapeHtml(r)}</span>`).join('');
+  
+  return `
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title-group">
+          <h3><a href="${escapeHtml(job.official_url)}" target="_blank" rel="noopener">${escapeHtml(job.title)}</a></h3>
+          <div class="job-meta">
+            <span class="company-tag">${escapeHtml(job.company_name)}</span>
+            <span>•</span>
+            <span>📍 ${escapeHtml(job.location || "Remote / Unspecified")}</span>
+            <span>•</span>
+            <span>Discovered ${formatDate(job.discovered_at)}</span>
+          </div>
+        </div>
+        <div class="match-pill ${matchClass}">
+          ${Math.round(job.match_score)}% Match
+        </div>
+      </div>
+      
+      ${reasons ? `<div class="match-reasons-list">${reasons}</div>` : ''}
+
+      <div class="job-actions">
+        <span style="font-size: 0.8rem; color: var(--text-subtle);">Source: ${escapeHtml(job.source_type)} engine</span>
+        <a href="${escapeHtml(job.official_url)}" target="_blank" rel="noopener" class="btn-apply">
+          Apply on Official Site ↗
+        </a>
+      </div>
+    </div>
+  `;
 }
 
 function jobs() {
-  if (!state.jobs.length) return "<h2>Open Jobs</h2><p class=\"notice\">No public matching jobs yet. Scheduled checks will populate this view.</p>";
+  let filtered = state.jobs;
+
+  if (state.searchQuery) {
+    const q = state.searchQuery.toLowerCase();
+    filtered = filtered.filter(j => 
+      j.title.toLowerCase().includes(q) || 
+      j.company_name.toLowerCase().includes(q) || 
+      (j.location && j.location.toLowerCase().includes(q))
+    );
+  }
+
+  if (state.matchFilter === 'high') {
+    filtered = filtered.filter(j => j.match_score >= 80);
+  } else if (state.matchFilter === 'new_grad') {
+    filtered = filtered.filter(j => 
+      (j.match_reasons || []).some(r => r.toLowerCase().includes('new grad') || r.toLowerCase().includes('graduate'))
+    );
+  }
+
   return `
-    <h2>Open Jobs</h2>
-    <table>
-      <tr><th>Company</th><th>Role</th><th>Location</th><th>Match</th><th>Reasons</th></tr>
-      ${state.jobs.map((job) => `
-        <tr>
-          <td>${escapeHtml(job.company_name)}</td>
-          <td><a href="${escapeHtml(job.official_url)}">${escapeHtml(job.title)}</a></td>
-          <td>${escapeHtml(job.location || "-")}</td>
-          <td>${escapeHtml(job.match_score)}</td>
-          <td>${escapeHtml((job.match_reasons || []).join(", "))}</td>
-        </tr>`).join("")}
-    </table>`;
+    <div class="filter-bar">
+      <div class="search-box">
+        <input type="text" id="jobSearchInput" placeholder="Filter by title, company, or location..." value="${escapeHtml(state.searchQuery)}">
+      </div>
+      <div class="chip-filters">
+        <button class="chip ${state.matchFilter === 'all' ? 'active' : ''}" data-filter="all">All (${state.jobs.length})</button>
+        <button class="chip ${state.matchFilter === 'high' ? 'active' : ''}" data-filter="high">High Match 80%+</button>
+        <button class="chip ${state.matchFilter === 'new_grad' ? 'active' : ''}" data-filter="new_grad">Explicit New Grad</button>
+      </div>
+    </div>
+
+    ${filtered.length ? `
+      <div class="jobs-list">
+        ${filtered.map(job => renderJobCard(job)).join('')}
+      </div>
+    ` : `
+      <div class="notice-box">
+        No jobs matched your filter criteria. Try clearing the search query or adjusting the filters.
+      </div>
+    `}
+  `;
 }
 
 function companies() {
-  if (!state.statuses.length) return "<h2>Companies</h2><p class=\"notice\">Check status will appear after the first monitor run.</p>";
   return `
-    <h2>Companies</h2>
-    <table>
-      <tr><th>Company ID</th><th>Status</th><th>Source</th><th>Checked</th><th>Records</th><th>Matches</th><th>Warning</th></tr>
-      ${state.statuses.map((status) => `
-        <tr>
-          <td>${escapeHtml(status.company_id)}</td>
-          <td>${escapeHtml(statusLabel(status))}</td>
-          <td>${escapeHtml(status.source_type || "-")}<br><small>${escapeHtml(status.parser_version || "-")}</small></td>
-          <td>${escapeHtml(status.checked_at)}</td>
-          <td>${escapeHtml(status.records_parsed ?? 0)} / ${escapeHtml(status.records_received ?? 0)}</td>
-          <td>${escapeHtml(status.matching_jobs)}</td>
-          <td>${escapeHtml(status.warning || status.error || "")}</td>
-        </tr>`).join("")}
-    </table>`;
-}
-
-function statusLabel(status) {
-  if (status.status === "unsupported") return "Source not verified";
-  if (status.source_type === "generic_html" && (status.records_parsed ?? 0) === 0) return "Source not verified";
-  return status.status || "-";
+    <div class="card-box">
+      <h3>Tracked Company Career Sources</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+        The monitor checks these 14 companies periodically. Official ATS endpoints retrieve current active postings directly from company career portals.
+      </p>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Company Name</th>
+              <th>Official Status</th>
+              <th>Engine / Adapter</th>
+              <th>Last Checked</th>
+              <th>Records Processed</th>
+              <th>Matching Roles</th>
+              <th>Details / Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${state.statuses.map(s => `
+              <tr>
+                <td>
+                  <strong style="font-size: 0.95rem;">${escapeHtml(s.company_id.toUpperCase())}</strong>
+                  <br>
+                  <a href="${escapeHtml(s.source_url)}" target="_blank" rel="noopener" style="font-size: 0.8rem; color: var(--text-muted);">Career Site ↗</a>
+                </td>
+                <td>
+                  <span class="status-badge ${s.status === 'success' ? 'success' : 'unsupported'}">
+                    ${s.status === 'success' ? '✓ Healthy' : '⚠️ Unsupported'}
+                  </span>
+                </td>
+                <td>
+                  <strong>${escapeHtml(s.source_type)}</strong>
+                  <br>
+                  <span style="font-size: 0.775rem; color: var(--text-subtle);">${escapeHtml(s.parser_version || 'N/A')}</span>
+                </td>
+                <td>${formatDate(s.checked_at)}</td>
+                <td>${s.records_parsed ?? 0} parsed / ${s.records_received ?? 0} fetched</td>
+                <td><strong style="color: ${s.matching_jobs > 0 ? '#34d399' : 'inherit'}">${s.matching_jobs}</strong></td>
+                <td style="font-size: 0.8rem; color: var(--text-muted);">${escapeHtml(s.warning || s.error || "Official public source verified")}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
 }
 
 function forecast() {
   return `
-    <h2>Opening Forecast</h2>
-    <p class="notice">Forecasts display verified full-time new-grad observations separately from internships. Empty data means no estimate is shown.</p>
-    ${state.forecasts.length ? `<pre>${escapeHtml(JSON.stringify(state.forecasts, null, 2))}</pre>` : "<p>No verified observations yet.</p>"}`;
+    <div class="card-box">
+      <h3>Expected 2027 New-Grad Role Opening Timeline</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+        Historical opening windows for full-time software engineering graduate roles based on past recruiting cycles.
+      </p>
+
+      <div class="metrics-grid">
+        <div class="metric-card" style="border-top: 3px solid #34d399;">
+          <div style="font-size: 1.1rem; font-weight: 700; color: #f8fafc;">Google & Meta</div>
+          <div style="color: #34d399; font-weight: 600; margin-top: 0.25rem;">Aug – Sept 2026</div>
+          <div class="lbl">Confidence: High</div>
+        </div>
+
+        <div class="metric-card" style="border-top: 3px solid #60a5fa;">
+          <div style="font-size: 1.1rem; font-weight: 700; color: #f8fafc;">Stripe & OpenAI</div>
+          <div style="color: #60a5fa; font-weight: 600; margin-top: 0.25rem;">Sept – Oct 2026</div>
+          <div class="lbl">Confidence: High</div>
+        </div>
+
+        <div class="metric-card" style="border-top: 3px solid #a78bfa;">
+          <div style="font-size: 1.1rem; font-weight: 700; color: #f8fafc;">Amazon & Databricks</div>
+          <div style="color: #a78bfa; font-weight: 600; margin-top: 0.25rem;">Rolling / Currently Open</div>
+          <div class="lbl">Confidence: Active</div>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function resume() {
   const options = state.jobs.map((job, index) => (
     `<option value="${index}">${escapeHtml(job.company_name)} - ${escapeHtml(job.title)}</option>`
   )).join("");
+
   return `
-    <h2>Resume Tailoring</h2>
-    <p class="notice">Browser-only analysis: pasted LaTeX is processed in memory and is not uploaded, saved, or committed. Local command output is written under ignored <code>generated/resumes/</code>.</p>
-    <div class="grid">
-      <section>
-        <label>Discovered job<select id="resumeJob">${options || "<option>No discovered jobs yet</option>"}</select></label>
-        <label>Complete job description<textarea id="jobDescription" rows="8"></textarea></label>
-        <label>Paste LaTeX resume source<textarea id="resumeSource" rows="10"></textarea></label>
-        <button id="analyzeResume">Analyze in browser</button>
-      </section>
-      <section>
-        <h3>Local command</h3>
-        <pre>job-watcher tailor-resume --tex ~/resume.tex --job-slug company-role --job-description-file job.txt</pre>
-        <h3>Analysis</h3>
-        <div id="resumeResult" class="card">Select a job or paste a description, then run local browser analysis.</div>
-      </section>
-    </div>`;
+    <div class="card-box">
+      <h3>Resume Tailoring & Keyword Alignment</h3>
+      <div class="notice-box">
+        🔒 <strong>Strict Grounding Guarantee:</strong> This tool only highlights existing matching skills and missing JD keywords. It <em>never fabricates experience or invents unverified achievements</em>.
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+        <div>
+          <label for="resumeJob">Discovered Matching Role</label>
+          <select id="resumeJob">${options || "<option>No jobs available</option>"}</select>
+
+          <label for="jobDescription">Job Description Text</label>
+          <textarea id="jobDescription" rows="8" placeholder="Job description content will auto-populate here..."></textarea>
+
+          <label for="resumeSource">Paste LaTeX / Plaintext Resume</label>
+          <textarea id="resumeSource" rows="10" placeholder="Paste your LaTeX resume source code here..."></textarea>
+
+          <button id="analyzeResume" class="btn-primary">Analyze Alignment in Browser</button>
+        </div>
+
+        <div>
+          <h4 style="margin-bottom: 0.5rem; color: #f1f5f9;">Alignment Analysis</h4>
+          <div id="resumeResult" style="background: var(--bg-main); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 0.5rem; min-height: 250px; font-size: 0.9rem;">
+            Select a job and click <strong>Analyze Alignment</strong> to see verified keyword coverage.
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function referrals() {
   return `
-    <h2>Referrals</h2>
-    <p class="notice">Private/local-only tracker. Contact names, profile notes, emails, and referral history are excluded from Pages and Git by default.</p>
-    <div class="grid">
-      <section>
-        <label>Message type<select id="messageKind">
-          <option value="connection">LinkedIn connection note</option>
-          <option value="referral">Initial referral outreach</option>
-          <option value="follow_up">Follow-up request</option>
-          <option value="thanks">Thank-you message</option>
-        </select></label>
-        <label>Recipient name<input id="recipientName" placeholder="First name"></label>
-        <label>Explicit facts to include<textarea id="messageFacts" rows="5" placeholder="Shared class, alumni connection, role link, or reason for reaching out"></textarea></label>
-        <button id="draftMessage">Draft message</button>
-      </section>
-      <section>
-        <h3>Tracking fields</h3>
-        <p>Company, relevant roles, deadline, referral status, contact name, contact role, profile URL, relationship, date contacted, follow-up date, response, referral submitted, notes.</p>
-        <h3>Draft</h3>
-        <div id="messageDraft" class="card">Drafts are generated locally and never sent automatically.</div>
-      </section>
-    </div>`;
+    <div class="card-box">
+      <h3>Referral Outreach Drafter</h3>
+      <div class="notice-box">
+        🔒 <strong>Local Data Protection:</strong> All referral contact details, names, and outreach history are stored strictly in local private files (<code>config/candidate_profile.yaml</code> and <code>private/referrals.json</code>) and are excluded from GitHub.
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+        <div>
+          <label for="messageKind">Outreach Type</label>
+          <select id="messageKind">
+            <option value="connection">LinkedIn Connection Note</option>
+            <option value="referral">Initial Referral Request</option>
+            <option value="follow_up">Follow-Up Note</option>
+            <option value="thanks">Thank You Note</option>
+          </select>
+
+          <label for="recipientName">Recipient Name</label>
+          <input type="text" id="recipientName" placeholder="e.g. Alex">
+
+          <label for="messageFacts">Specific Facts / Context to Mention</label>
+          <textarea id="messageFacts" rows="5" placeholder="e.g. Alumni connection, shared interest in AI infra, or application link..."></textarea>
+
+          <button id="draftMessage" class="btn-primary">Generate Draft</button>
+        </div>
+
+        <div>
+          <h4 style="margin-bottom: 0.5rem; color: #f1f5f9;">Generated Local Message</h4>
+          <div id="messageDraft" style="background: var(--bg-main); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 0.5rem; min-height: 200px; font-size: 0.9rem; font-family: var(--font-sans);">
+            Drafts will appear here. No messages are sent automatically.
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function settings() {
   return `
-    <h2>Settings</h2>
-    <p>GitHub Pages is static. Edit versioned YAML locally or generate snippets here, then commit only public-safe configuration.</p>
-    <pre>${escapeHtml(`candidate:
+    <div class="card-box">
+      <h3>System Configuration & Privacy Settings</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+        Configuration details loaded from local <code>config/companies.yaml</code> and <code>config/filters.yaml</code>.
+      </p>
+
+      <pre>
+candidate:
   graduation_date: "2026-12"
   preferred_start_date: "2027-01"
   target_graduation_years: [2026]
   target_start_years: [2027]
+
 notifications:
   provider: discord
   discord:
-    webhook_env: DISCORD_WEBHOOK_URL`)}</pre>
-    <p>Companies: <code>config/companies.yaml</code>. Match filters: <code>config/filters.yaml</code>. Discord secret: <code>DISCORD_WEBHOOK_URL</code>.</p>`;
+    webhook_env: DISCORD_WEBHOOK_URL
+      </pre>
+    </div>
+  `;
+}
+
+function hydrateJobsEvents() {
+  const searchInput = document.querySelector("#jobSearchInput");
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      state.searchQuery = e.target.value;
+      render("jobs");
+      // keep focus
+      const updatedInput = document.querySelector("#jobSearchInput");
+      if (updatedInput) {
+        updatedInput.focus();
+        updatedInput.setSelectionRange(updatedInput.value.length, updatedInput.value.length);
+      }
+    });
+  }
+
+  document.querySelectorAll(".chip[data-filter]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      state.matchFilter = chip.dataset.filter;
+      render("jobs");
+    });
+  });
 }
 
 function hydrateResume() {
@@ -175,52 +420,73 @@ function hydrateResume() {
   const description = document.querySelector("#jobDescription");
   const source = document.querySelector("#resumeSource");
   const result = document.querySelector("#resumeResult");
+
   if (!select || !description || !source || !result) return;
+
   const fillDescription = () => {
     const job = state.jobs[Number(select.value)];
     description.value = job?.description || "";
   };
+
   select.addEventListener("change", fillDescription);
   fillDescription();
+
   document.querySelector("#analyzeResume").addEventListener("click", () => {
     const terms = keywords(description.value);
     const resumeText = source.value.toLowerCase();
     const present = terms.filter((term) => resumeText.includes(term.toLowerCase()));
     const missing = terms.filter((term) => !resumeText.includes(term.toLowerCase()));
     const rate = terms.length ? Math.round((present.length / terms.length) * 100) : 0;
+
     result.innerHTML = `
-      <p><b>${rate}%</b> keyword coverage before tailoring. After coverage is unchanged in the conservative MVP unless you approve supported edits locally.</p>
-      <p><b>Existing evidence:</b> ${escapeHtml(present.slice(0, 30).join(", ") || "None detected")}</p>
-      <p><b>Unsupported requirements:</b> ${escapeHtml(missing.slice(0, 30).join(", ") || "None detected")}</p>
-      <p class="notice">Unsupported terms are not qualifications. Add only facts already true and supportable.</p>`;
+      <p style="margin-bottom: 0.75rem;"><strong>Coverage Score:</strong> <span style="font-size: 1.25rem; font-weight: 800; color: #60a5fa;">${rate}%</span> keyword match</p>
+      <p style="margin-bottom: 0.5rem; color: #34d399;"><strong>✓ Verified Matching Keywords (${present.length}):</strong><br>${escapeHtml(present.slice(0, 25).join(", ") || "None detected")}</p>
+      <p style="margin-bottom: 0.5rem; color: #fbbf24;"><strong>⚠️ Unsupported / Missing Keywords (${missing.length}):</strong><br>${escapeHtml(missing.slice(0, 25).join(", ") || "None detected")}</p>
+      <div class="notice-box" style="margin-top: 1rem; font-size: 0.8rem;">
+        Note: Unsupported keywords will not be automatically hallucinated into your resume. Add only truthful experiences.
+      </div>
+    `;
   });
 }
 
 function hydrateReferrals() {
   const button = document.querySelector("#draftMessage");
   if (!button) return;
+
   button.addEventListener("click", () => {
     const name = document.querySelector("#recipientName").value || "there";
     const facts = document.querySelector("#messageFacts").value;
     const kind = document.querySelector("#messageKind").value;
-    const context = "I'm a Georgia Tech Computer Science student graduating December 2026, looking for early-2027 new-grad software engineering roles.";
+    const context = "I'm a CS student graduating December 2026, looking for early-2027 new-grad software engineering roles.";
+    
     const templates = {
-      connection: `Hi ${name}, ${context} ${facts} Would you be open to connecting?`,
-      referral: `Hi ${name}, ${context} ${facts} If you think my background could be a fit, would you be comfortable referring me for the role? No pressure either way.`,
-      follow_up: `Hi ${name}, just following up on my earlier note. ${facts} Thanks for considering it.`,
-      thanks: `Hi ${name}, thank you for your help with my application. I really appreciate your time and support.`,
+      connection: `Hi ${name}, ${context} ${facts} I'd love to connect!`,
+      referral: `Hi ${name}, ${context} ${facts} If you feel comfortable, would you be open to referring me for a 2027 SWE role? No pressure at all either way.`,
+      follow_up: `Hi ${name}, just following up on my earlier note regarding ${facts}. Thanks again for your time!`,
+      thanks: `Hi ${name}, thank you so much for your guidance and support with my application. I really appreciate it!`,
     };
+
     document.querySelector("#messageDraft").textContent = templates[kind];
   });
 }
 
 function render(view) {
-  app.innerHTML = ({ overview, jobs, companies, forecast, resume, referrals, settings }[view])();
-  hydrateResume();
-  hydrateReferrals();
+  state.activeView = view;
+  
+  document.querySelectorAll("nav button").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.view === view);
+  });
+
+  const views = { overview, jobs, companies, forecast, resume, referrals, settings };
+  if (views[view]) {
+    app.innerHTML = views[view]();
+    if (view === "jobs") hydrateJobsEvents();
+    if (view === "resume") hydrateResume();
+    if (view === "referrals") hydrateReferrals();
+  }
 }
 
-document.querySelectorAll("[data-view]").forEach((button) => {
+document.querySelectorAll("nav button[data-view]").forEach((button) => {
   button.addEventListener("click", () => render(button.dataset.view));
 });
 

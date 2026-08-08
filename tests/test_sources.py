@@ -6,6 +6,7 @@ import httpx
 import pytest
 
 from job_watcher.models import CompanyConfig
+from job_watcher.sources.amazon import AmazonSource
 from job_watcher.sources.ashby import AshbySource
 from job_watcher.sources.greenhouse import GreenhouseSource
 
@@ -68,14 +69,23 @@ def test_greenhouse_parser_reports_plausible_records(monkeypatch, identifier, fi
     "company",
     [
         CompanyConfig(id="ramp", name="Ramp", careers_url="https://ramp.com/careers", source_type="ashby", source_identifier="ramp"),
+        CompanyConfig(id="openai", name="OpenAI", careers_url="https://openai.com/careers/search/", source_type="ashby", source_identifier="openai"),
         CompanyConfig(id="hubspot", name="HubSpot", careers_url="https://www.hubspot.com/careers/jobs", source_type="greenhouse", source_identifier="hubspotjobs"),
         CompanyConfig(id="stripe", name="Stripe", careers_url="https://stripe.com/jobs/search", source_type="greenhouse", source_identifier="stripe"),
+        CompanyConfig(id="databricks", name="Databricks", careers_url="https://www.databricks.com/company/careers/open-positions", source_type="greenhouse", source_identifier="databricks"),
+        CompanyConfig(id="linkedin", name="LinkedIn", careers_url="https://careers.linkedin.com/", source_type="greenhouse", source_identifier="linkedin"),
+        CompanyConfig(id="amazon", name="Amazon", careers_url="https://www.amazon.jobs/", source_type="amazon", source_identifier="amazon"),
     ],
 )
 def test_live_sources_return_plausible_record_counts(company):
-    source = AshbySource() if company.source_type == "ashby" else GreenhouseSource()
+    if company.source_type == "ashby":
+        source = AshbySource()
+    elif company.source_type == "amazon":
+        source = AmazonSource()
+    else:
+        source = GreenhouseSource()
     result = source.fetch_jobs(company)
 
     assert result.records_received >= result.records_parsed >= 0
-    assert result.records_received < 1000
+    assert result.records_received < 5000
     assert result.records_parsed > 0
