@@ -37,15 +37,48 @@ def _contains(text: str, terms: list[str]) -> bool:
     return any(term.lower() in text for term in terms)
 
 
+EXCLUDED_TITLE_TOKENS = [
+    "senior", "sr.", "sr ", "staff", "principal", "lead", "manager", "director",
+    "architect", "software engineer ii", "software engineer 2", "software engineer iii",
+    "software engineer 3", "software engineer iv", "software engineer 4",
+    "sde ii", "sde 2", "sde iii", "sde 3", "swe ii", "swe 2", "swe iii", "swe 3",
+    "engineer ii", "engineer 2", "engineer iii", "engineer 3", "eng ii", "eng 2"
+]
+
+INTERN_TITLE_TOKENS = ["intern", "internship", "co-op", "coop"]
+
+
 def score_job(job: RawJob, rules: dict) -> tuple[float, list[str]]:
+    # 1. Location Check
     us_only = rules.get("candidate", {}).get("us_only", True)
     if us_only and not is_us_location(job.location):
         return 0.0, ["Non-US location excluded"]
 
-    title, description = job.title.lower(), (job.description or "").lower()
+    title = job.title.lower().strip()
+    description = (job.description or "").lower().strip()
     all_text = f"{title}\n{description}"
-    keywords, weights = rules["positive_keywords"], rules["weights"]
-    score, reasons = 0.0, []
+
+    # 2. Strict Title Level Check
+    for token in EXCLUDED_TITLE_TOKENS:
+        if token in title:
+            return 0.0, [f"Excluded non-entry level in title: '{token}'"]
+
+    # 3. Internship Title Check (User target is full-time 2027 start)
+    for token in INTERN_TITLE_TOKENS:
+        if token in title:
+            return 0.0, [f"Internship title excluded: '{token}'"]
+
+    # 4. Strict 3+ Years Experience Rejection in Description
+    if re.search(r"\b([3-9]|[1-9][0-9])\+?\s*(?:-\s*\d+)?\s*years?(?:\s+of)?(?:\s+non-internship|\s+professional|\s+relevant|\s+work)?\s+experience\b", description):
+        return 0.0, ["Requires 3+ years experience - excluded for New Grad"]
+
+    if re.search(r"\bminimum\s+(?:of\s+)?([3-9]|[1-9][0-9])\s+years\b", description):
+        return 0.0, ["Requires 3+ minimum years experience - excluded for New Grad"]
+
+    keywords = rules["positive_keywords"]
+    weights = rules["weights"]
+    score = 0.0
+    reasons = []
 
     if us_only and job.location:
         reasons.append("United States location")
@@ -56,35 +89,26 @@ def score_job(job: RawJob, rules: dict) -> tuple[float, list[str]]:
     else:
         score += weights["non_engineering"]
         reasons.append("No relevant software-engineering title")
+
     if _contains(title, keywords["new_grad"]):
         score += weights["new_grad_title"]
         reasons.append("Explicit new-graduate title")
     elif _contains(title, keywords["early_career"]):
         score += weights["early_career_title"]
         reasons.append("Early-career title")
+
     if _contains(description, keywords["new_grad"] + keywords["early_career"]):
         score += weights["new_grad_description"]
         reasons.append("Early-career wording in description")
+
     if _contains(all_text, keywords["start_date"]) or re.search(
         r"\b(2026|2027)\s+(graduate|grad)\b", all_text
     ):
         score += weights["graduation_or_start_year"]
         reasons.append("Matches December 2026 / 2027 start timing")
+
     if re.search(r"(?:0|1|2)\s*(?:-|to)?\s*(?:2)?\s*years?(?: of experience)?", description):
         score += weights["zero_to_two_years"]
         reasons.append("0–2 years experience")
-    elif re.search(r"\b3\+?\s+years?", description):
-        score += weights["three_years"]
-        reasons.append("Three years experience")
-    if _contains(
-        title, ["senior", "staff", "principal", "lead", "manager", "director", "architect"]
-    ):
-        score += weights["senior_title"]
-        reasons.append("Senior indicator in title")
-    if _contains(title, ["intern", "internship"]):
-        score += weights["internship_title"]
-        reasons.append("Internship title")
-    if re.search(r"\b(?:4|5|6|7|8|9|[1-9][0-9])\+?\s+years?", description):
-        score += weights["four_plus_years"]
-        reasons.append("Four or more years required")
+
     return max(0, min(100, score)), reasons

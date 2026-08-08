@@ -20,10 +20,6 @@ RULES = {
         "new_grad_description": 25,
         "graduation_or_start_year": 20,
         "zero_to_two_years": 20,
-        "three_years": 5,
-        "senior_title": -80,
-        "internship_title": -80,
-        "four_plus_years": -60,
         "non_engineering": -50,
     },
 }
@@ -51,6 +47,32 @@ def test_internship_title_is_rejected():
     )
     score, _ = score_job(job, RULES)
     assert score == 0
+
+
+def test_software_engineer_ii_is_rejected():
+    job = RawJob(
+        source_id="1",
+        title="Software Engineer II",
+        official_url="https://example.com",
+        location="Austin, TX",
+        description="Looking for mid-level engineer.",
+    )
+    score, reasons = score_job(job, RULES)
+    assert score == 0
+    assert "Excluded non-entry level in title" in reasons[0]
+
+
+def test_three_plus_years_experience_is_rejected():
+    job = RawJob(
+        source_id="1",
+        title="Software Engineer",
+        official_url="https://example.com",
+        location="New York, NY",
+        description="Requires 3+ years of non-internship experience in C++ and distributed systems.",
+    )
+    score, reasons = score_job(job, RULES)
+    assert score == 0
+    assert "Requires 3+ years experience - excluded for New Grad" in reasons[0]
 
 
 def test_non_us_location_is_rejected():
