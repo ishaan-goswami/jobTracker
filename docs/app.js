@@ -438,12 +438,60 @@ function hydrateResume() {
     const missing = terms.filter((term) => !resumeText.includes(term.toLowerCase()));
     const rate = terms.length ? Math.round((present.length / terms.length) * 100) : 0;
 
+    // HackerRank Scoring Rules
+    const hasGithub = /github\.com\/[a-z0-9_-]+/i.test(source.value);
+    const hasLinks = /https?:\/\/|github\.com|demo|app\./i.test(source.value);
+    const hasIntern = /intern|co-op|coop/i.test(resumeText);
+    const hasDevExp = /software engineer|developer|full-time/i.test(resumeText);
+    const hasFounder = /founder|co-founder|early employee/i.test(resumeText);
+
+    let osScore = hasGithub ? 8 : 0;
+    if (/google summer of code|gsoc/i.test(resumeText)) osScore += 20;
+    osScore = Math.min(35, osScore);
+
+    let projScore = 15;
+    if (hasLinks) projScore += 10;
+    projScore = Math.min(30, projScore);
+
+    let prodScore = 0;
+    if (hasIntern) prodScore += 15;
+    if (hasDevExp) prodScore += 5;
+    if (hasFounder) prodScore += 5;
+    prodScore = Math.min(25, prodScore);
+
+    const skillsScore = Math.min(10, Math.max(5, Math.round(rate / 10)));
+    let bonus = (hasGithub ? 2 : 0) + (source.value.includes("linkedin.com") ? 1 : 0) + (hasFounder ? 3 : 0);
+    bonus = Math.min(20, bonus);
+
+    let deductions = 0;
+    if (!hasLinks) deductions += 5;
+    if (/todo list|calculator app/i.test(resumeText)) deductions += 3;
+
+    const totalHackerRank = Math.max(0, Math.min(120, osScore + projScore + prodScore + skillsScore + bonus - deductions));
+
     result.innerHTML = `
-      <p style="margin-bottom: 0.75rem;"><strong>Coverage Score:</strong> <span style="font-size: 1.25rem; font-weight: 800; color: #60a5fa;">${rate}%</span> keyword match</p>
+      <p style="margin-bottom: 0.75rem;"><strong>Keyword Alignment:</strong> <span style="font-size: 1.25rem; font-weight: 800; color: #60a5fa;">${rate}%</span></p>
+      
+      <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 0.5rem; padding: 0.85rem; margin-bottom: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <strong style="color: #f8fafc; font-size: 1rem;">HackerRank ATS Scorecard</strong>
+          <span style="font-size: 1.2rem; font-weight: 800; color: ${totalHackerRank >= 70 ? '#34d399' : '#fbbf24'};">${totalHackerRank} / 120 pts</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.65rem; font-size: 0.8rem; color: #cbd5e1;">
+          <div>• Open Source: <strong>${osScore}/35</strong></div>
+          <div>• Self Projects: <strong>${projScore}/30</strong></div>
+          <div>• Production Exp: <strong>${prodScore}/25</strong></div>
+          <div>• Tech Skills: <strong>${skillsScore}/10</strong></div>
+          <div>• Bonus Points: <strong style="color: #34d399;">+${bonus}</strong></div>
+          <div>• Deductions: <strong style="color: #f87171;">-${deductions}</strong></div>
+        </div>
+      </div>
+
       <p style="margin-bottom: 0.5rem; color: #34d399;"><strong>✓ Verified Matching Keywords (${present.length}):</strong><br>${escapeHtml(present.slice(0, 25).join(", ") || "None detected")}</p>
       <p style="margin-bottom: 0.5rem; color: #fbbf24;"><strong>⚠️ Unsupported / Missing Keywords (${missing.length}):</strong><br>${escapeHtml(missing.slice(0, 25).join(", ") || "None detected")}</p>
+      
       <div class="notice-box" style="margin-top: 1rem; font-size: 0.8rem;">
-        Note: Unsupported keywords will not be automatically hallucinated into your resume. Add only truthful experiences.
+        HackerRank Rule: Includes <strong>${hasGithub ? '✓ GitHub URL detected' : '⚠️ No GitHub URL detected'}</strong> & <strong>${hasLinks ? '✓ Active Links detected' : '⚠️ Missing links penalty (-5 pts)'}</strong>.
       </div>
     `;
   });

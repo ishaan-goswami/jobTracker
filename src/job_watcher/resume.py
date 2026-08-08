@@ -1,10 +1,12 @@
-"""Local-only, conservative LaTeX tailoring utilities. No network/API use."""
+"""Local-only, conservative LaTeX tailoring utilities and HackerRank ATS evaluation."""
 from __future__ import annotations
 
 import difflib
 import json
 import re
 from pathlib import Path
+
+from .hackerrank_evaluator import evaluate_hackerrank_rules
 
 
 def _keyword_match_rate(tex: str, keywords: list[str]) -> float:
@@ -61,11 +63,12 @@ def analyze(tex: str, job_description: str) -> dict:
     ]
 
     match_rate = _keyword_match_rate(tex, keywords[:80])
+    hackerrank_eval = evaluate_hackerrank_rules(tex, job_description)
 
     return {
         "match_analysis": {
             "summary": (
-                "Conservative local keyword analysis. The generated LaTeX is "
+                "Conservative local keyword & HackerRank ATS analysis. The generated LaTeX is "
                 "unchanged unless a future rule can trace every edit to the "
                 "original resume."
             ),
@@ -75,6 +78,7 @@ def analyze(tex: str, job_description: str) -> dict:
         "important_keywords": keywords[:80],
         "resume_evidence": present,
         "unsupported_or_missing": missing,
+        "hackerrank_evaluation": hackerrank_eval,
         "recommended_bullet_order": [],
         "proposed_bullet_edits": [],
         "traceability": {
@@ -86,15 +90,14 @@ def analyze(tex: str, job_description: str) -> dict:
             "Do not add it unless it is already true and supportable."
         ),
         "method": (
-            "Local lexical evidence analysis; "
-            "no claims are generated."
+            "Local lexical evidence analysis & HackerRank 120-pt ATS rules; "
+            "no unverified claims are generated."
         ),
     }
 
 
 def tailor(tex_path: Path, job_slug: str, job_description: str, output_root: Path = Path("generated/resumes")) -> Path:
     original = tex_path.read_text(encoding="utf-8")
-    # Deliberately preserve source verbatim: an MVP must never invent or silently alter claims.
     revised = original
     target = output_root / job_slug
     target.mkdir(parents=True, exist_ok=True)
