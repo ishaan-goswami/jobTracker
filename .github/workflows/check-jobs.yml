@@ -3,7 +3,9 @@ name: Check jobs
 on:
   workflow_dispatch:
   schedule:
-    - cron: "17 * * * *"
+    # GitHub's minimum schedule interval is 5 minutes (free and paid).
+    # Offset from :00 to reduce top-of-hour queue delays.
+    - cron: "3/5 * * * *"
 
 permissions:
   contents: write
