@@ -3,6 +3,10 @@ from job_watcher.models import RawJob
 
 
 RULES = {
+    "candidate": {
+        "us_only": True,
+        "minimum_match_score": 55,
+    },
     "positive_keywords": {
         "engineering": ["software engineer"],
         "new_grad": ["new grad", "2026 graduate"],
@@ -30,6 +34,7 @@ def test_december_2026_candidate_matches_early_2027_role():
         source_id="1",
         title="Software Engineer, New Grad",
         official_url="https://example.com",
+        location="San Francisco, CA",
         description="For 2026 graduates who can start in early 2027. 0-2 years experience.",
     )
     score, reasons = score_job(job, RULES)
@@ -39,7 +44,36 @@ def test_december_2026_candidate_matches_early_2027_role():
 
 def test_internship_title_is_rejected():
     job = RawJob(
-        source_id="1", title="Software Engineer Intern", official_url="https://example.com"
+        source_id="1",
+        title="Software Engineer Intern",
+        official_url="https://example.com",
+        location="San Francisco, CA",
     )
     score, _ = score_job(job, RULES)
     assert score == 0
+
+
+def test_non_us_location_is_rejected():
+    job = RawJob(
+        source_id="1",
+        title="Software Engineer, New Grad",
+        official_url="https://example.com",
+        location="Sydney, Australia",
+        description="For 2026 graduates starting in 2027",
+    )
+    score, reasons = score_job(job, RULES)
+    assert score == 0.0
+    assert "Non-US location excluded" in reasons
+
+
+def test_us_location_is_accepted():
+    job = RawJob(
+        source_id="1",
+        title="Software Engineer, New Grad",
+        official_url="https://example.com",
+        location="Seattle, WA",
+        description="Software engineer position starting early 2027",
+    )
+    score, reasons = score_job(job, RULES)
+    assert score >= 90
+    assert "United States location" in reasons

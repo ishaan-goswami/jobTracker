@@ -4,6 +4,7 @@ candidate:
   target_graduation_years: [2026]
   target_start_years: [2027]
   minimum_match_score: 55
+  us_only: true
 
 positive_keywords:
   new_grad: ["new grad", "new graduate", "university graduate", "university grad", "recent graduate", "2027 graduate", "class of 2027", "december 2026 graduate", "winter 2026 graduate", "2026 graduate", "class of 2026"]

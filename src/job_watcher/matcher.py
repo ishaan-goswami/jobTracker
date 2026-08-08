@@ -2,16 +2,54 @@ import re
 
 from .models import RawJob
 
+NON_US_COUNTRY_TOKENS = {
+    "australia", "aus", "canada", "can", "india", "ind", "uk", "japan", "jpn",
+    "singapore", "sgp", "germany", "deu", "france", "fra", "ireland", "irl",
+    "netherlands", "nld", "spain", "esp", "israel", "isr", "brazil", "bra",
+    "mexico", "mex", "china", "chn", "hong kong", "hkg", "poland", "pol",
+    "switzerland", "che", "sweden", "swe", "nzl", "new zealand"
+}
+
+NON_US_CITY_TERMS = [
+    "sydney", "melbourne", "brisbane", "toronto", "vancouver", "montreal",
+    "bengaluru", "bangalore", "hyderabad", "pune", "gurgaon", "noida", "mumbai",
+    "delhi", "chennai", "london", "dublin", "tokyo", "berlin", "munich",
+    "amsterdam", "zurich", "paris", "tel aviv", "beijing", "shanghai", "shenzhen",
+    "sao paulo", "mexico city", "warsaw", "krakow", "stockholm"
+]
+
+
+def is_us_location(location: str | None) -> bool:
+    if not location:
+        return True
+    loc_lower = location.lower().strip()
+    tokens = [t.strip(",. ") for t in loc_lower.split()]
+    for token in tokens:
+        if token in NON_US_COUNTRY_TOKENS:
+            return False
+    for city in NON_US_CITY_TERMS:
+        if city in loc_lower:
+            return False
+    return True
+
 
 def _contains(text: str, terms: list[str]) -> bool:
     return any(term.lower() in text for term in terms)
 
 
 def score_job(job: RawJob, rules: dict) -> tuple[float, list[str]]:
+    us_only = rules.get("candidate", {}).get("us_only", True)
+    if us_only and not is_us_location(job.location):
+        return 0.0, ["Non-US location excluded"]
+
     title, description = job.title.lower(), (job.description or "").lower()
     all_text = f"{title}\n{description}"
     keywords, weights = rules["positive_keywords"], rules["weights"]
     score, reasons = 0.0, []
+
+    if us_only and job.location:
+        reasons.append("United States location")
+
     if _contains(title, keywords["engineering"]):
         score += weights["engineering_title"]
         reasons.append("Relevant software-engineering title")
