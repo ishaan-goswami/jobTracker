@@ -1,29 +1,5 @@
 [
   {
-    "id": "7232592",
-    "company_id": "stripe",
-    "company_name": "Stripe",
-    "title": "Backend Engineer, Payments and Risk",
-    "location": "US",
-    "description": "&lt;p&gt;&lt;strong&gt;&lt;em&gt;Note:&amp;nbsp;&lt;/em&gt;&lt;/strong&gt;&lt;em&gt;if you are an intern, new grad, staff, frontend or fullstack applicant, please do not apply using this link and visit our &lt;/em&gt;&lt;a href=&quot;https://stripe.com/jobs/search&quot;&gt;&lt;em&gt;jobs page&lt;/em&gt;&lt;/a&gt;&lt;em&gt; for those specific postings.&lt;/em&gt;&lt;/p&gt;\n&lt;h2&gt;&lt;strong&gt;Who we are&lt;/strong&gt;&lt;/h2&gt;\n&lt;h3&gt;&lt;strong&gt;About Stripe&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;&lt;strong&gt;Stripe is a financial infrastructure platform for businesses.&lt;/strong&gt;&amp;nbsp;Millions of companies \u2014 from the world&#39;s largest enterprises to the most ambitious startups \u2014 use Stripe to accept payments, grow their revenue, and accelerate new business opportunities. Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead. That means you have an unprecedented opportunity to put the global economy within everyone&#39;s reach while doing the most important work of your career.&lt;/p&gt;\n&lt;hr&gt;\n&lt;p&gt;&lt;strong&gt;About the Organization&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Payments and Risk&lt;/p&gt;\n&lt;p&gt;Sub-orgs: Link and OCS, Payments Acceptance, Risk&lt;/p&gt;\n&lt;p&gt;The Payments organization focuses on developing products and platforms that enable users to accept payments from customers efficiently. This includes building APIs for processing payments, enabling regional, non-card payment options, and extending Stripe&#39;s capabilities to make it easy for businesses to accept in-person payments. Optimized Checkout and Link teams work to create best-in-class checkout experiences that enhance customer satisfaction and drive merchant conversion rates. The Risk Engineering team develops products that minimize financial and regulatory risks while ensuring a seamless user experience, thereby safeguarding Stripe&#39;s brand and financial stability.&lt;/p&gt;\n&lt;p&gt;Team Matching: Exact team matching for one of the sub-teams will begin during final stages. Please note we may also consider you for different orgs based on your experience, location, etc.&amp;nbsp;&lt;/p&gt;\n&lt;hr&gt;\n&lt;p&gt;&lt;strong&gt;What you&#39;ll do&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;We&#39;re looking for backend engineers who want to make an impact on managing money at a global scale with a passion for building ergonomic APIs. Our team collaborates with many cross-functional teams \u2014 from Infrastructure to Product \u2014 to deliver innovative solutions that address evolving user needs.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Responsibilities&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Design, build, and maintain APIs, services, and large-scale systems that reliably and efficiently handle billions of money movement requests&lt;/li&gt;\n&lt;li&gt;Debug and solve critical production issues across services and multiple levels of the stack&lt;/li&gt;\n&lt;li&gt;Mentor engineers to help them grow&lt;/li&gt;\n&lt;li&gt;Collaborate with stakeholders across the company to build new features at large scale, while improving internal engineering standards, tooling, and processes&lt;/li&gt;\n&lt;li&gt;Collaborate effectively in a distributed and hybrid team, maintaining open communication and strong connections with colleagues&lt;/li&gt;\n&lt;/ul&gt;\n&lt;hr&gt;\n&lt;p&gt;&lt;strong&gt;Who you are&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;We&#39;re looking for someone who meets the minimum requirements to be considered for the role. If you meet these requirements, you are encouraged to apply. The preferred qualifications are a bonus, not a requirement.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Minimum requirements&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;2+ years of industry software engineering experience (does not include internships or co-ops)&lt;/li&gt;\n&lt;li&gt;Strong coding skills in any programming language (we understand new languages can be learned on the job, so our interview process is language agnostic)&lt;/li&gt;\n&lt;li&gt;Strong collaboration skills; can work across workstreams within your team and contribute to your peers&#39; success&lt;/li&gt;\n&lt;li&gt;Ability to thrive with a high degree of autonomy and ownership, with an entrepreneurial mindset&lt;/li&gt;\n&lt;li&gt;Interested in working as a generalist across varying technologies and stacks to solve problems and delight both internal and external users&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Preferred qualifications&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Experience with large-scale financial tracking systems&lt;/li&gt;\n&lt;li&gt;Good understanding and practical knowledge of cloud-based services (e.g., gRPC, GraphQL, Docker/Kubernetes, AWS, etc.)&lt;/li&gt;\n&lt;/ul&gt;",
-    "team": null,
-    "employment_type": null,
-    "official_url": "https://stripe.com/jobs/search?gh_jid=7232592",
-    "source_url": "https://stripe.com/jobs/search",
-    "source_type": "greenhouse",
-    "posted_at": null,
-    "discovered_at": "2026-08-14T12:42:58.321114Z",
-    "last_seen_at": "2026-08-14T12:42:58.321114Z",
-    "is_open": true,
-    "match_score": 55.0,
-    "match_reasons": [
-      "United States location",
-      "Relevant software-engineering title",
-      "Early-career wording in description"
-    ],
-    "fingerprint": "da46e5c3353c2e6367968a082fab62d02edb117109d2a8100831a4c5d4f85d5f"
-  },
-  {
     "id": "21bfde35-ffec-42d2-a2c6-8a03dad789d5",
     "company_id": "openai",
     "company_name": "OpenAI",
@@ -36,8 +12,8 @@
     "source_url": "https://openai.com/careers/search/",
     "source_type": "ashby",
     "posted_at": null,
-    "discovered_at": "2026-08-14T12:42:58.321114Z",
-    "last_seen_at": "2026-08-14T12:42:58.321114Z",
+    "discovered_at": "2026-08-14T14:02:33.335797Z",
+    "last_seen_at": "2026-08-14T14:02:33.335797Z",
     "is_open": true,
     "match_score": 55.0,
     "match_reasons": [
@@ -60,8 +36,8 @@
     "source_url": "https://www.amazon.jobs/",
     "source_type": "amazon",
     "posted_at": null,
-    "discovered_at": "2026-08-14T12:42:58.321114Z",
-    "last_seen_at": "2026-08-14T12:42:58.321114Z",
+    "discovered_at": "2026-08-14T14:02:33.335797Z",
+    "last_seen_at": "2026-08-14T14:02:33.335797Z",
     "is_open": true,
     "match_score": 65.0,
     "match_reasons": [
@@ -84,8 +60,8 @@
     "source_url": "https://www.amazon.jobs/",
     "source_type": "amazon",
     "posted_at": null,
-    "discovered_at": "2026-08-14T12:42:58.321114Z",
-    "last_seen_at": "2026-08-14T12:42:58.321114Z",
+    "discovered_at": "2026-08-14T14:02:33.335797Z",
+    "last_seen_at": "2026-08-14T14:02:33.335797Z",
     "is_open": true,
     "match_score": 65.0,
     "match_reasons": [
@@ -108,8 +84,8 @@
     "source_url": "https://www.amazon.jobs/",
     "source_type": "amazon",
     "posted_at": null,
-    "discovered_at": "2026-08-14T12:42:58.321114Z",
-    "last_seen_at": "2026-08-14T12:42:58.321114Z",
+    "discovered_at": "2026-08-14T14:02:33.335797Z",
+    "last_seen_at": "2026-08-14T14:02:33.335797Z",
     "is_open": true,
     "match_score": 55.0,
     "match_reasons": [
@@ -132,6 +108,30 @@
     "source_url": "https://www.amazon.jobs/",
     "source_type": "amazon",
     "posted_at": null,
+    "discovered_at": "2026-08-14T14:02:33.335797Z",
+    "last_seen_at": "2026-08-14T14:02:33.335797Z",
+    "is_open": true,
+    "match_score": 55.0,
+    "match_reasons": [
+      "United States location",
+      "Relevant software-engineering title",
+      "Early-career wording in description"
+    ],
+    "fingerprint": "5e5c39392488200c33643256209e31253c559f89c9545001fbd13ce94a1e3d2f"
+  },
+  {
+    "id": "7232592",
+    "company_id": "stripe",
+    "company_name": "Stripe",
+    "title": "Backend Engineer, Payments and Risk",
+    "location": "US",
+    "description": "&lt;p&gt;&lt;strong&gt;&lt;em&gt;Note:&amp;nbsp;&lt;/em&gt;&lt;/strong&gt;&lt;em&gt;if you are an intern, new grad, staff, frontend or fullstack applicant, please do not apply using this link and visit our &lt;/em&gt;&lt;a href=&quot;https://stripe.com/jobs/search&quot;&gt;&lt;em&gt;jobs page&lt;/em&gt;&lt;/a&gt;&lt;em&gt; for those specific postings.&lt;/em&gt;&lt;/p&gt;\n&lt;h2&gt;&lt;strong&gt;Who we are&lt;/strong&gt;&lt;/h2&gt;\n&lt;h3&gt;&lt;strong&gt;About Stripe&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;&lt;strong&gt;Stripe is a financial infrastructure platform for businesses.&lt;/strong&gt;&amp;nbsp;Millions of companies \u2014 from the world&#39;s largest enterprises to the most ambitious startups \u2014 use Stripe to accept payments, grow their revenue, and accelerate new business opportunities. Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead. That means you have an unprecedented opportunity to put the global economy within everyone&#39;s reach while doing the most important work of your career.&lt;/p&gt;\n&lt;hr&gt;\n&lt;p&gt;&lt;strong&gt;About the Organization&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Payments and Risk&lt;/p&gt;\n&lt;p&gt;Sub-orgs: Link and OCS, Payments Acceptance, Risk&lt;/p&gt;\n&lt;p&gt;The Payments organization focuses on developing products and platforms that enable users to accept payments from customers efficiently. This includes building APIs for processing payments, enabling regional, non-card payment options, and extending Stripe&#39;s capabilities to make it easy for businesses to accept in-person payments. Optimized Checkout and Link teams work to create best-in-class checkout experiences that enhance customer satisfaction and drive merchant conversion rates. The Risk Engineering team develops products that minimize financial and regulatory risks while ensuring a seamless user experience, thereby safeguarding Stripe&#39;s brand and financial stability.&lt;/p&gt;\n&lt;p&gt;Team Matching: Exact team matching for one of the sub-teams will begin during final stages. Please note we may also consider you for different orgs based on your experience, location, etc.&amp;nbsp;&lt;/p&gt;\n&lt;hr&gt;\n&lt;p&gt;&lt;strong&gt;What you&#39;ll do&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;We&#39;re looking for backend engineers who want to make an impact on managing money at a global scale with a passion for building ergonomic APIs. Our team collaborates with many cross-functional teams \u2014 from Infrastructure to Product \u2014 to deliver innovative solutions that address evolving user needs.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Responsibilities&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Design, build, and maintain APIs, services, and large-scale systems that reliably and efficiently handle billions of money movement requests&lt;/li&gt;\n&lt;li&gt;Debug and solve critical production issues across services and multiple levels of the stack&lt;/li&gt;\n&lt;li&gt;Mentor engineers to help them grow&lt;/li&gt;\n&lt;li&gt;Collaborate with stakeholders across the company to build new features at large scale, while improving internal engineering standards, tooling, and processes&lt;/li&gt;\n&lt;li&gt;Collaborate effectively in a distributed and hybrid team, maintaining open communication and strong connections with colleagues&lt;/li&gt;\n&lt;/ul&gt;\n&lt;hr&gt;\n&lt;p&gt;&lt;strong&gt;Who you are&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;We&#39;re looking for someone who meets the minimum requirements to be considered for the role. If you meet these requirements, you are encouraged to apply. The preferred qualifications are a bonus, not a requirement.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Minimum requirements&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;2+ years of industry software engineering experience (does not include internships or co-ops)&lt;/li&gt;\n&lt;li&gt;Strong coding skills in any programming language (we understand new languages can be learned on the job, so our interview process is language agnostic)&lt;/li&gt;\n&lt;li&gt;Strong collaboration skills; can work across workstreams within your team and contribute to your peers&#39; success&lt;/li&gt;\n&lt;li&gt;Ability to thrive with a high degree of autonomy and ownership, with an entrepreneurial mindset&lt;/li&gt;\n&lt;li&gt;Interested in working as a generalist across varying technologies and stacks to solve problems and delight both internal and external users&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Preferred qualifications&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Experience with large-scale financial tracking systems&lt;/li&gt;\n&lt;li&gt;Good understanding and practical knowledge of cloud-based services (e.g., gRPC, GraphQL, Docker/Kubernetes, AWS, etc.)&lt;/li&gt;\n&lt;/ul&gt;",
+    "team": null,
+    "employment_type": null,
+    "official_url": "https://stripe.com/jobs/search?gh_jid=7232592",
+    "source_url": "https://stripe.com/jobs/search",
+    "source_type": "greenhouse",
+    "posted_at": null,
     "discovered_at": "2026-08-14T12:42:58.321114Z",
     "last_seen_at": "2026-08-14T12:42:58.321114Z",
     "is_open": true,
@@ -141,7 +141,7 @@
       "Relevant software-engineering title",
       "Early-career wording in description"
     ],
-    "fingerprint": "5e5c39392488200c33643256209e31253c559f89c9545001fbd13ce94a1e3d2f"
+    "fingerprint": "da46e5c3353c2e6367968a082fab62d02edb117109d2a8100831a4c5d4f85d5f"
   },
   {
     "id": "6163230",
