@@ -12,8 +12,8 @@
     "source_url": "https://openai.com/careers/search/",
     "source_type": "ashby",
     "posted_at": null,
-    "discovered_at": "2026-08-14T20:38:37.262684Z",
-    "last_seen_at": "2026-08-14T20:38:37.262684Z",
+    "discovered_at": "2026-08-14T21:00:48.304052Z",
+    "last_seen_at": "2026-08-14T21:00:48.304052Z",
     "is_open": true,
     "match_score": 55.0,
     "match_reasons": [
@@ -36,8 +36,8 @@
     "source_url": "https://www.amazon.jobs/",
     "source_type": "amazon",
     "posted_at": null,
-    "discovered_at": "2026-08-14T20:38:37.262684Z",
-    "last_seen_at": "2026-08-14T20:38:37.262684Z",
+    "discovered_at": "2026-08-14T21:00:48.304052Z",
+    "last_seen_at": "2026-08-14T21:00:48.304052Z",
     "is_open": true,
     "match_score": 65.0,
     "match_reasons": [
@@ -60,8 +60,8 @@
     "source_url": "https://www.amazon.jobs/",
     "source_type": "amazon",
     "posted_at": null,
-    "discovered_at": "2026-08-14T20:38:37.262684Z",
-    "last_seen_at": "2026-08-14T20:38:37.262684Z",
+    "discovered_at": "2026-08-14T21:00:48.304052Z",
+    "last_seen_at": "2026-08-14T21:00:48.304052Z",
     "is_open": true,
     "match_score": 65.0,
     "match_reasons": [
@@ -84,8 +84,8 @@
     "source_url": "https://www.amazon.jobs/",
     "source_type": "amazon",
     "posted_at": null,
-    "discovered_at": "2026-08-14T20:38:37.262684Z",
-    "last_seen_at": "2026-08-14T20:38:37.262684Z",
+    "discovered_at": "2026-08-14T21:00:48.304052Z",
+    "last_seen_at": "2026-08-14T21:00:48.304052Z",
     "is_open": true,
     "match_score": 55.0,
     "match_reasons": [
@@ -108,8 +108,8 @@
     "source_url": "https://www.amazon.jobs/",
     "source_type": "amazon",
     "posted_at": null,
-    "discovered_at": "2026-08-14T20:38:37.262684Z",
-    "last_seen_at": "2026-08-14T20:38:37.262684Z",
+    "discovered_at": "2026-08-14T21:00:48.304052Z",
+    "last_seen_at": "2026-08-14T21:00:48.304052Z",
     "is_open": true,
     "match_score": 55.0,
     "match_reasons": [
@@ -132,8 +132,8 @@
     "source_url": "https://stripe.com/jobs/search",
     "source_type": "greenhouse",
     "posted_at": null,
-    "discovered_at": "2026-08-14T20:38:37.262684Z",
-    "last_seen_at": "2026-08-14T20:38:37.262684Z",
+    "discovered_at": "2026-08-14T21:00:48.304052Z",
+    "last_seen_at": "2026-08-14T21:00:48.304052Z",
     "is_open": true,
     "match_score": 55.0,
     "match_reasons": [
@@ -142,6 +142,30 @@
       "Early-career wording in description"
     ],
     "fingerprint": "da46e5c3353c2e6367968a082fab62d02edb117109d2a8100831a4c5d4f85d5f"
+  },
+  {
+    "id": "6606581",
+    "company_id": "stripe",
+    "company_name": "Stripe",
+    "title": "Full Stack Engineer, Money as a Service",
+    "location": "N/A",
+    "description": "&lt;p&gt;&lt;strong&gt;&lt;em&gt;Note: &lt;/em&gt;&lt;/strong&gt;&lt;em&gt;if you are an intern or new grad applicant, please do not apply using this link and visit our &lt;/em&gt;&lt;a href=&quot;https://stripe.com/jobs/search&quot;&gt;&lt;em&gt;jobs page&lt;/em&gt;&lt;/a&gt;&lt;em&gt; for those specific postings.&lt;/em&gt;&lt;/p&gt;\n&lt;h2&gt;&lt;strong&gt;Who we are&lt;/strong&gt;&lt;/h2&gt;\n&lt;h3&gt;&lt;strong&gt;About Stripe&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;Stripe is a financial infrastructure platform for businesses. Millions of companies\u2014from the world&#39;s largest enterprises to the most ambitious startups\u2014use Stripe to accept payments, grow their revenue, and accelerate new business opportunities. Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead. That means you have an unprecedented opportunity to put the global economy within everyone&#39;s reach while doing the most important work of your career.&lt;/p&gt;\n&lt;h3&gt;&lt;strong&gt;About the Organization&amp;nbsp;&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;Money as a Service (MaaS) oversees a diverse portfolio of Stripe&#39;s core products and platforms. These offerings facilitate the global movement and management of funds for users. The teams that fall under the MaaS umbrella include: Accounts and Connect, Money Movement and Storage (MMS), Crypto and Banking as a Service (BaaS). Together, these teams work to ensure Stripe users have the robust financial infrastructure and tools they need to power their businesses on a global scale.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Team Matching:&lt;/strong&gt; exact team matching for one of the sub-teams will begin during final stages.&lt;em&gt; Please note we may also consider you for different orgs based on your experience, location, etc. &lt;/em&gt;More information on our team matching process can be found &lt;a href=&quot;https://docs.google.com/document/d/1zvJkO2c7GzukHG-_oqc5wbOLajpuh5FjbmZPcZPU1o0/edit?tab=t.0#heading=h.ahb3b6nrktv1&quot;&gt;here&lt;/a&gt;.&amp;nbsp;&lt;/p&gt;\n&lt;h2&gt;&lt;strong&gt;What you\u2019ll do&lt;/strong&gt;&lt;/h2&gt;\n&lt;p&gt;We\u2019re looking for Full Stack engineers who are interested in building software services and platforms that impact thousands of employees and millions of Stripe users, regardless of whether they\u2019re an end user, developer, or partner.&lt;/p&gt;\n&lt;h3&gt;&lt;strong&gt;Responsibilities&lt;/strong&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;Build end-to-end experiences for Connect that make it as easy as possible to participate in the Internet economy and receive money online. Some of Stripe\u2019s largest users are platforms that connect senders of payments with receivers of payments. Lyft connects riders to drivers, Kickstarter connects backers to projects, and Squarespace connects shoppers to online stores. All of them participate in doing business online, and all of them use Connect.&lt;/li&gt;\n&lt;li&gt;Make it easy for Connect platforms to scale their business through leveraging the full power of Stripe\u2019s products via the dashboard, adding to their business models and product functionality while reducing integration lift and complexity.&lt;/li&gt;\n&lt;li&gt;Build great product experiences (integrate with Instant Payouts, Issuing, Capital, Terminal, etc) into all of Connect\u2019s dashboard surfaces.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h2&gt;&lt;strong&gt;Who you are&lt;/strong&gt;&lt;/h2&gt;\n&lt;p&gt;We&#39;re looking for someone who meets the minimum requirements to be considered for the role. If you meet these requirements, you are encouraged to apply. The preferred qualifications are a bonus, not a requirement.&lt;/p&gt;\n&lt;h3&gt;&lt;strong&gt;Minimum requirements&lt;/strong&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;2-12+ years of industry software engineering experience (does not include internships or co-ops).&lt;/li&gt;\n&lt;li&gt;You enjoy data modeling challenges and have a high bar for keeping your solutions expressive yet simple to use.&lt;/li&gt;\n&lt;li&gt;Excellent written and verbal communication.&lt;/li&gt;\n&lt;li&gt;Enjoy being a generalist working on both the frontend, backend, and anything it takes to solve problems and delight users both internally and externally.&lt;/li&gt;\n&lt;li&gt;Thrive in a collaborative environment involving different stakeholders and subject matter experts.&lt;/li&gt;\n&lt;li&gt;Take pride in working on projects to successful completion involving a wide variety of technologies and systems.&lt;/li&gt;\n&lt;li&gt;Can stitch together many different services and processes together even if you have not worked with them before.&lt;/li&gt;\n&lt;li&gt;Can put yourself in the shoes of your users and be a steward of crafting great experiences.&lt;/li&gt;\n&lt;li&gt;Enjoy working with a diverse group of people with different expertise.&lt;/li&gt;\n&lt;li&gt;Uphold best practices in engineering, security, and design.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;&lt;strong&gt;Preferred Qualifications&lt;/strong&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;Experience working in high-growth teams similar to Stripe.&lt;/li&gt;\n&lt;li&gt;Experience building financial systems or tools for financial experts.&lt;/li&gt;\n&lt;/ul&gt;",
+    "team": null,
+    "employment_type": null,
+    "official_url": "https://stripe.com/jobs/search?gh_jid=6606581",
+    "source_url": "https://stripe.com/jobs/search",
+    "source_type": "greenhouse",
+    "posted_at": null,
+    "discovered_at": "2026-08-14T21:00:48.304052Z",
+    "last_seen_at": "2026-08-14T21:00:48.304052Z",
+    "is_open": true,
+    "match_score": 55.0,
+    "match_reasons": [
+      "United States location",
+      "Relevant software-engineering title",
+      "Early-career wording in description"
+    ],
+    "fingerprint": "9fb3c344a40b3d0e9d6ffa7d9be5e056ff580fd72314a8b3e1a6c08440384a59"
   },
   {
     "id": "6163230",
@@ -166,30 +190,6 @@
       "Early-career wording in description"
     ],
     "fingerprint": "1ef959dc83d649e7122d2052d99d91b5702ffb53cc05bd9ce5ffa229bbb7f0a8"
-  },
-  {
-    "id": "6606581",
-    "company_id": "stripe",
-    "company_name": "Stripe",
-    "title": "Full Stack Engineer, Money as a Service",
-    "location": "N/A",
-    "description": "&lt;p&gt;&lt;strong&gt;&lt;em&gt;Note: &lt;/em&gt;&lt;/strong&gt;&lt;em&gt;if you are an intern or new grad applicant, please do not apply using this link and visit our &lt;/em&gt;&lt;a href=&quot;https://stripe.com/jobs/search&quot;&gt;&lt;em&gt;jobs page&lt;/em&gt;&lt;/a&gt;&lt;em&gt; for those specific postings.&lt;/em&gt;&lt;/p&gt;\n&lt;h2&gt;&lt;strong&gt;Who we are&lt;/strong&gt;&lt;/h2&gt;\n&lt;h3&gt;&lt;strong&gt;About Stripe&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;Stripe is a financial infrastructure platform for businesses. Millions of companies\u2014from the world&#39;s largest enterprises to the most ambitious startups\u2014use Stripe to accept payments, grow their revenue, and accelerate new business opportunities. Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead. That means you have an unprecedented opportunity to put the global economy within everyone&#39;s reach while doing the most important work of your career.&lt;/p&gt;\n&lt;h3&gt;&lt;strong&gt;About the Organization&amp;nbsp;&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;Money as a Service (MaaS) oversees a diverse portfolio of Stripe&#39;s core products and platforms. These offerings facilitate the global movement and management of funds for users. The teams that fall under the MaaS umbrella include: Accounts and Connect, Money Movement and Storage (MMS), Crypto and Banking as a Service (BaaS). Together, these teams work to ensure Stripe users have the robust financial infrastructure and tools they need to power their businesses on a global scale.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Team Matching:&lt;/strong&gt; exact team matching for one of the sub-teams will begin during final stages.&lt;em&gt; Please note we may also consider you for different orgs based on your experience, location, etc. &lt;/em&gt;More information on our team matching process can be found &lt;a href=&quot;https://docs.google.com/document/d/1zvJkO2c7GzukHG-_oqc5wbOLajpuh5FjbmZPcZPU1o0/edit?tab=t.0#heading=h.ahb3b6nrktv1&quot;&gt;here&lt;/a&gt;.&amp;nbsp;&lt;/p&gt;\n&lt;h2&gt;&lt;strong&gt;What you\u2019ll do&lt;/strong&gt;&lt;/h2&gt;\n&lt;p&gt;We\u2019re looking for Full Stack engineers who are interested in building software services and platforms that impact thousands of employees and millions of Stripe users, regardless of whether they\u2019re an end user, developer, or partner.&lt;/p&gt;\n&lt;h3&gt;&lt;strong&gt;Responsibilities&lt;/strong&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;Build end-to-end experiences for Connect that make it as easy as possible to participate in the Internet economy and receive money online. Some of Stripe\u2019s largest users are platforms that connect senders of payments with receivers of payments. Lyft connects riders to drivers, Kickstarter connects backers to projects, and Squarespace connects shoppers to online stores. All of them participate in doing business online, and all of them use Connect.&lt;/li&gt;\n&lt;li&gt;Make it easy for Connect platforms to scale their business through leveraging the full power of Stripe\u2019s products via the dashboard, adding to their business models and product functionality while reducing integration lift and complexity.&lt;/li&gt;\n&lt;li&gt;Build great product experiences (integrate with Instant Payouts, Issuing, Capital, Terminal, etc) into all of Connect\u2019s dashboard surfaces.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h2&gt;&lt;strong&gt;Who you are&lt;/strong&gt;&lt;/h2&gt;\n&lt;p&gt;We&#39;re looking for someone who meets the minimum requirements to be considered for the role. If you meet these requirements, you are encouraged to apply. The preferred qualifications are a bonus, not a requirement.&lt;/p&gt;\n&lt;h3&gt;&lt;strong&gt;Minimum requirements&lt;/strong&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;2-12+ years of industry software engineering experience (does not include internships or co-ops).&lt;/li&gt;\n&lt;li&gt;You enjoy data modeling challenges and have a high bar for keeping your solutions expressive yet simple to use.&lt;/li&gt;\n&lt;li&gt;Excellent written and verbal communication.&lt;/li&gt;\n&lt;li&gt;Enjoy being a generalist working on both the frontend, backend, and anything it takes to solve problems and delight users both internally and externally.&lt;/li&gt;\n&lt;li&gt;Thrive in a collaborative environment involving different stakeholders and subject matter experts.&lt;/li&gt;\n&lt;li&gt;Take pride in working on projects to successful completion involving a wide variety of technologies and systems.&lt;/li&gt;\n&lt;li&gt;Can stitch together many different services and processes together even if you have not worked with them before.&lt;/li&gt;\n&lt;li&gt;Can put yourself in the shoes of your users and be a steward of crafting great experiences.&lt;/li&gt;\n&lt;li&gt;Enjoy working with a diverse group of people with different expertise.&lt;/li&gt;\n&lt;li&gt;Uphold best practices in engineering, security, and design.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;&lt;strong&gt;Preferred Qualifications&lt;/strong&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;Experience working in high-growth teams similar to Stripe.&lt;/li&gt;\n&lt;li&gt;Experience building financial systems or tools for financial experts.&lt;/li&gt;\n&lt;/ul&gt;",
-    "team": null,
-    "employment_type": null,
-    "official_url": "https://stripe.com/jobs/search?gh_jid=6606581",
-    "source_url": "https://stripe.com/jobs/search",
-    "source_type": "greenhouse",
-    "posted_at": null,
-    "discovered_at": "2026-08-14T20:38:37.262684Z",
-    "last_seen_at": "2026-08-14T20:38:37.262684Z",
-    "is_open": true,
-    "match_score": 55.0,
-    "match_reasons": [
-      "United States location",
-      "Relevant software-engineering title",
-      "Early-career wording in description"
-    ],
-    "fingerprint": "9fb3c344a40b3d0e9d6ffa7d9be5e056ff580fd72314a8b3e1a6c08440384a59"
   },
   {
     "id": "10403353",
