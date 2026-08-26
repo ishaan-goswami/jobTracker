@@ -12,8 +12,8 @@
     "source_url": "https://openai.com/careers/search/",
     "source_type": "ashby",
     "posted_at": null,
-    "discovered_at": "2026-08-26T16:55:38.686715Z",
-    "last_seen_at": "2026-08-26T16:55:38.686715Z",
+    "discovered_at": "2026-08-26T18:51:51.521705Z",
+    "last_seen_at": "2026-08-26T18:51:51.521705Z",
     "is_open": true,
     "match_score": 55.0,
     "match_reasons": [
@@ -36,8 +36,8 @@
     "source_url": "https://www.amazon.jobs/",
     "source_type": "amazon",
     "posted_at": null,
-    "discovered_at": "2026-08-26T16:55:38.686715Z",
-    "last_seen_at": "2026-08-26T16:55:38.686715Z",
+    "discovered_at": "2026-08-26T18:51:51.521705Z",
+    "last_seen_at": "2026-08-26T18:51:51.521705Z",
     "is_open": true,
     "match_score": 65.0,
     "match_reasons": [
@@ -60,8 +60,8 @@
     "source_url": "https://www.amazon.jobs/",
     "source_type": "amazon",
     "posted_at": null,
-    "discovered_at": "2026-08-26T16:55:38.686715Z",
-    "last_seen_at": "2026-08-26T16:55:38.686715Z",
+    "discovered_at": "2026-08-26T18:51:51.521705Z",
+    "last_seen_at": "2026-08-26T18:51:51.521705Z",
     "is_open": true,
     "match_score": 65.0,
     "match_reasons": [
@@ -84,8 +84,8 @@
     "source_url": "https://www.amazon.jobs/",
     "source_type": "amazon",
     "posted_at": null,
-    "discovered_at": "2026-08-26T16:55:38.686715Z",
-    "last_seen_at": "2026-08-26T16:55:38.686715Z",
+    "discovered_at": "2026-08-26T18:51:51.521705Z",
+    "last_seen_at": "2026-08-26T18:51:51.521705Z",
     "is_open": true,
     "match_score": 55.0,
     "match_reasons": [
@@ -108,8 +108,8 @@
     "source_url": "https://stripe.com/jobs/search",
     "source_type": "greenhouse",
     "posted_at": null,
-    "discovered_at": "2026-08-26T16:55:38.686715Z",
-    "last_seen_at": "2026-08-26T16:55:38.686715Z",
+    "discovered_at": "2026-08-26T18:51:51.521705Z",
+    "last_seen_at": "2026-08-26T18:51:51.521705Z",
     "is_open": true,
     "match_score": 55.0,
     "match_reasons": [
@@ -132,8 +132,8 @@
     "source_url": "https://stripe.com/jobs/search",
     "source_type": "greenhouse",
     "posted_at": null,
-    "discovered_at": "2026-08-26T16:55:38.686715Z",
-    "last_seen_at": "2026-08-26T16:55:38.686715Z",
+    "discovered_at": "2026-08-26T18:51:51.521705Z",
+    "last_seen_at": "2026-08-26T18:51:51.521705Z",
     "is_open": true,
     "match_score": 55.0,
     "match_reasons": [
@@ -156,8 +156,8 @@
     "source_url": "https://www.amazon.jobs/",
     "source_type": "amazon",
     "posted_at": null,
-    "discovered_at": "2026-08-26T16:55:38.686715Z",
-    "last_seen_at": "2026-08-26T16:55:38.686715Z",
+    "discovered_at": "2026-08-26T18:51:51.521705Z",
+    "last_seen_at": "2026-08-26T18:51:51.521705Z",
     "is_open": true,
     "match_score": 65.0,
     "match_reasons": [
@@ -166,6 +166,30 @@
       "Early-career title"
     ],
     "fingerprint": "f78df40e23af46a3d9d018679fb57ea9109aae011a3bbe7a0449f2a14bed6a53"
+  },
+  {
+    "id": "10515912",
+    "company_id": "amazon",
+    "company_name": "Amazon",
+    "title": "Software Engineer I, Memberships",
+    "location": "San Francisco, California, USA",
+    "description": "If you are interested in this position, please apply on Twitch's Career site\u00a0https://www.twitch.tv/jobs/en/<br/><br/>About Us<br/><br/>Twitch is the world\u2019s biggest live streaming service, with global communities built around gaming, entertainment, music, sports, cooking, and more. It is where thousands of communities come together for whatever, every day.<br/><br/>We\u2019re about community, inside and out. You\u2019ll find coworkers who are eager to team up, collaborate, and smash (or elegantly solve) problems together. We\u2019re on a quest to empower live communities, so if this sounds good to you, see what we\u2019re up to on\u00a0LinkedIn\u00a0and X, and discover the projects we\u2019re solving on our\u00a0Blog. Be sure to explore our\u00a0Interviewing Guide\u00a0to learn how to ace our interview process.<br/><br/>About the Role<br/><br/>Join Twitch\u2019s Memberships team within the Commerce Engineering organization, where we\u2019re building rewarding experiences allowing creators to make a living doing what they love. We\u2019re the team behind our continuous patronage features including channel Subscriptions, Gifting, and Turbo.<br/><br/>As a member of our team, you\u2019ll work alongside our highly engaged and collaborative team to design, build and maintain systems that scale to millions of concurrent users. We actively seek to improve our experiences and are looking for members that are passionate about our end users.  <br/><br/>Our team is based in San Francisco, CA and Seattle, WA<br/> <br/>You Will<br/><br/>Create interactive experiences that are rewarding for both viewers and creators <br/>Architect and build robust, scalable applications that can handle millions of concurrent users<br/>Participate in Operational Excellence work to maintain and support our live services<br/>Collaborate with fellow engineers, product managers and designers to build new products and solutions<br/><br/>Perks<br/>* Medical, Dental, Vision & Disability Insurance<br/>* 401(k)<br/>* Maternity & Parental Leave<br/>* Flexible PTO<br/>* Amazon Employee Discount",
+    "team": "Software Development",
+    "employment_type": "full-time",
+    "official_url": "https://www.amazon.jobs/en/jobs/10515912/software-engineer-i-memberships",
+    "source_url": "https://www.amazon.jobs/",
+    "source_type": "amazon",
+    "posted_at": null,
+    "discovered_at": "2026-08-26T18:51:51.521705Z",
+    "last_seen_at": "2026-08-26T18:51:51.521705Z",
+    "is_open": true,
+    "match_score": 65.0,
+    "match_reasons": [
+      "United States location",
+      "Relevant software-engineering title",
+      "Early-career title"
+    ],
+    "fingerprint": "3d7dcca3e00a7b8913a55167fefe65c8895e6827db3049cf45ffc70792968d25"
   },
   {
     "id": "10440600",
