@@ -1,7 +1,7 @@
 [
   {
     "company_id": "netflix",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "unsupported",
     "source_type": "unsupported",
     "source_url": "https://jobs.netflix.com/",
@@ -15,13 +15,13 @@
   },
   {
     "company_id": "openai",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "success",
     "source_type": "ashby",
     "source_url": "https://api.ashbyhq.com/posting-api/job-board/openai",
-    "jobs_found": 757,
-    "records_received": 757,
-    "records_parsed": 757,
+    "jobs_found": 755,
+    "records_received": 755,
+    "records_parsed": 755,
     "matching_jobs": 1,
     "parser_version": "ashby.v1",
     "warning": null,
@@ -29,7 +29,7 @@
   },
   {
     "company_id": "linkedin",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "success",
     "source_type": "greenhouse",
     "source_url": "https://boards-api.greenhouse.io/v1/boards/linkedin/jobs?content=true",
@@ -43,7 +43,7 @@
   },
   {
     "company_id": "millennium-management",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "unsupported",
     "source_type": "unsupported",
     "source_url": "https://careers.ml.com/",
@@ -57,7 +57,7 @@
   },
   {
     "company_id": "hubspot",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "success",
     "source_type": "greenhouse",
     "source_url": "https://boards-api.greenhouse.io/v1/boards/hubspotjobs/jobs?content=true",
@@ -71,7 +71,7 @@
   },
   {
     "company_id": "doordash",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "unsupported",
     "source_type": "unsupported",
     "source_url": "https://careersatdoordash.com/",
@@ -85,7 +85,7 @@
   },
   {
     "company_id": "uber",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "unsupported",
     "source_type": "unsupported",
     "source_url": "https://www.uber.com/us/en/careers/",
@@ -99,7 +99,7 @@
   },
   {
     "company_id": "google",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "unsupported",
     "source_type": "unsupported",
     "source_url": "https://www.google.com/about/careers/applications/jobs/results/",
@@ -113,7 +113,7 @@
   },
   {
     "company_id": "amazon",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "success",
     "source_type": "amazon",
     "source_url": "https://www.amazon.jobs/en/search.json?base_query=software+engineer&result_limit=100",
@@ -127,7 +127,7 @@
   },
   {
     "company_id": "databricks",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "success",
     "source_type": "greenhouse",
     "source_url": "https://boards-api.greenhouse.io/v1/boards/databricks/jobs?content=true",
@@ -141,13 +141,13 @@
   },
   {
     "company_id": "stripe",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "success",
     "source_type": "greenhouse",
     "source_url": "https://boards-api.greenhouse.io/v1/boards/stripe/jobs?content=true",
-    "jobs_found": 574,
-    "records_received": 574,
-    "records_parsed": 574,
+    "jobs_found": 575,
+    "records_received": 575,
+    "records_parsed": 575,
     "matching_jobs": 2,
     "parser_version": "greenhouse.v1",
     "warning": null,
@@ -155,7 +155,7 @@
   },
   {
     "company_id": "meta",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "unsupported",
     "source_type": "unsupported",
     "source_url": "https://www.metacareers.com/jobs/",
@@ -169,7 +169,7 @@
   },
   {
     "company_id": "ramp",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "success",
     "source_type": "ashby",
     "source_url": "https://api.ashbyhq.com/posting-api/job-board/ramp",
@@ -183,7 +183,7 @@
   },
   {
     "company_id": "tiktok",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "unsupported",
     "source_type": "unsupported",
     "source_url": "https://lifeattiktok.com/search/",
@@ -197,7 +197,7 @@
   },
   {
     "company_id": "anthropic",
-    "checked_at": "2026-08-30T13:10:01.240736Z",
+    "checked_at": "2026-08-30T17:26:00.568557Z",
     "status": "unsupported",
     "source_type": "unsupported",
     "source_url": "https://www.anthropic.com/careers",
