@@ -216,7 +216,7 @@ function companies() {
     <div class="card-box">
       <h3>Tracked Company Career Sources</h3>
       <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
-        The monitor checks these 14 companies periodically. Official ATS endpoints retrieve current active postings directly from company career portals.
+        The monitor checks these ${state.statuses.length || 16} target companies periodically. Official ATS endpoints retrieve current active postings directly from company career portals.
       </p>
       <div class="table-wrapper">
         <table>

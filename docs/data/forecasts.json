@@ -4,9 +4,9 @@
     "company_name": "DoorDash",
     "expected_opening_date": "Sept 8 \u2013 Sept 10, 2026",
     "expected_opening_window": "Next Week (Early Sept)",
-    "historical_cycle": "DoorDash SWE New Grad roles open in early September.",
+    "historical_cycle": "DoorDash SWE New Grad roles open early September.",
     "confidence": "Confirmed / Very High",
-    "last_updated": "2026-09-03T17:37:56.168682+00:00"
+    "last_updated": "2026-09-03T17:44:37.429683+00:00"
   },
   {
     "company_id": "figma",
@@ -15,16 +15,43 @@
     "expected_opening_window": "Mid September",
     "historical_cycle": "Figma University / New Grad roles open mid-September.",
     "confidence": "Confirmed / Very High",
-    "last_updated": "2026-09-03T17:37:56.168682+00:00"
+    "last_updated": "2026-09-03T17:44:37.429683+00:00"
+  },
+  {
+    "company_id": "stripe",
+    "company_name": "Stripe",
+    "expected_opening_date": "\ud83d\udfe2 Currently Open / Active",
+    "expected_opening_window": "Open Now",
+    "historical_cycle": "Stripe new-grad and early career positions.",
+    "confidence": "Active / Discovered",
+    "last_updated": "2026-09-03T17:44:37.429683+00:00"
+  },
+  {
+    "company_id": "openai",
+    "company_name": "OpenAI",
+    "expected_opening_date": "\ud83d\udfe2 Currently Open / Active",
+    "expected_opening_window": "Open Now",
+    "historical_cycle": "OpenAI early career positions.",
+    "confidence": "Active / Discovered",
+    "last_updated": "2026-09-03T17:44:37.429683+00:00"
+  },
+  {
+    "company_id": "anthropic",
+    "company_name": "Anthropic",
+    "expected_opening_date": "\ud83d\udfe2 Currently Open / Active",
+    "expected_opening_window": "Open Now",
+    "historical_cycle": "Anthropic early career positions.",
+    "confidence": "Active / Discovered",
+    "last_updated": "2026-09-03T17:44:37.429683+00:00"
   },
   {
     "company_id": "google",
     "company_name": "Google",
     "expected_opening_date": "Sept 8 \u2013 Sept 20, 2026",
     "expected_opening_window": "September 2026",
-    "historical_cycle": "Dec 2026 Grad / 2027 Early Career SWE postings open early autumn.",
+    "historical_cycle": "Dec 2026 Grad / 2027 Early Career SWE postings.",
     "confidence": "High",
-    "last_updated": "2026-09-03T17:37:56.168682+00:00"
+    "last_updated": "2026-09-03T17:44:37.429683+00:00"
   },
   {
     "company_id": "meta",
@@ -33,34 +60,16 @@
     "expected_opening_window": "September \u2013 October",
     "historical_cycle": "University Graduate roles open early September.",
     "confidence": "High",
-    "last_updated": "2026-09-03T17:37:56.168682+00:00"
-  },
-  {
-    "company_id": "stripe",
-    "company_name": "Stripe",
-    "expected_opening_date": "Sept 15 \u2013 Sept 30, 2026",
-    "expected_opening_window": "Mid-Late September",
-    "historical_cycle": "New grad postings traditionally open mid-September.",
-    "confidence": "High",
-    "last_updated": "2026-09-03T17:37:56.168682+00:00"
-  },
-  {
-    "company_id": "openai",
-    "company_name": "OpenAI",
-    "expected_opening_date": "Sept 15 \u2013 Oct 15, 2026",
-    "expected_opening_window": "September \u2013 October",
-    "historical_cycle": "Early career positions open in Q3/Q4.",
-    "confidence": "Medium",
-    "last_updated": "2026-09-03T17:37:56.168682+00:00"
+    "last_updated": "2026-09-03T17:44:37.429683+00:00"
   },
   {
     "company_id": "amazon",
     "company_name": "Amazon",
-    "expected_opening_date": "Active / Rolling",
-    "expected_opening_window": "Currently Open",
+    "expected_opening_date": "\ud83d\udfe2 Currently Open / Active",
+    "expected_opening_window": "Open Now",
     "historical_cycle": "SDE I & University Graduate positions posted continuously.",
-    "confidence": "Active",
-    "last_updated": "2026-09-03T17:37:56.168682+00:00"
+    "confidence": "Active / Discovered",
+    "last_updated": "2026-09-03T17:44:37.429683+00:00"
   },
   {
     "company_id": "databricks",
@@ -69,6 +78,6 @@
     "expected_opening_window": "Currently Open",
     "historical_cycle": "University recruiting opens early autumn.",
     "confidence": "Active",
-    "last_updated": "2026-09-03T17:37:56.168682+00:00"
+    "last_updated": "2026-09-03T17:44:37.429683+00:00"
   }
 ]
