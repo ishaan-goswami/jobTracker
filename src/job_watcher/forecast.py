@@ -71,10 +71,10 @@ HISTORICAL_OBSERVATIONS = [
     {
         "company_id": "databricks",
         "company_name": "Databricks",
-        "expected_opening_date": "Active / Rolling",
-        "expected_opening_window": "Currently Open",
+        "expected_opening_date": "September – October",
+        "expected_opening_window": "Q3/Q4 2026",
         "historical_cycle": "University recruiting opens early autumn.",
-        "confidence": "Active",
+        "confidence": "Medium",
     },
 ]
 
@@ -99,4 +99,7 @@ def generate_forecasts(data_dir: Path) -> list[dict]:
             "last_updated": now,
         })
     write_json(data_dir / "forecasts.json", results)
+    docs_forecasts = data_dir.parent / "docs" / "data" / "forecasts.json"
+    if docs_forecasts.parent.exists():
+        write_json(docs_forecasts, results)
     return results

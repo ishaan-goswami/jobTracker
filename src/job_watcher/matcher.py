@@ -58,7 +58,14 @@ def is_us_location(location: str | None) -> bool:
 
 
 def _contains(text: str, terms: list[str]) -> bool:
-    return any(term.lower() in text for term in terms)
+    for term in terms:
+        t = term.lower().strip()
+        if not t:
+            continue
+        pattern = r"\b" + re.escape(t) + r"\b"
+        if re.search(pattern, text):
+            return True
+    return False
 
 
 EXCLUDED_TITLE_TOKENS = [
