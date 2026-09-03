@@ -298,8 +298,113 @@ nav button.active {
 }
 
 .company-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
   font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(148, 163, 184, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.3);
   color: #cbd5e1;
+}
+
+.company-tag.company-stripe {
+  background: rgba(99, 91, 255, 0.18);
+  border: 1px solid rgba(99, 91, 255, 0.45);
+  color: #c7d2fe;
+}
+
+.company-tag.company-google {
+  background: rgba(66, 133, 244, 0.18);
+  border: 1px solid rgba(66, 133, 244, 0.45);
+  color: #bfdbfe;
+}
+
+.company-tag.company-openai {
+  background: rgba(16, 163, 127, 0.18);
+  border: 1px solid rgba(16, 163, 127, 0.45);
+  color: #a7f3d0;
+}
+
+.company-tag.company-anthropic {
+  background: rgba(217, 119, 6, 0.18);
+  border: 1px solid rgba(217, 119, 6, 0.45);
+  color: #fde68a;
+}
+
+.company-tag.company-doordash {
+  background: rgba(255, 48, 8, 0.18);
+  border: 1px solid rgba(255, 48, 8, 0.45);
+  color: #fecaca;
+}
+
+.company-tag.company-figma {
+  background: rgba(162, 89, 255, 0.18);
+  border: 1px solid rgba(162, 89, 255, 0.45);
+  color: #e9d5ff;
+}
+
+.company-tag.company-meta {
+  background: rgba(6, 104, 225, 0.18);
+  border: 1px solid rgba(6, 104, 225, 0.45);
+  color: #bfdbfe;
+}
+
+.company-tag.company-amazon {
+  background: rgba(255, 153, 0, 0.18);
+  border: 1px solid rgba(255, 153, 0, 0.45);
+  color: #fef08a;
+}
+
+.company-tag.company-databricks {
+  background: rgba(255, 54, 33, 0.18);
+  border: 1px solid rgba(255, 54, 33, 0.45);
+  color: #fecaca;
+}
+
+.company-tag.company-uber {
+  background: rgba(56, 189, 248, 0.18);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  color: #bae6fd;
+}
+
+.company-tag.company-linkedin {
+  background: rgba(10, 102, 194, 0.18);
+  border: 1px solid rgba(10, 102, 194, 0.45);
+  color: #bfdbfe;
+}
+
+.company-tag.company-hubspot {
+  background: rgba(255, 122, 89, 0.18);
+  border: 1px solid rgba(255, 122, 89, 0.45);
+  color: #fed7aa;
+}
+
+.company-tag.company-netflix {
+  background: rgba(229, 9, 20, 0.18);
+  border: 1px solid rgba(229, 9, 20, 0.45);
+  color: #fecaca;
+}
+
+.company-tag.company-tiktok {
+  background: rgba(255, 0, 80, 0.18);
+  border: 1px solid rgba(255, 0, 80, 0.45);
+  color: #fbcfe8;
+}
+
+.company-tag.company-ramp {
+  background: rgba(203, 251, 69, 0.18);
+  border: 1px solid rgba(203, 251, 69, 0.45);
+  color: #d9f99d;
+}
+
+.company-tag.company-millennium-management {
+  background: rgba(0, 188, 212, 0.18);
+  border: 1px solid rgba(0, 188, 212, 0.45);
+  color: #a5f3fc;
 }
 
 .match-pill {

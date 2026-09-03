@@ -143,7 +143,7 @@ function renderJobCard(job) {
         <div class="job-title-group">
           <h3><a href="${escapeHtml(job.official_url)}" target="_blank" rel="noopener">${escapeHtml(job.title)}</a></h3>
           <div class="job-meta">
-            <span class="company-tag">${escapeHtml(job.company_name)}</span>
+            <span class="company-tag company-${escapeHtml((job.company_id || job.company_name).toLowerCase())}">${escapeHtml(job.company_name)}</span>
             <span>•</span>
             <span>📍 ${escapeHtml(job.location || "Remote / Unspecified")}</span>
             <span>•</span>
@@ -264,8 +264,10 @@ function companies() {
 
 function forecast() {
   const cards = state.forecasts.map(f => `
-    <div class="metric-card" style="border-top: 3px solid ${f.confidence.includes('Confirmed') ? '#34d399' : (f.confidence === 'Active' ? '#a78bfa' : '#60a5fa')};">
-      <div style="font-size: 1.1rem; font-weight: 700; color: #f8fafc;">${escapeHtml(f.company_name)}</div>
+    <div class="metric-card" style="border-top: 3px solid ${f.confidence.includes('Confirmed') ? '#34d399' : (f.confidence.includes('Active') ? '#a78bfa' : '#60a5fa')};">
+      <div style="margin-bottom: 0.4rem;">
+        <span class="company-tag company-${escapeHtml(f.company_id.toLowerCase())}">${escapeHtml(f.company_name)}</span>
+      </div>
       <div style="color: #34d399; font-weight: 600; margin-top: 0.25rem;">📅 ${escapeHtml(f.expected_opening_date)}</div>
       <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.35rem;">${escapeHtml(f.historical_cycle)}</div>
       <div class="lbl" style="margin-top: 0.5rem;">Confidence: ${escapeHtml(f.confidence)}</div>
