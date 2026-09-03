@@ -73,7 +73,8 @@ EXCLUDED_TITLE_TOKENS = [
     "principal", "lead", "manager", "director", "architect",
     "software engineer ii", "software engineer 2", "software engineer iii", "software engineer 3",
     "software engineer iv", "software engineer 4", "sde ii", "sde 2", "sde iii", "sde 3",
-    "swe ii", "swe 2", "swe iii", "swe 3", "engineer ii", "engineer 2", "engineer iii", "engineer 3"
+    "swe ii", "swe 2", "swe iii", "swe 3", "engineer ii", "engineer 2", "engineer iii", "engineer 3",
+    "phd", "ph.d.", "doctorate"
 ]
 
 INTERN_TITLE_TOKENS = ["intern", "internship", "co-op", "coop"]

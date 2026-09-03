@@ -154,3 +154,16 @@ def test_member_of_technical_staff_is_accepted_and_generic_sde1_with_experience_
     assert score1 >= 55
     assert score2 == 0.0
 
+
+def test_phd_titles_are_rejected():
+    job_phd = RawJob(
+        source_id="1",
+        title="Software Engineer, PhD, Early Career",
+        official_url="https://example.com",
+        location="Mountain View, CA",
+        description="PhD early career role",
+    )
+    score, reasons = score_job(job_phd, RULES)
+    assert score == 0.0
+    assert "Excluded non-entry level in title" in reasons[0]
+
