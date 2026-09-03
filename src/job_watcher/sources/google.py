@@ -9,7 +9,13 @@ PARSER_VERSION = "google.v1"
 
 class GoogleSource(JobSource):
     def fetch_jobs(self, company: CompanyConfig) -> SourceResult:
-        queries = ["Software Engineer", "Early Career", "University Graduate"]
+        queries = [
+            "Software Engineer Campus",
+            "Software Engineer Early Career",
+            "Software Engineer University Graduate",
+            "New Grad Software Engineer",
+            "Software Engineer",
+        ]
         raw_jobs_map = {}
         total_fetched = 0
         errors = []
@@ -18,6 +24,12 @@ class GoogleSource(JobSource):
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "Accept-Language": "en-US,en;q=0.9",
         }
+
+        location_markers = [
+            "USA", "United States", "Canada", "Mexico", "UK", "United Kingdom", "Germany", "India",
+            "CA", "WA", "NY", "TX", "MA", "GA", "ON", "QC", "Waterloo", "Montreal", "Mountain View",
+            "Cambridge", "Sunnyvale", "Seattle", "Atlanta", "Austin", "New York"
+        ]
 
         for query in queries:
             url = f"https://www.google.com/about/careers/applications/jobs/results/?q={httpx.QueryParams({'q': query})}"
@@ -38,24 +50,30 @@ class GoogleSource(JobSource):
                         continue
 
                     link_tag = card.find("a", href=True)
-                    href = link_tag["href"] if link_tag else "https://www.google.com/about/careers/applications/jobs/results/"
+                    if not link_tag:
+                        continue
+                    href = link_tag["href"]
                     if href.startswith("/"):
                         href = "https://www.google.com/about/careers/applications" + href
                     elif not href.startswith("http"):
                         href = "https://www.google.com/about/careers/applications/" + href.lstrip("/")
 
                     href = href.split("?")[0]
+                    if "jobs/results/" not in href:
+                        continue
+                        
                     job_id = href.split("jobs/results/")[-1].strip("/") or title.lower().replace(" ", "-")
 
                     text_content = card.get_text(separator=" ", strip=True)
 
                     locations = []
                     for span in card.find_all("span"):
-                        s_text = span.get_text(strip=True)
-                        if any(marker in s_text for marker in ["CA", "WA", "NY", "TX", "MA", "GA", "USA", "United States", "Mountain View", "Sunnyvale", "Seattle", "Cambridge", "Atlanta"]):
-                            locations.append(s_text)
+                        s_text = span.get_text(strip=True).replace("place", "").lstrip("; ").strip()
+                        if any(marker in s_text for marker in location_markers):
+                            if s_text and s_text not in locations and len(s_text) < 100:
+                                locations.append(s_text)
 
-                    location = ", ".join(dict.fromkeys(locations)) or "United States"
+                    location = "; ".join(locations) or "Unspecified"
 
                     if job_id not in raw_jobs_map:
                         raw_jobs_map[job_id] = RawJob(
