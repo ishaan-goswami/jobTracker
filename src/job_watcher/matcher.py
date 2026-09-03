@@ -38,11 +38,11 @@ def _contains(text: str, terms: list[str]) -> bool:
 
 
 EXCLUDED_TITLE_TOKENS = [
-    "senior", "sr.", "sr ", "staff", "principal", "lead", "manager", "director",
-    "architect", "software engineer ii", "software engineer 2", "software engineer iii",
-    "software engineer 3", "software engineer iv", "software engineer 4",
-    "sde ii", "sde 2", "sde iii", "sde 3", "swe ii", "swe 2", "swe iii", "swe 3",
-    "engineer ii", "engineer 2", "engineer iii", "engineer 3", "eng ii", "eng 2"
+    "senior", "sr.", "sr ", "staff software engineer", "staff engineer", "senior staff", "principal staff",
+    "principal", "lead", "manager", "director", "architect",
+    "software engineer ii", "software engineer 2", "software engineer iii", "software engineer 3",
+    "software engineer iv", "software engineer 4", "sde ii", "sde 2", "sde iii", "sde 3",
+    "swe ii", "swe 2", "swe iii", "swe 3", "engineer ii", "engineer 2", "engineer iii", "engineer 3"
 ]
 
 INTERN_TITLE_TOKENS = ["intern", "internship", "co-op", "coop"]
