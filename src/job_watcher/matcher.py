@@ -3,33 +3,56 @@ import re
 from .models import RawJob
 
 NON_US_COUNTRY_TOKENS = {
-    "australia", "aus", "canada", "can", "india", "ind", "uk", "japan", "jpn",
+    "australia", "aus", "canada", "can", "india", "ind", "uk", "united kingdom", "japan", "jpn",
     "singapore", "sgp", "germany", "deu", "france", "fra", "ireland", "irl",
     "netherlands", "nld", "spain", "esp", "israel", "isr", "brazil", "bra",
     "mexico", "mex", "china", "chn", "hong kong", "hkg", "poland", "pol",
-    "switzerland", "che", "sweden", "swe", "nzl", "new zealand"
+    "switzerland", "che", "sweden", "swe", "nzl", "new zealand", "philippines", "phl",
+    "italy", "ita", "portugal", "prt", "romania", "rou", "czechia", "cze", "austria", "aut",
+    "emea", "apac", "latam", "europe", "asia", "ukraine", "ukr", "taiwan", "twn"
 }
 
 NON_US_CITY_TERMS = [
-    "sydney", "melbourne", "brisbane", "toronto", "vancouver", "montreal",
-    "bengaluru", "bangalore", "hyderabad", "pune", "gurgaon", "noida", "mumbai",
-    "delhi", "chennai", "london", "dublin", "tokyo", "berlin", "munich",
-    "amsterdam", "zurich", "paris", "tel aviv", "beijing", "shanghai", "shenzhen",
-    "sao paulo", "mexico city", "warsaw", "krakow", "stockholm"
+    "sydney", "melbourne", "brisbane", "perth", "adelaide",
+    "toronto", "vancouver", "montreal", "calgary", "ottawa",
+    "bengaluru", "bangalore", "hyderabad", "pune", "gurgaon", "noida", "mumbai", "delhi", "chennai", "kolkata",
+    "london", "manchester", "edinburgh", "dublin", "cork",
+    "tokyo", "osaka", "berlin", "munich", "frankfurt", "hamburg",
+    "amsterdam", "rotterdam", "zurich", "geneva", "paris", "lyon",
+    "tel aviv", "beijing", "shanghai", "shenzhen", "hangzhou",
+    "sao paulo", "rio de janeiro", "mexico city", "guadalajara",
+    "warsaw", "krakow", "wroclaw", "stockholm", "gothenburg", "copenhagen", "helsinki", "oslo",
+    "manila", "buenos aires", "santiago", "bogota", "singapore"
 ]
+
+US_STATE_CODES = {
+    "al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky",
+    "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd",
+    "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy", "dc"
+}
 
 
 def is_us_location(location: str | None) -> bool:
     if not location:
         return True
     loc_lower = location.lower().strip()
-    tokens = [t.strip(",. ") for t in loc_lower.split()]
+    
+    tokens = [t.strip(",.() ") for t in loc_lower.split()]
     for token in tokens:
         if token in NON_US_COUNTRY_TOKENS:
             return False
+            
     for city in NON_US_CITY_TERMS:
         if city in loc_lower:
             return False
+
+    if any(us_marker in loc_lower for us_marker in ["united states", "usa", "us", "u.s.", "remote - us", "remote, us"]):
+        return True
+
+    for token in tokens:
+        if token in US_STATE_CODES:
+            return True
+
     return True
 
 
@@ -49,7 +72,7 @@ INTERN_TITLE_TOKENS = ["intern", "internship", "co-op", "coop"]
 
 
 def score_job(job: RawJob, rules: dict) -> tuple[float, list[str]]:
-    # 1. Location Check
+    # 1. Strict US Location Check
     us_only = rules.get("candidate", {}).get("us_only", True)
     if us_only and not is_us_location(job.location):
         return 0.0, ["Non-US location excluded"]
@@ -63,20 +86,28 @@ def score_job(job: RawJob, rules: dict) -> tuple[float, list[str]]:
         if token in title:
             return 0.0, [f"Excluded non-entry level in title: '{token}'"]
 
-    # 3. Internship Title Check (User target is full-time 2027 start)
+    # 3. Internship Title Check
     for token in INTERN_TITLE_TOKENS:
         if token in title:
             return 0.0, [f"Internship title excluded: '{token}'"]
 
-    # 4. Strict 3+ Years Experience Rejection in Description
-    if re.search(r"\b([3-9]|[1-9][0-9])\+?\s*(?:-\s*\d+)?\s*years?(?:\s+of)?(?:\s+non-internship|\s+professional|\s+relevant|\s+work)?\s+experience\b", description):
-        return 0.0, ["Requires 3+ years experience - excluded for New Grad"]
+    # 4. Strict Experience Rejection
+    if re.search(r"\b([2-9]|[1-9][0-9])\s*(?:-|–|\+)\s*(?:[0-9]+)?\+?\s*years?(?:\s+of)?(?:\s+industry|\s+non-internship|\s+professional|\s+relevant|\s+work)?\s+experience\b", description):
+        return 0.0, ["Requires experience beyond New Grad - excluded"]
 
-    if re.search(r"\bminimum\s+(?:of\s+)?([3-9]|[1-9][0-9])\s+years\b", description):
-        return 0.0, ["Requires 3+ minimum years experience - excluded for New Grad"]
+    if re.search(r"\bminimum\s+(?:of\s+)?([2-9]|[1-9][0-9])\s+years\b", description):
+        return 0.0, ["Requires minimum years experience - excluded for New Grad"]
 
     keywords = rules["positive_keywords"]
     weights = rules["weights"]
+
+    # 5. MUST have explicit New Grad, Early Career, SDE 1, or Member of Technical Staff (MTS) designation
+    has_explicit_early_career_title = _contains(title, keywords["new_grad"] + keywords["early_career"])
+    has_explicit_early_career_desc = _contains(description, keywords["new_grad"])
+
+    if not (has_explicit_early_career_title or has_explicit_early_career_desc):
+        return 0.0, ["Requires explicit New Grad / Early Career / MTS designation"]
+
     score = 0.0
     reasons = []
 
@@ -86,16 +117,13 @@ def score_job(job: RawJob, rules: dict) -> tuple[float, list[str]]:
     if _contains(title, keywords["engineering"]):
         score += weights["engineering_title"]
         reasons.append("Relevant software-engineering title")
-    else:
-        score += weights["non_engineering"]
-        reasons.append("No relevant software-engineering title")
 
     if _contains(title, keywords["new_grad"]):
         score += weights["new_grad_title"]
         reasons.append("Explicit new-graduate title")
     elif _contains(title, keywords["early_career"]):
         score += weights["early_career_title"]
-        reasons.append("Early-career title")
+        reasons.append("Early-career / MTS title")
 
     if _contains(description, keywords["new_grad"] + keywords["early_career"]):
         score += weights["new_grad_description"]

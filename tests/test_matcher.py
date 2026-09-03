@@ -72,7 +72,7 @@ def test_three_plus_years_experience_is_rejected():
     )
     score, reasons = score_job(job, RULES)
     assert score == 0
-    assert "Requires 3+ years experience - excluded for New Grad" in reasons[0]
+    assert "Requires experience beyond New Grad - excluded" in reasons[0]
 
 
 def test_non_us_location_is_rejected():
