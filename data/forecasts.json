@@ -1,50 +1,74 @@
 [
   {
+    "company_id": "doordash",
+    "company_name": "DoorDash",
+    "expected_opening_date": "Sept 8 \u2013 Sept 10, 2026",
+    "expected_opening_window": "Next Week (Early Sept)",
+    "historical_cycle": "DoorDash SWE New Grad roles open in early September.",
+    "confidence": "Confirmed / Very High",
+    "last_updated": "2026-09-03T17:37:56.168682+00:00"
+  },
+  {
+    "company_id": "figma",
+    "company_name": "Figma",
+    "expected_opening_date": "Sept 14, 2026",
+    "expected_opening_window": "Mid September",
+    "historical_cycle": "Figma University / New Grad roles open mid-September.",
+    "confidence": "Confirmed / Very High",
+    "last_updated": "2026-09-03T17:37:56.168682+00:00"
+  },
+  {
     "company_id": "google",
     "company_name": "Google",
-    "expected_opening_window": "August \u2013 September",
-    "historical_cycle": "Dec 2026 Grad / 2027 FT role window typically opens mid-August.",
+    "expected_opening_date": "Sept 8 \u2013 Sept 20, 2026",
+    "expected_opening_window": "September 2026",
+    "historical_cycle": "Dec 2026 Grad / 2027 Early Career SWE postings open early autumn.",
     "confidence": "High",
-    "last_updated": "2026-08-08T06:32:02.743430+00:00"
+    "last_updated": "2026-09-03T17:37:56.168682+00:00"
   },
   {
     "company_id": "meta",
     "company_name": "Meta",
+    "expected_opening_date": "Sept 8 \u2013 Oct 1, 2026",
     "expected_opening_window": "September \u2013 October",
     "historical_cycle": "University Graduate roles open early September.",
     "confidence": "High",
-    "last_updated": "2026-08-08T06:32:02.743430+00:00"
+    "last_updated": "2026-09-03T17:37:56.168682+00:00"
   },
   {
     "company_id": "stripe",
     "company_name": "Stripe",
-    "expected_opening_window": "September",
+    "expected_opening_date": "Sept 15 \u2013 Sept 30, 2026",
+    "expected_opening_window": "Mid-Late September",
     "historical_cycle": "New grad postings traditionally open mid-September.",
     "confidence": "High",
-    "last_updated": "2026-08-08T06:32:02.743430+00:00"
+    "last_updated": "2026-09-03T17:37:56.168682+00:00"
   },
   {
     "company_id": "openai",
     "company_name": "OpenAI",
+    "expected_opening_date": "Sept 15 \u2013 Oct 15, 2026",
     "expected_opening_window": "September \u2013 October",
     "historical_cycle": "Early career positions open in Q3/Q4.",
     "confidence": "Medium",
-    "last_updated": "2026-08-08T06:32:02.743430+00:00"
+    "last_updated": "2026-09-03T17:37:56.168682+00:00"
   },
   {
     "company_id": "amazon",
     "company_name": "Amazon",
-    "expected_opening_window": "Rolling / Currently Active",
+    "expected_opening_date": "Active / Rolling",
+    "expected_opening_window": "Currently Open",
     "historical_cycle": "SDE I & University Graduate positions posted continuously.",
     "confidence": "Active",
-    "last_updated": "2026-08-08T06:32:02.743430+00:00"
+    "last_updated": "2026-09-03T17:37:56.168682+00:00"
   },
   {
     "company_id": "databricks",
     "company_name": "Databricks",
-    "expected_opening_window": "August \u2013 October",
+    "expected_opening_date": "Active / Rolling",
+    "expected_opening_window": "Currently Open",
     "historical_cycle": "University recruiting opens early autumn.",
-    "confidence": "Medium",
-    "last_updated": "2026-08-08T06:32:02.743430+00:00"
+    "confidence": "Active",
+    "last_updated": "2026-09-03T17:37:56.168682+00:00"
   }
 ]

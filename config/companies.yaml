@@ -143,8 +143,18 @@ companies:
   name: Anthropic
   enabled: true
   careers_url: https://www.anthropic.com/careers
-  source_type: unsupported
-  source_identifier: ''
+  source_type: greenhouse
+  source_identifier: anthropic
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: figma
+  name: Figma
+  enabled: true
+  careers_url: https://www.figma.com/careers/
+  source_type: greenhouse
+  source_identifier: figma
   locations:
   - United States
   include_keywords: []

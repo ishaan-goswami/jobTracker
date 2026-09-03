@@ -263,31 +263,24 @@ function companies() {
 }
 
 function forecast() {
+  const cards = state.forecasts.map(f => `
+    <div class="metric-card" style="border-top: 3px solid ${f.confidence.includes('Confirmed') ? '#34d399' : (f.confidence === 'Active' ? '#a78bfa' : '#60a5fa')};">
+      <div style="font-size: 1.1rem; font-weight: 700; color: #f8fafc;">${escapeHtml(f.company_name)}</div>
+      <div style="color: #34d399; font-weight: 600; margin-top: 0.25rem;">📅 ${escapeHtml(f.expected_opening_date)}</div>
+      <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.35rem;">${escapeHtml(f.historical_cycle)}</div>
+      <div class="lbl" style="margin-top: 0.5rem;">Confidence: ${escapeHtml(f.confidence)}</div>
+    </div>
+  `).join('');
+
   return `
     <div class="card-box">
-      <h3>Expected 2027 New-Grad Role Opening Timeline</h3>
+      <h3>Targeted 2027 New-Grad Role Opening Timeline</h3>
       <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
-        Historical opening windows for full-time software engineering graduate roles based on past recruiting cycles.
+        Exact targeted opening dates and historical cycle predictions for 2027 full-time SWE graduate roles.
       </p>
 
       <div class="metrics-grid">
-        <div class="metric-card" style="border-top: 3px solid #34d399;">
-          <div style="font-size: 1.1rem; font-weight: 700; color: #f8fafc;">Google & Meta</div>
-          <div style="color: #34d399; font-weight: 600; margin-top: 0.25rem;">Aug – Sept 2026</div>
-          <div class="lbl">Confidence: High</div>
-        </div>
-
-        <div class="metric-card" style="border-top: 3px solid #60a5fa;">
-          <div style="font-size: 1.1rem; font-weight: 700; color: #f8fafc;">Stripe & OpenAI</div>
-          <div style="color: #60a5fa; font-weight: 600; margin-top: 0.25rem;">Sept – Oct 2026</div>
-          <div class="lbl">Confidence: High</div>
-        </div>
-
-        <div class="metric-card" style="border-top: 3px solid #a78bfa;">
-          <div style="font-size: 1.1rem; font-weight: 700; color: #f8fafc;">Amazon & Databricks</div>
-          <div style="color: #a78bfa; font-weight: 600; margin-top: 0.25rem;">Rolling / Currently Open</div>
-          <div class="lbl">Confidence: Active</div>
-        </div>
+        ${cards || '<div class="notice-box">No forecast data loaded.</div>'}
       </div>
     </div>
   `;
