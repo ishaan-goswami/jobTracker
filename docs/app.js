@@ -52,7 +52,7 @@ async function load() {
     forecasts: "forecasts.json",
   })) {
     try {
-      state[key] = await fetch(`data/${file}`).then((res) => res.ok ? res.json() : []);
+      state[key] = await fetch(`data/${file}?t=${Date.now()}`, { cache: "no-store" }).then((res) => res.ok ? res.json() : []);
     } catch {
       state[key] = [];
     }
