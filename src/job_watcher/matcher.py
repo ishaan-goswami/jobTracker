@@ -22,7 +22,8 @@ NON_US_CITY_TERMS = [
     "tel aviv", "beijing", "shanghai", "shenzhen", "hangzhou",
     "sao paulo", "rio de janeiro", "mexico city", "guadalajara",
     "warsaw", "krakow", "wroclaw", "stockholm", "gothenburg", "copenhagen", "helsinki", "oslo",
-    "manila", "buenos aires", "santiago", "bogota", "singapore"
+    "manila", "buenos aires", "santiago", "bogota", "singapore",
+    "bucharest", "barcelona", "madrid"
 ]
 
 US_STATE_CODES = {
@@ -70,6 +71,15 @@ EXCLUDED_TITLE_TOKENS = [
 
 INTERN_TITLE_TOKENS = ["intern", "internship", "co-op", "coop"]
 
+EXPLICIT_EARLY_CAREER_TITLE_KEYWORDS = [
+    "new grad", "new graduate", "university graduate", "university grad", "recent graduate",
+    "2027 graduate", "class of 2027", "2026 graduate", "class of 2026",
+    "early career", "early-career", "early talent", "entry level", "entry-level",
+    "software engineer i", "software engineer 1", "sde i", "sde 1", "swe i", "swe 1",
+    "associate software engineer", "associate engineer", "graduate software engineer",
+    "campus", "emerging talent", "member of technical staff", "mts"
+]
+
 
 def score_job(job: RawJob, rules: dict) -> tuple[float, list[str]]:
     # 1. Strict US Location Check
@@ -81,7 +91,7 @@ def score_job(job: RawJob, rules: dict) -> tuple[float, list[str]]:
     description = (job.description or "").lower().strip()
     all_text = f"{title}\n{description}"
 
-    # 2. Strict Title Level Check
+    # 2. Strict Title Level Check (Reject Sr, Engineer II/3/4)
     for token in EXCLUDED_TITLE_TOKENS:
         if token in title:
             return 0.0, [f"Excluded non-entry level in title: '{token}'"]
@@ -91,23 +101,19 @@ def score_job(job: RawJob, rules: dict) -> tuple[float, list[str]]:
         if token in title:
             return 0.0, [f"Internship title excluded: '{token}'"]
 
-    # 4. Strict Experience Rejection
+    # 4. Strict Experience Rejection in Description
     if re.search(r"\b([2-9]|[1-9][0-9])\s*(?:-|–|\+)\s*(?:[0-9]+)?\+?\s*years?(?:\s+of)?(?:\s+industry|\s+non-internship|\s+professional|\s+relevant|\s+work)?\s+experience\b", description):
         return 0.0, ["Requires experience beyond New Grad - excluded"]
 
     if re.search(r"\bminimum\s+(?:of\s+)?([2-9]|[1-9][0-9])\s+years\b", description):
         return 0.0, ["Requires minimum years experience - excluded for New Grad"]
 
+    # 5. MUST have explicit New Grad, Early Career, SDE 1, or Member of Technical Staff (MTS) in TITLE
+    if not _contains(title, EXPLICIT_EARLY_CAREER_TITLE_KEYWORDS):
+        return 0.0, ["Title lacks explicit New Grad / Early Career / SDE 1 / MTS designation"]
+
     keywords = rules["positive_keywords"]
     weights = rules["weights"]
-
-    # 5. MUST have explicit New Grad, Early Career, SDE 1, or Member of Technical Staff (MTS) designation
-    has_explicit_early_career_title = _contains(title, keywords["new_grad"] + keywords["early_career"])
-    has_explicit_early_career_desc = _contains(description, keywords["new_grad"])
-
-    if not (has_explicit_early_career_title or has_explicit_early_career_desc):
-        return 0.0, ["Requires explicit New Grad / Early Career / MTS designation"]
-
     score = 0.0
     reasons = []
 

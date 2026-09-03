@@ -6,7 +6,7 @@
     "expected_opening_window": "Next Week (Early Sept)",
     "historical_cycle": "DoorDash SWE New Grad roles open early September.",
     "confidence": "Confirmed / Very High",
-    "last_updated": "2026-09-03T17:49:37.196919+00:00"
+    "last_updated": "2026-09-03T17:52:43.394174+00:00"
   },
   {
     "company_id": "figma",
@@ -15,7 +15,7 @@
     "expected_opening_window": "Mid September",
     "historical_cycle": "Figma University / New Grad roles open mid-September.",
     "confidence": "Confirmed / Very High",
-    "last_updated": "2026-09-03T17:49:37.196919+00:00"
+    "last_updated": "2026-09-03T17:52:43.394174+00:00"
   },
   {
     "company_id": "stripe",
@@ -24,7 +24,7 @@
     "expected_opening_window": "Open Now",
     "historical_cycle": "Stripe new-grad and early career positions.",
     "confidence": "Active / Discovered",
-    "last_updated": "2026-09-03T17:49:37.196919+00:00"
+    "last_updated": "2026-09-03T17:52:43.394174+00:00"
   },
   {
     "company_id": "openai",
@@ -33,7 +33,7 @@
     "expected_opening_window": "Q3/Q4 2026",
     "historical_cycle": "OpenAI early career positions.",
     "confidence": "Medium",
-    "last_updated": "2026-09-03T17:49:37.196919+00:00"
+    "last_updated": "2026-09-03T17:52:43.394174+00:00"
   },
   {
     "company_id": "anthropic",
@@ -42,7 +42,7 @@
     "expected_opening_window": "Q3/Q4 2026",
     "historical_cycle": "Anthropic early career positions.",
     "confidence": "Medium",
-    "last_updated": "2026-09-03T17:49:37.196919+00:00"
+    "last_updated": "2026-09-03T17:52:43.394174+00:00"
   },
   {
     "company_id": "google",
@@ -51,7 +51,7 @@
     "expected_opening_window": "September 2026",
     "historical_cycle": "Dec 2026 Grad / 2027 Early Career SWE postings.",
     "confidence": "High",
-    "last_updated": "2026-09-03T17:49:37.196919+00:00"
+    "last_updated": "2026-09-03T17:52:43.394174+00:00"
   },
   {
     "company_id": "meta",
@@ -60,7 +60,7 @@
     "expected_opening_window": "September \u2013 October",
     "historical_cycle": "University Graduate roles open early September.",
     "confidence": "High",
-    "last_updated": "2026-09-03T17:49:37.196919+00:00"
+    "last_updated": "2026-09-03T17:52:43.394174+00:00"
   },
   {
     "company_id": "amazon",
@@ -69,7 +69,7 @@
     "expected_opening_window": "Open Now",
     "historical_cycle": "SDE I & University Graduate positions posted continuously.",
     "confidence": "Active / Discovered",
-    "last_updated": "2026-09-03T17:49:37.196919+00:00"
+    "last_updated": "2026-09-03T17:52:43.394174+00:00"
   },
   {
     "company_id": "databricks",
@@ -78,6 +78,6 @@
     "expected_opening_window": "Currently Open",
     "historical_cycle": "University recruiting opens early autumn.",
     "confidence": "Active",
-    "last_updated": "2026-09-03T17:49:37.196919+00:00"
+    "last_updated": "2026-09-03T17:52:43.394174+00:00"
   }
 ]
