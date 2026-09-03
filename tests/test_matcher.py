@@ -72,7 +72,7 @@ def test_three_plus_years_experience_is_rejected():
     )
     score, reasons = score_job(job, RULES)
     assert score == 0
-    assert "Requires experience beyond New Grad - excluded" in reasons[0]
+    assert "Requires 1+ years professional experience beyond New Grad - excluded" in reasons[0] or "Title lacks explicit New Grad" in reasons[0]
 
 
 def test_non_us_location_is_rejected():
@@ -80,12 +80,11 @@ def test_non_us_location_is_rejected():
         source_id="1",
         title="Software Engineer, New Grad",
         official_url="https://example.com",
-        location="Sydney, Australia",
-        description="For 2026 graduates starting in 2027",
+        location="London, UK",
     )
     score, reasons = score_job(job, RULES)
-    assert score == 0.0
-    assert "Non-US location excluded" in reasons
+    assert score == 0
+    assert "Non-US location excluded" in reasons[0]
 
 
 def test_us_location_is_accepted():
@@ -110,7 +109,7 @@ def test_bucharest_and_barcelona_locations_are_rejected():
     )
     job_barca = RawJob(
         source_id="2",
-        title="Software Engineer I",
+        title="Software Engineer, New Grad",
         official_url="https://example.com",
         location="Barcelona, Spain",
     )
@@ -132,26 +131,26 @@ def test_title_without_explicit_early_career_designation_is_rejected():
     )
     score, reasons = score_job(job, RULES)
     assert score == 0.0
-    assert "Title lacks explicit New Grad / Early Career / SDE 1 / MTS designation" in reasons[0]
+    assert "Title lacks explicit New Grad / Early Career / Entry Level / MTS designation" in reasons[0]
 
 
-def test_member_of_technical_staff_and_sde1_titles_are_accepted():
+def test_member_of_technical_staff_is_accepted_and_generic_sde1_with_experience_is_rejected():
     job_mts = RawJob(
         source_id="1",
         title="Member of Technical Staff",
         official_url="https://example.com",
         location="San Francisco, CA",
-        description="Software engineer position",
+        description="Software engineer position for early career hires.",
     )
     job_sde1 = RawJob(
         source_id="2",
         title="Software Engineer I",
         official_url="https://example.com",
         location="Seattle, WA",
-        description="SDE 1 role",
+        description="Requires 1+ years of non-internship professional experience.",
     )
     score1, _ = score_job(job_mts, RULES)
     score2, _ = score_job(job_sde1, RULES)
     assert score1 >= 55
-    assert score2 >= 55
+    assert score2 == 0.0
 

@@ -82,9 +82,13 @@ EXPLICIT_EARLY_CAREER_TITLE_KEYWORDS = [
     "new grad", "new graduate", "university graduate", "university grad", "recent graduate",
     "2027 graduate", "class of 2027", "2026 graduate", "class of 2026",
     "early career", "early-career", "early talent", "entry level", "entry-level",
-    "software engineer i", "software engineer 1", "sde i", "sde 1", "swe i", "swe 1",
     "associate software engineer", "associate engineer", "graduate software engineer",
     "campus", "emerging talent", "member of technical staff", "mts"
+]
+
+EXPLICIT_NEW_GRAD_TITLES = [
+    "new grad", "new graduate", "university graduate", "university grad", "recent graduate",
+    "2027 graduate", "class of 2027", "2026 graduate", "class of 2026"
 ]
 
 
@@ -108,16 +112,18 @@ def score_job(job: RawJob, rules: dict) -> tuple[float, list[str]]:
         if token in title:
             return 0.0, [f"Internship title excluded: '{token}'"]
 
-    # 4. Strict Experience Rejection in Description
-    if re.search(r"\b([2-9]|[1-9][0-9])\s*(?:-|–|\+)\s*(?:[0-9]+)?\+?\s*years?(?:\s+of)?(?:\s+industry|\s+non-internship|\s+professional|\s+relevant|\s+work)?\s+experience\b", description):
-        return 0.0, ["Requires experience beyond New Grad - excluded"]
+    # 4. Strict 1+ Years Non-Internship / Professional Experience Rejection (unless explicitly titled New Grad)
+    if re.search(r"\b([1-9][0-9]*)\+?\s*(?:-|–|\+)?\s*(?:[0-9]+)?\+?\s*years?(?:\s+of)?(?:\s+industry|\s+non-internship|\s+professional|\s+relevant|\s+work)?\s+experience\b", description):
+        if not _contains(title, EXPLICIT_NEW_GRAD_TITLES):
+            return 0.0, ["Requires 1+ years professional experience beyond New Grad - excluded"]
 
-    if re.search(r"\bminimum\s+(?:of\s+)?([2-9]|[1-9][0-9])\s+years\b", description):
-        return 0.0, ["Requires minimum years experience - excluded for New Grad"]
+    if re.search(r"\bminimum\s+(?:of\s+)?([1-9][0-9]*)\s+years\b", description):
+        if not _contains(title, EXPLICIT_NEW_GRAD_TITLES):
+            return 0.0, ["Requires minimum years experience beyond New Grad - excluded"]
 
-    # 5. MUST have explicit New Grad, Early Career, SDE 1, or Member of Technical Staff (MTS) in TITLE
+    # 5. MUST have explicit New Grad, Early Career, Entry Level, or Member of Technical Staff (MTS) in TITLE
     if not _contains(title, EXPLICIT_EARLY_CAREER_TITLE_KEYWORDS):
-        return 0.0, ["Title lacks explicit New Grad / Early Career / SDE 1 / MTS designation"]
+        return 0.0, ["Title lacks explicit New Grad / Early Career / Entry Level / MTS designation"]
 
     keywords = rules["positive_keywords"]
     weights = rules["weights"]
