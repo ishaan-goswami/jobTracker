@@ -86,10 +86,7 @@ EXPLICIT_EARLY_CAREER_TITLE_KEYWORDS = [
     "campus", "emerging talent", "member of technical staff", "mts"
 ]
 
-EXPLICIT_NEW_GRAD_TITLES = [
-    "new grad", "new graduate", "university graduate", "university grad", "recent graduate",
-    "2027 graduate", "class of 2027", "2026 graduate", "class of 2026"
-]
+EXPLICIT_NEW_GRAD_TITLES = EXPLICIT_EARLY_CAREER_TITLE_KEYWORDS
 
 
 def score_job(job: RawJob, rules: dict) -> tuple[float, list[str]]:

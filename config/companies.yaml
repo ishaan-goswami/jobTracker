@@ -73,8 +73,8 @@ companies:
   name: Google
   enabled: true
   careers_url: https://www.google.com/about/careers/applications/jobs/results/
-  source_type: unsupported
-  source_identifier: ''
+  source_type: google
+  source_identifier: google
   locations:
   - United States
   include_keywords: []

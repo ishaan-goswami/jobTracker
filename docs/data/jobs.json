@@ -12,8 +12,8 @@
     "source_url": "https://stripe.com/jobs/search",
     "source_type": "greenhouse",
     "posted_at": null,
-    "discovered_at": "2026-09-03T17:57:28.658270Z",
-    "last_seen_at": "2026-09-03T17:57:28.658270Z",
+    "discovered_at": "2026-09-03T18:08:12.822545Z",
+    "last_seen_at": "2026-09-03T18:08:12.822545Z",
     "is_open": true,
     "match_score": 100.0,
     "match_reasons": [
@@ -23,5 +23,31 @@
       "Early-career wording in description"
     ],
     "fingerprint": "bfcb93c8e1d01e501bf5a62a0545ce4d076716371f06e7338003a895d3146f23"
+  },
+  {
+    "id": "google-111182182432547526-software-engineer-compilers-runtimes-and-toolchains-early-career",
+    "company_id": "google",
+    "company_name": "Google",
+    "title": "Software Engineer, Compilers, Runtimes and Toolchains, Early Career",
+    "location": "United States",
+    "description": "Software Engineer, Compilers, Runtimes and Toolchains, Early Career corporate_fare Google place Mexico City, CDMX, Mexico bar_chart Early Early Experience completing work as directed, and collaborating with teammates; developing knowledge of relevant concepts and processes. Google | Mexico City, CDMX, Mexico Minimum qualifications Bachelor\u2019s degree or equivalent practical experience. 1 year of experience with data structures or algorithms. 1 year of experience with software development using C++ and Python. Ability to communicate in English fluently to interact with local stakeholders in this customer-facing role. Experience in writing and debugging software code Experience with one or more programming languages Learn more share Share Software Engineer, Compilers, Runtimes and Toolchains, Early Career link Copy link email Email a friend",
+    "team": "Software Engineering",
+    "employment_type": "full-time",
+    "official_url": "https://www.google.com/about/careers/applications/jobs/results/111182182432547526-software-engineer-compilers-runtimes-and-toolchains-early-career",
+    "source_url": "https://www.google.com/about/careers/applications/jobs/results/",
+    "source_type": "google",
+    "posted_at": null,
+    "discovered_at": "2026-09-03T18:08:12.822545Z",
+    "last_seen_at": "2026-09-03T18:08:12.822545Z",
+    "is_open": true,
+    "match_score": 100.0,
+    "match_reasons": [
+      "United States location",
+      "Relevant software-engineering title",
+      "Early-career / MTS title",
+      "Early-career wording in description",
+      "0\u20132 years experience"
+    ],
+    "fingerprint": "6cd95c83406f9ddceda158af7aaecaff8d09f0ac568a054699859ebfa413d215"
   }
 ]
