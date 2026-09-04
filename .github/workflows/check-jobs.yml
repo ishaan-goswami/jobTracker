@@ -1,21 +1,22 @@
-name: Check jobs
+name: Daily Job Check & Refresh
 
 on:
   workflow_dispatch:
   schedule:
-    # GitHub's minimum schedule interval is 5 minutes (free and paid).
-    # Offset from :00 to reduce top-of-hour queue delays.
-    - cron: "3/5 * * * *"
+    # Runs twice daily at 00:00 and 12:00 UTC (8:00 PM EDT & 8:00 AM EDT)
+    - cron: "0 0,12 * * *"
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: check-jobs
   cancel-in-progress: false
 
 jobs:
-  monitor:
+  monitor-and-deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -36,6 +37,9 @@ jobs:
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
+      - name: Generate forecasts
+        run: job-watcher generate-forecasts
+
       - name: Prepare dashboard data
         run: |
           mkdir -p docs/data
@@ -53,6 +57,21 @@ jobs:
           if git diff --cached --quiet; then
             echo "No data changes to commit."
           else
-            git commit -m "chore(data): update job monitoring results [skip ci]"
+            git commit -m "chore(data): daily job monitoring update"
             git push
           fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
+
