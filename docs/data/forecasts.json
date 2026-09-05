@@ -6,7 +6,7 @@
     "expected_opening_window": "Next Week (Early Sept)",
     "historical_cycle": "DoorDash SWE New Grad roles open early September.",
     "confidence": "Confirmed / Very High",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "figma",
@@ -15,7 +15,7 @@
     "expected_opening_window": "Mid September",
     "historical_cycle": "Figma University / New Grad roles open mid-September.",
     "confidence": "Confirmed / Very High",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "google",
@@ -24,7 +24,7 @@
     "expected_opening_window": "Open Now",
     "historical_cycle": "Dec 2026 Grad / 2027 Early Career SWE postings.",
     "confidence": "Active / Discovered",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "meta",
@@ -33,7 +33,7 @@
     "expected_opening_window": "September \u2013 October",
     "historical_cycle": "University Graduate roles open early September.",
     "confidence": "High",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "stripe",
@@ -42,7 +42,7 @@
     "expected_opening_window": "Open Now",
     "historical_cycle": "Stripe new-grad and early career positions.",
     "confidence": "Active / Discovered",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "openai",
@@ -51,7 +51,7 @@
     "expected_opening_window": "Q3/Q4 2026",
     "historical_cycle": "OpenAI early career positions.",
     "confidence": "Medium",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "anthropic",
@@ -60,7 +60,7 @@
     "expected_opening_window": "Q3/Q4 2026",
     "historical_cycle": "Anthropic early career positions.",
     "confidence": "Medium",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "amazon",
@@ -69,7 +69,7 @@
     "expected_opening_window": "Currently Open",
     "historical_cycle": "SDE I & University Graduate positions posted continuously.",
     "confidence": "Active",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "databricks",
@@ -78,7 +78,7 @@
     "expected_opening_window": "Q3/Q4 2026",
     "historical_cycle": "University recruiting opens early autumn.",
     "confidence": "Medium",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "uber",
@@ -87,7 +87,7 @@
     "expected_opening_window": "Early Autumn",
     "historical_cycle": "Uber University / Early Career roles.",
     "confidence": "High",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "linkedin",
@@ -96,7 +96,7 @@
     "expected_opening_window": "Early Autumn",
     "historical_cycle": "LinkedIn Entry-level / New Grad SWE roles.",
     "confidence": "High",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "hubspot",
@@ -105,7 +105,7 @@
     "expected_opening_window": "Early Autumn",
     "historical_cycle": "HubSpot Graduate Software Engineering roles.",
     "confidence": "High",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "ramp",
@@ -114,7 +114,7 @@
     "expected_opening_window": "Q3/Q4 2026",
     "historical_cycle": "Ramp New Grad / Early Career engineering roles.",
     "confidence": "Medium",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "tiktok",
@@ -123,7 +123,7 @@
     "expected_opening_window": "Early Autumn",
     "historical_cycle": "TikTok Early Career / Campus recruitment.",
     "confidence": "High",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "netflix",
@@ -132,7 +132,7 @@
     "expected_opening_window": "Autumn Window",
     "historical_cycle": "Netflix New Grad & Early Career roles.",
     "confidence": "Medium",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   },
   {
     "company_id": "millennium-management",
@@ -141,6 +141,6 @@
     "expected_opening_window": "Early Autumn",
     "historical_cycle": "Millennium Quantitative & SWE Campus hiring.",
     "confidence": "Medium",
-    "last_updated": "2026-09-03T18:25:57.962450+00:00"
+    "last_updated": "2026-09-05T01:43:53.613390+00:00"
   }
 ]
