@@ -559,18 +559,48 @@ function resume() {
 
 function referrals() {
   const hasKey = Boolean(state.geminiApiKey);
+  const trackedCompanies = Array.from(new Set([
+    "Stripe", "Amazon", "Google", "Meta", "Bloomberg", "Salesforce", "NCR Voyix",
+    ...state.jobs.map(j => j.company_name)
+  ])).sort();
 
   return `
     <div class="card-box">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
         <div>
-          <h3>🤝 AI Referral Outreach Drafter</h3>
+          <h3>🤝 Referral Finder & AI Outreach Hub</h3>
           <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.2rem;">
-            Generate human-sounding, highly personalized outreach notes tailored to recruiters, alumni, and engineering connections using Google Gemini AI.
+            Discover potential referrers across Georgia Tech alumni networks, Blind threads, and Twitter, then generate human-sounding AI outreach notes with Gemini.
           </p>
         </div>
         <div style="font-family: var(--font-mono); font-size: 0.775rem; background: ${hasKey ? 'rgba(16, 185, 129, 0.15)' : 'rgba(245, 158, 11, 0.15)'}; border: 1px solid ${hasKey ? 'rgba(52, 211, 153, 0.35)' : 'rgba(251, 191, 36, 0.35)'}; color: ${hasKey ? '#6ee7b7' : '#fde047'}; padding: 0.35rem 0.75rem; border-radius: 0.5rem; font-weight: 700;">
           ${hasKey ? '✨ Gemini AI Engine: Connected' : '🔑 Gemini Key Optional'}
+        </div>
+      </div>
+
+      <!-- Section 1: 1-Click Referrer Lead Finder -->
+      <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1.75rem;">
+        <div style="font-family: var(--font-heading); font-size: 1rem; font-weight: 800; color: #60a5fa; margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>🔍 1-CLICK REFERRER LEAD FINDER & ALUMNI MATCHER</span>
+        </div>
+        <p style="font-size: 0.825rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Select any company to generate direct 1-click search deep links for Georgia Tech alumni, active engineers, Blind referral threads, and Twitter referral posts.
+        </p>
+
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.15rem;">
+          <div style="flex: 1; min-width: 220px;">
+            <select id="referrerCompanySelect" style="font-size: 0.9rem; padding: 0.65rem 0.85rem; background: rgba(3, 7, 18, 0.85);">
+              ${trackedCompanies.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('')}
+            </select>
+          </div>
+          <div style="flex: 1; min-width: 200px;">
+            <input type="text" id="referrerCompanyCustom" placeholder="Or type custom company..." style="font-size: 0.9rem; padding: 0.65rem 0.85rem; background: rgba(3, 7, 18, 0.85);">
+          </div>
+        </div>
+
+        <!-- Dynamic Deep Links Panel -->
+        <div id="referrerDeepLinks" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.75rem;">
+          <!-- Will populate via hydrateReferrals -->
         </div>
       </div>
 
@@ -927,6 +957,63 @@ async function callGeminiAPI(apiKey, prompt) {
 }
 
 function hydrateReferrals() {
+  const compSelect = document.querySelector("#referrerCompanySelect");
+  const compCustom = document.querySelector("#referrerCompanyCustom");
+  const deepLinksPanel = document.querySelector("#referrerDeepLinks");
+
+  const updateDeepLinks = () => {
+    if (!deepLinksPanel) return;
+    const compName = (compCustom && compCustom.value.trim()) ? compCustom.value.trim() : (compSelect ? compSelect.value : "Stripe");
+
+    const linkedinAlumniUrl = `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(compName + ' "Georgia Tech"')}`;
+    const linkedinSweUrl = `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(compName + ' "Software Engineer"')}`;
+    const linkedinRecruiterUrl = `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(compName + ' "University Recruiter"')}`;
+    const blindUrl = `https://www.google.com/search?q=${encodeURIComponent('site:teamblind.com ' + compName + ' referral 2026 OR 2027')}`;
+    const twitterUrl = `https://x.com/search?q=${encodeURIComponent('"' + compName + '" ("referral" OR "referring")')}&f=live`;
+    const redditUrl = `https://www.google.com/search?q=${encodeURIComponent('site:reddit.com/r/csmajors OR site:reddit.com/r/cscareerquestions ' + compName + ' referral')}`;
+
+    deepLinksPanel.innerHTML = `
+      <a href="${linkedinAlumniUrl}" target="_blank" rel="noopener" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(59, 130, 246, 0.3); padding: 0.85rem 1rem; border-radius: 0.5rem; text-decoration: none; display: flex; flex-direction: column; gap: 0.25rem;">
+        <span style="font-weight: 800; color: #93c5fd; font-size: 0.85rem;">🎓 GT Alumni at ${escapeHtml(compName)}</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">Find Georgia Tech alumni on LinkedIn ↗</span>
+      </a>
+
+      <a href="${linkedinSweUrl}" target="_blank" rel="noopener" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(52, 211, 153, 0.3); padding: 0.85rem 1rem; border-radius: 0.5rem; text-decoration: none; display: flex; flex-direction: column; gap: 0.25rem;">
+        <span style="font-weight: 800; color: #6ee7b7; font-size: 0.85rem;">👨‍💻 SWEs at ${escapeHtml(compName)}</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">Find active software engineers on LinkedIn ↗</span>
+      </a>
+
+      <a href="${linkedinRecruiterUrl}" target="_blank" rel="noopener" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(167, 139, 250, 0.3); padding: 0.85rem 1rem; border-radius: 0.5rem; text-decoration: none; display: flex; flex-direction: column; gap: 0.25rem;">
+        <span style="font-weight: 800; color: #c4b5fd; font-size: 0.85rem;">👥 Recruiters at ${escapeHtml(compName)}</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">Find university recruiters on LinkedIn ↗</span>
+      </a>
+
+      <a href="${blindUrl}" target="_blank" rel="noopener" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(251, 191, 36, 0.3); padding: 0.85rem 1rem; border-radius: 0.5rem; text-decoration: none; display: flex; flex-direction: column; gap: 0.25rem;">
+        <span style="font-weight: 800; color: #fde047; font-size: 0.85rem;">💬 Blind Referral Threads</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">Search TeamBlind live referral posts ↗</span>
+      </a>
+
+      <a href="${twitterUrl}" target="_blank" rel="noopener" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(244, 63, 94, 0.3); padding: 0.85rem 1rem; border-radius: 0.5rem; text-decoration: none; display: flex; flex-direction: column; gap: 0.25rem;">
+        <span style="font-weight: 800; color: #fda4af; font-size: 0.85rem;">🐦 Twitter/X Referral Posts</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">Live tweets offering referrals ↗</span>
+      </a>
+
+      <a href="${redditUrl}" target="_blank" rel="noopener" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(245, 158, 11, 0.3); padding: 0.85rem 1rem; border-radius: 0.5rem; text-decoration: none; display: flex; flex-direction: column; gap: 0.25rem;">
+        <span style="font-weight: 800; color: #fcd34d; font-size: 0.85rem;">🤖 Reddit Referral Threads</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">Search r/csmajors referral posts ↗</span>
+      </a>
+    `;
+
+    const recCompInput = document.querySelector("#recipientCompany");
+    if (recCompInput && !recCompInput.value) {
+      recCompInput.value = `Software Engineer at ${compName}`;
+    }
+  };
+
+  if (compSelect) compSelect.addEventListener("change", updateDeepLinks);
+  if (compCustom) compCustom.addEventListener("input", updateDeepLinks);
+  updateDeepLinks();
+
   const saveBtn = document.querySelector("#saveGeminiKeyBtn");
   const keyInput = document.querySelector("#geminiApiKeyInput");
   if (saveBtn && keyInput) {
