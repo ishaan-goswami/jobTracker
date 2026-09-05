@@ -579,7 +579,7 @@ function referrals() {
       </div>
 
       <!-- Section 1: 1-Click Referrer Lead Finder -->
-      <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1.75rem;">
+      <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1.5rem;">
         <div style="font-family: var(--font-heading); font-size: 1rem; font-weight: 800; color: #60a5fa; margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.5rem;">
           <span>🔍 1-CLICK REFERRER LEAD FINDER & ALUMNI MATCHER</span>
         </div>
@@ -601,6 +601,28 @@ function referrals() {
         <!-- Dynamic Deep Links Panel -->
         <div id="referrerDeepLinks" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.75rem;">
           <!-- Will populate via hydrateReferrals -->
+        </div>
+      </div>
+
+      <!-- Section 2: Direct Work Email Permutator (High Response Channel) -->
+      <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1.75rem;">
+        <div style="font-family: var(--font-heading); font-size: 1rem; font-weight: 800; color: #6ee7b7; margin-bottom: 0.65rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+          <span>📧 DIRECT WORK EMAIL PERMUTATOR (5x-10x Higher Response Rate)</span>
+          <span style="font-size: 0.75rem; font-family: var(--font-mono); background: rgba(16, 185, 129, 0.15); color: #6ee7b7; padding: 0.2rem 0.55rem; border-radius: 0.35rem; font-weight: 700;">Bypasses LinkedIn DM Ignorance</span>
+        </div>
+        <p style="font-size: 0.825rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Engineers ignore LinkedIn connection notes because notifications are off. Direct work emails reach their primary inbox. Enter an engineer's name & domain to generate exact email patterns:
+        </p>
+
+        <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.75rem;">
+          <input type="text" id="emailFirstName" placeholder="First Name (e.g. Alex)" style="flex: 1; min-width: 140px; font-size: 0.85rem; padding: 0.6rem 0.8rem; background: rgba(3, 7, 18, 0.85);">
+          <input type="text" id="emailLastName" placeholder="Last Name (e.g. Chen)" style="flex: 1; min-width: 140px; font-size: 0.85rem; padding: 0.6rem 0.8rem; background: rgba(3, 7, 18, 0.85);">
+          <input type="text" id="emailDomain" placeholder="Domain (e.g. stripe.com)" style="flex: 1; min-width: 160px; font-size: 0.85rem; padding: 0.6rem 0.8rem; background: rgba(3, 7, 18, 0.85);">
+          <button id="generateEmailsBtn" class="btn-primary" style="font-size: 0.825rem; padding: 0.6rem 1rem;">⚡ Generate Email Permutations</button>
+        </div>
+
+        <div id="emailPermutationsResult" style="display: none; background: rgba(3, 7, 18, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); padding: 1rem; border-radius: 0.5rem; margin-top: 0.75rem;">
+          <!-- Populated dynamically -->
         </div>
       </div>
 
@@ -1013,6 +1035,51 @@ function hydrateReferrals() {
   if (compSelect) compSelect.addEventListener("change", updateDeepLinks);
   if (compCustom) compCustom.addEventListener("input", updateDeepLinks);
   updateDeepLinks();
+
+  const genEmailBtn = document.querySelector("#generateEmailsBtn");
+  if (genEmailBtn) {
+    genEmailBtn.addEventListener("click", () => {
+      const fn = document.querySelector("#emailFirstName")?.value.trim().toLowerCase() || "alex";
+      const ln = document.querySelector("#emailLastName")?.value.trim().toLowerCase() || "chen";
+      const domain = document.querySelector("#emailDomain")?.value.trim().toLowerCase() || "stripe.com";
+
+      const resBox = document.querySelector("#emailPermutationsResult");
+      if (!resBox) return;
+
+      const fi = fn.charAt(0);
+
+      const patterns = [
+        `${fn}.${ln}@${domain}`,
+        `${fi}${ln}@${domain}`,
+        `${fn}@${domain}`,
+        `${fn}${ln}@${domain}`,
+        `${fn}_${ln}@${domain}`
+      ];
+
+      resBox.style.display = "block";
+      resBox.innerHTML = `
+        <div style="font-family: var(--font-heading); font-size: 0.875rem; font-weight: 800; color: #6ee7b7; margin-bottom: 0.65rem; display: flex; justify-content: space-between; align-items: center;">
+          <span>Generated Direct Corporate Email Candidates for ${escapeHtml(fn)} ${escapeHtml(ln)} (${escapeHtml(domain)})</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.6rem;">
+          ${patterns.map(addr => `
+            <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); padding: 0.5rem 0.75rem; border-radius: 0.4rem; display: flex; justify-content: space-between; align-items: center;">
+              <code style="font-size: 0.825rem; color: #93c5fd;">${escapeHtml(addr)}</code>
+              <button class="copy-email-btn btn-primary" data-addr="${escapeHtml(addr)}" style="font-size: 0.725rem; padding: 0.2rem 0.5rem;">📋 Copy</button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      document.querySelectorAll(".copy-email-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          navigator.clipboard.writeText(btn.dataset.addr);
+          btn.textContent = "✓ Copied!";
+          setTimeout(() => { btn.textContent = "📋 Copy"; }, 2000);
+        });
+      });
+    });
+  }
 
   const saveBtn = document.querySelector("#saveGeminiKeyBtn");
   const keyInput = document.querySelector("#geminiApiKeyInput");
