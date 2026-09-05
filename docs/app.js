@@ -144,7 +144,7 @@ function forecast() {
 
 
 const STOP_WORDS = new Set([
-  // Grammar stop words
+  // Grammar & Common stop words
   "a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any", "are", "aren't", "as", "at",
   "be", "because", "been", "before", "being", "below", "between", "both", "but", "by", "can", "can't", "cannot",
   "could", "couldn't", "did", "didn't", "do", "does", "doesn't", "doing", "don't", "down", "during", "each",
@@ -158,14 +158,14 @@ const STOP_WORDS = new Set([
   "those", "through", "to", "too", "under", "until", "up", "very", "was", "wasn't", "we", "we'd", "we'll", "we're",
   "we've", "were", "weren't", "what", "what's", "when", "when's", "where", "where's", "which", "while", "who",
   "who's", "whom", "why", "why's", "with", "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're",
-  "you've", "your", "yours", "yourself", "yourselves",
+  "you've", "your", "yours", "yourself", "yourselves", "still", "still'", "world's", "world", "replatforming",
 
-  // Corporate background / marketing / general business prose words
-  "about", "stripe", "google", "amazon", "meta", "bloomberg", "company", "companies", "business", "businesses",
+  // Non-technical prose, marketing, and corporate culture words
+  "stripe", "google", "amazon", "meta", "bloomberg", "company", "companies", "business", "businesses",
   "growth", "economic", "economy", "prosperity", "conditions", "improving", "focused", "programmable", "financial",
   "services", "rethinking", "principles", "start", "scale", "million", "millions", "trillion", "trillions",
   "dollars", "equivalent", "gdp", "frontier", "solo", "founders", "established", "enterprises", "united",
-  "practical", "ambitious", "world", "world's", "faster", "everyone", "better", "open", "markets", "variety",
+  "practical", "ambitious", "faster", "everyone", "better", "open", "markets", "variety", "role", "roles",
   "customer", "customers", "base", "quality", "diversity", "products", "increase", "craft", "creativity",
   "unleashed", "smallest", "niches", "wholly", "contingent", "success", "invest", "unusual", "rate",
   "upgrades", "every", "single", "day", "compounding", "gains", "maintain", "reliable", "internet",
@@ -184,13 +184,14 @@ const STOP_WORDS = new Set([
   "field", "obtained", "summer", "equivalent", "professional", "internship", "side", "classwork",
   "mostly", "believe", "learned", "fundamentals", "general", "knowledge", "present", "previous",
   "internships", "collaboratively", "multi-person", "coding", "setting", "ability", "unfamiliar", "systems",
-  "form", "subject", "matter", "experts", "clear", "written", "communication", "skills", "explain",
+  "form", "subject", "experts", "clear", "written", "communication", "skills", "explain",
   "stakeholders", "members", "leverage", "tools", "accelerate", "development", "critical", "thinking",
   "judgement", "review", "refine", "validate", "outputs", "one", "specialized", "balanced",
-  "understanding", "safely", "update", "navigating", "managing", "bases", "leading", "contributing",
-  "alongside", "peers", "high", "complex", "technical", "obstacles", "independently", "knowing", "precisely",
+  "safely", "update", "navigating", "managing", "bases", "leading", "contributing",
+  "alongside", "peers", "high", "complex", "obstacles", "independently", "knowing", "precisely",
   "unblock", "oneself", "ask", "help", "strong", "h2", "h3", "h4", "div", "span", "p", "li", "ul", "ol",
-  "nbsp", "quot", "href", "amp"
+  "nbsp", "quot", "href", "amp", "looking", "move", "want", "great", "place", "builder", "energized",
+  "building", "without", "right", "work", "like", "time", "creating", "around"
 ]);
 
 const KNOWN_TECH_TERMS = new Set([
@@ -250,7 +251,8 @@ function formatDate(isoStr) {
 function keywords(text) {
   const plainText = stripHtml(text);
   
-  const reqMatch = plainText.match(/(minimum requirements|preferred qualifications|requirements|qualifications|responsibilities|tech stack|who you are|your role)/i);
+  // Slicing exclusively starting from technical requirements & qualifications sections
+  const reqMatch = plainText.match(/(minimum requirements|preferred qualifications|requirements|qualifications|responsibilities|tech stack)/i);
   const reqText = reqMatch ? plainText.slice(reqMatch.index) : plainText;
 
   const rawTokens = reqText.split(/[\s,;:()/\\–—•"'\`\[\]]+/);
@@ -770,9 +772,36 @@ function hydrateResume() {
         </div>
       </div>
 
+      <!-- Action Plan: Specific Changes Needed for Higher Score (PROMINENT AT TOP) -->
+      <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 0.75rem; padding: 1.15rem; margin-bottom: 1.25rem; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);">
+        <div style="font-family: var(--font-heading); font-size: 1rem; font-weight: 800; color: #60a5fa; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
+          <span style="display: flex; align-items: center; gap: 0.4rem;">
+            <span>🚀 RECOMMENDED RESUME IMPROVEMENTS</span>
+          </span>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; background: rgba(59, 130, 246, 0.25); border: 1px solid rgba(96, 165, 250, 0.3); padding: 0.25rem 0.6rem; border-radius: 0.4rem; color: #93c5fd; font-weight: 800;">
+            +${100 - totalHackerRank} PTS POSSIBLE
+          </span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          ${recommendations.length ? recommendations.map((rec, idx) => `
+            <div style="display: flex; align-items: flex-start; gap: 0.75rem; background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255, 255, 255, 0.08); padding: 0.8rem 0.95rem; border-radius: 0.5rem;">
+              <span style="font-size: 1.25rem; line-height: 1;">${rec.icon}</span>
+              <div style="flex: 1; font-size: 0.85rem;">
+                <div style="font-weight: 700; color: #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
+                  <span>Step ${idx + 1}: ${escapeHtml(rec.title)}</span>
+                  <span style="font-family: var(--font-mono); font-size: 0.775rem; color: #34d399; font-weight: 800; background: rgba(16, 185, 129, 0.12); padding: 0.15rem 0.45rem; border-radius: 0.3rem;">${rec.gain}</span>
+                </div>
+                <div style="color: #cbd5e1; margin-top: 0.3rem; line-height: 1.45;">${rec.detail}</div>
+              </div>
+            </div>
+          `).join('') : '<div style="font-size: 0.85rem; color: #34d399; font-weight: 600;">✓ Your resume meets all top ATS and HackerRank criteria!</div>'}
+        </div>
+      </div>
+
       <div style="margin-bottom: 1.15rem;">
         <div style="font-size: 0.825rem; font-weight: 700; color: #34d399; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
-          <span>✓ Matching Keywords (${present.length})</span>
+          <span>✓ Matching Technical Keywords (${present.length})</span>
           <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Found in your resume</span>
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; max-height: 110px; overflow-y: auto; padding: 0.25rem;">
@@ -782,34 +811,11 @@ function hydrateResume() {
 
       <div style="margin-bottom: 1.15rem;">
         <div style="font-size: 0.825rem; font-weight: 700; color: #fbbf24; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
-          <span>⚠️ Missing / High Impact Keywords (${missing.length})</span>
+          <span>⚠️ Missing High-Impact Keywords (${missing.length})</span>
           <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Consider adding to resume</span>
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; max-height: 110px; overflow-y: auto; padding: 0.25rem;">
           ${missing.length ? missing.map(term => `<span class="reason-tag" style="background: rgba(245, 158, 11, 0.12); border-color: rgba(251, 191, 36, 0.25); color: #fde047;">+ ${escapeHtml(term)}</span>`).join('') : '<span style="font-size: 0.8rem; color: #34d399;">Perfect! All key job terms covered.</span>'}
-        </div>
-      </div>
-
-      <!-- Action Plan: Specific Changes Needed for Higher Score -->
-      <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 0.75rem; padding: 1.15rem; margin-top: 1.25rem;">
-        <div style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 800; color: #60a5fa; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
-          <span>🚀 Recommended Changes for Higher Score</span>
-          <span style="font-family: var(--font-mono); font-size: 0.75rem; background: rgba(59, 130, 246, 0.2); padding: 0.2rem 0.5rem; border-radius: 0.3rem; color: #93c5fd;">+${100 - totalHackerRank} PTS POSSIBLE</span>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-          ${recommendations.length ? recommendations.map((rec, idx) => `
-            <div style="display: flex; align-items: flex-start; gap: 0.75rem; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.06); padding: 0.75rem 0.9rem; border-radius: 0.5rem;">
-              <span style="font-size: 1.2rem; line-height: 1;">${rec.icon}</span>
-              <div style="flex: 1; font-size: 0.825rem;">
-                <div style="font-weight: 700; color: #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
-                  <span>${idx + 1}. ${escapeHtml(rec.title)}</span>
-                  <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #34d399; font-weight: 800;">${rec.gain}</span>
-                </div>
-                <div style="color: var(--text-muted); margin-top: 0.25rem; line-height: 1.4;">${rec.detail}</div>
-              </div>
-            </div>
-          `).join('') : '<div style="font-size: 0.825rem; color: #34d399;">Your resume meets all top ATS and HackerRank criteria!</div>'}
         </div>
       </div>
     `;
