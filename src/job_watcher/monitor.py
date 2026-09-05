@@ -7,6 +7,7 @@ from pathlib import Path
 import httpx
 
 from .config import ROOT, companies, filters
+from .forecast import generate_forecasts
 from .matcher import score_job
 from .models import CheckStatus, CompanyConfig, Job, SourceResult
 from .sources import SOURCES
@@ -122,4 +123,5 @@ def run(data_dir: Path = ROOT / "data") -> list[Job]:
         [job["fingerprint"] for job in read_json(data_dir / "jobs.json", [])],
     )
     write_json(data_dir / "check_status.json", statuses)
+    generate_forecasts(data_dir)
     return [Job.model_validate(job) for job in new]
