@@ -144,6 +144,7 @@ function forecast() {
 
 
 const STOP_WORDS = new Set([
+  // Grammar stop words
   "a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any", "are", "aren't", "as", "at",
   "be", "because", "been", "before", "being", "below", "between", "both", "but", "by", "can", "can't", "cannot",
   "could", "couldn't", "did", "didn't", "do", "does", "doesn't", "doing", "don't", "down", "during", "each",
@@ -158,12 +159,38 @@ const STOP_WORDS = new Set([
   "we've", "were", "weren't", "what", "what's", "when", "when's", "where", "where's", "which", "while", "who",
   "who's", "whom", "why", "why's", "with", "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're",
   "you've", "your", "yours", "yourself", "yourselves",
-  "about", "company", "stripe", "google", "amazon", "meta", "bloomberg", "team", "teams", "work", "working",
-  "role", "who", "what", "where", "make", "easier", "cheaper", "first", "many", "much", "well", "also", "like",
-  "just", "help", "world", "people", "year", "years", "day", "days", "time", "way", "ways", "new", "our", "us",
-  "one", "two", "three", "best", "great", "high", "good", "will", "want", "looking", "think", "place", "places",
-  "strong", "about", "minimum", "requirements", "qualification", "qualifications", "preferred", "degree",
-  "strong", "h2", "h3", "h4", "div", "span", "p", "li", "ul", "ol", "nbsp", "quot", "href", "amp"
+
+  // Corporate background / marketing / general business prose words
+  "about", "stripe", "google", "amazon", "meta", "bloomberg", "company", "companies", "business", "businesses",
+  "growth", "economic", "economy", "prosperity", "conditions", "improving", "focused", "programmable", "financial",
+  "services", "rethinking", "principles", "start", "scale", "million", "millions", "trillion", "trillions",
+  "dollars", "equivalent", "gdp", "frontier", "solo", "founders", "established", "enterprises", "united",
+  "practical", "ambitious", "world", "world's", "faster", "everyone", "better", "open", "markets", "variety",
+  "customer", "customers", "base", "quality", "diversity", "products", "increase", "craft", "creativity",
+  "unleashed", "smallest", "niches", "wholly", "contingent", "success", "invest", "unusual", "rate",
+  "upgrades", "every", "single", "day", "compounding", "gains", "maintain", "reliable", "internet",
+  "entirely", "pieces", "ideas", "significant", "advances", "risk", "fraud", "years", "making", "safer",
+  "accessible", "people", "tend", "seriously", "fairly", "serious", "depending", "livelihoods", "admire",
+  "ambition", "intensity", "curiosity", "humility", "rigor", "effective", "knowledgeable", "domains",
+  "besides", "applied", "exercise", "understanding", "aspect", "society", "market", "working", "especially",
+  "innovative", "ones", "think", "best", "places", "learn", "works", "large", "enough", "individual",
+  "projects", "rapidly", "deployed", "meaningful", "fraction", "small", "agency", "outsized", "impact",
+  "teams", "center", "front", "meet", "moment", "urgency", "hard", "problems", "matter", "change", "build",
+  "career", "solutions", "precedent", "solving", "consequences", "successful", "stripes", "deeply",
+  "curious", "prefer", "joy", "discovery", "comfort", "certainty", "rigorous", "thinker", "appreciate",
+  "things", "worth", "tackled", "adaptable", "solver", "adapt", "quickly", "treat", "obstacles",
+  "opportunities", "embrace", "kindness", "encouraging", "measured", "risks", "act", "boldly", "absence",
+  "consensus", "minimum", "requirements", "qualification", "qualifications", "preferred", "degree",
+  "field", "obtained", "summer", "equivalent", "professional", "internship", "side", "classwork",
+  "mostly", "believe", "learned", "fundamentals", "general", "knowledge", "present", "previous",
+  "internships", "collaboratively", "multi-person", "coding", "setting", "ability", "unfamiliar", "systems",
+  "form", "subject", "matter", "experts", "clear", "written", "communication", "skills", "explain",
+  "stakeholders", "members", "leverage", "tools", "accelerate", "development", "critical", "thinking",
+  "judgement", "review", "refine", "validate", "outputs", "one", "specialized", "balanced",
+  "understanding", "safely", "update", "navigating", "managing", "bases", "leading", "contributing",
+  "alongside", "peers", "high", "complex", "technical", "obstacles", "independently", "knowing", "precisely",
+  "unblock", "oneself", "ask", "help", "strong", "h2", "h3", "h4", "div", "span", "p", "li", "ul", "ol",
+  "nbsp", "quot", "href", "amp"
 ]);
 
 const KNOWN_TECH_TERMS = new Set([
@@ -174,7 +201,8 @@ const KNOWN_TECH_TERMS = new Set([
   "distributed", "concurrency", "multithreading", "algorithms", "data structures", "system design", "database",
   "postgresql", "mysql", "mongodb", "redis", "kafka", "ai", "ml", "machine learning", "deep learning", "nlp",
   "llm", "security", "cryptography", "testing", "unit testing", "ci/cd", "linux", "unix", "code review",
-  "computer science", "bachelor's", "master's", "side projects", "classwork", "agency", "collaborative"
+  "computer science", "bachelor", "bachelor's", "master", "master's", "phd", "side projects", "classwork",
+  "collaborative", "production", "production systems", "large codebases"
 ]);
 
 function escapeHtml(value) {
@@ -221,31 +249,33 @@ function formatDate(isoStr) {
 
 function keywords(text) {
   const plainText = stripHtml(text);
-  const seen = new Set();
-  const rawTokens = plainText.split(/[\s,;:()/\\–—•"'\`\[\]]+/);
   
-  const extracted = [];
+  const reqMatch = plainText.match(/(minimum requirements|preferred qualifications|requirements|qualifications|responsibilities|tech stack|who you are|your role)/i);
+  const reqText = reqMatch ? plainText.slice(reqMatch.index) : plainText;
+
+  const rawTokens = reqText.split(/[\s,;:()/\\–—•"'\`\[\]]+/);
+  const seen = new Set();
+  const techMatches = [];
+  const domainMatches = [];
+
   for (let raw of rawTokens) {
-    let clean = raw.replace(/^[^a-zA-Z0-9+#.-]+|[^a-zA-Z0-9+#.-]+$/g, "");
+    let clean = raw.replace(/^[^a-zA-Z0-9+#-]+|[^a-zA-Z0-9+#-]+$/g, "").replace(/\.+$|\,+$|:+$|;+$/g, "");
     if (!clean) continue;
+    if (/^\d+$/.test(clean)) continue;
+    
     const lower = clean.toLowerCase();
-    
     if (STOP_WORDS.has(lower) || seen.has(lower)) continue;
-    if (clean.length < 3 && !["go", "c++", "c#", "ai", "ml", "ui", "ux", "ci", "cd"].includes(lower)) continue;
-    
-    seen.add(lower);
-    extracted.push(clean);
+
+    if (KNOWN_TECH_TERMS.has(lower)) {
+      seen.add(lower);
+      techMatches.push(clean);
+    } else if (clean.length >= 4 && !STOP_WORDS.has(lower)) {
+      seen.add(lower);
+      domainMatches.push(clean);
+    }
   }
 
-  extracted.sort((a, b) => {
-    const aTech = KNOWN_TECH_TERMS.has(a.toLowerCase());
-    const bTech = KNOWN_TECH_TERMS.has(b.toLowerCase());
-    if (aTech && !bTech) return -1;
-    if (!aTech && bTech) return 1;
-    return 0;
-  });
-
-  return extracted.slice(0, 60);
+  return [...techMatches, ...domainMatches].slice(0, 35);
 }
 
 async function load() {
