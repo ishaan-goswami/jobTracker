@@ -441,6 +441,11 @@ nav button.active {
 .company-tag.company-ramp { background: rgba(101, 163, 13, 0.28); border: 1px solid rgba(101, 163, 13, 0.65); color: #bef264; }
 .company-tag.company-millennium-management { background: rgba(14, 116, 144, 0.28); border: 1px solid rgba(14, 116, 144, 0.65); color: #67e8f9; }
 .company-tag.company-bloomberg { background: rgba(245, 158, 11, 0.28); border: 1px solid rgba(245, 158, 11, 0.65); color: #fde047; }
+.company-tag.company-airbnb { background: rgba(244, 63, 94, 0.28); border: 1px solid rgba(244, 63, 94, 0.65); color: #fda4af; }
+.company-tag.company-coinbase { background: rgba(37, 99, 235, 0.28); border: 1px solid rgba(37, 99, 235, 0.65); color: #93c5fd; }
+.company-tag.company-datadog { background: rgba(147, 51, 234, 0.28); border: 1px solid rgba(147, 51, 234, 0.65); color: #d8b4fe; }
+.company-tag.company-paypal { background: rgba(3, 105, 161, 0.28); border: 1px solid rgba(3, 105, 161, 0.65); color: #7dd3fc; }
+.company-tag.company-roblox { background: rgba(225, 29, 72, 0.28); border: 1px solid rgba(225, 29, 72, 0.65); color: #fca5a5; }
 
 /* Match Score Pill */
 .match-pill {

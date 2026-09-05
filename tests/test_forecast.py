@@ -23,7 +23,7 @@ def test_generate_forecasts(tmp_path: Path):
     (data_dir / "jobs.json").write_text('[{"company_id": "google", "is_open": true}]', encoding="utf-8")
 
     forecasts = generate_forecasts(data_dir)
-    assert len(forecasts) == 17
+    assert len(forecasts) == 22
     
     google_item = next(f for f in forecasts if f["company_id"] == "google")
     assert google_item["status_label"] == "🟢 OPEN NOW"

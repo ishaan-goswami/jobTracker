@@ -169,4 +169,54 @@ companies:
   - United States
   include_keywords: []
   exclude_keywords: []
+- id: airbnb
+  name: Airbnb
+  enabled: true
+  careers_url: https://careers.airbnb.com/
+  source_type: greenhouse
+  source_identifier: airbnb
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: coinbase
+  name: Coinbase
+  enabled: true
+  careers_url: https://www.coinbase.com/careers/positions
+  source_type: greenhouse
+  source_identifier: coinbase
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: datadog
+  name: Datadog
+  enabled: true
+  careers_url: https://www.datadoghq.com/careers/
+  source_type: greenhouse
+  source_identifier: datadog
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: paypal
+  name: PayPal
+  enabled: true
+  careers_url: https://www.paypal.com/us/webapps/mpp/jobs
+  source_type: unsupported
+  source_identifier: ''
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+- id: roblox
+  name: Roblox
+  enabled: true
+  careers_url: https://careers.roblox.com/
+  source_type: greenhouse
+  source_identifier: roblox
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
 

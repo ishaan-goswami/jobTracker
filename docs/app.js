@@ -561,6 +561,7 @@ function referrals() {
   const hasKey = Boolean(state.geminiApiKey);
   const trackedCompanies = Array.from(new Set([
     "Stripe", "Amazon", "Google", "Meta", "Bloomberg", "Salesforce", "NCR Voyix", "HubSpot",
+    "Airbnb", "Coinbase", "Datadog", "PayPal", "Roblox",
     ...state.jobs.map(j => j.company_name)
   ])).sort();
 
