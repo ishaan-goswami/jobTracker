@@ -694,6 +694,55 @@ function hydrateResume() {
 
     const totalHackerRank = Math.max(0, Math.min(100, osScore + projScore + prodScore + skillsScore + bonus - deductions));
 
+    // Generate Actionable Recommendations for Higher Score
+    const recommendations = [];
+
+    if (missing.length > 0) {
+      const topMissingTech = missing.slice(0, 5).join(", ");
+      recommendations.push({
+        icon: "⚡",
+        title: "Incorporate Missing High-Impact Keywords",
+        detail: `Add these key missing technical terms into your Skills section or project bullet points: <strong>${escapeHtml(topMissingTech)}</strong>.`,
+        gain: `+${Math.min(15, missing.length * 3)} pts`
+      });
+    }
+
+    if (!hasGithub) {
+      recommendations.push({
+        icon: "🐙",
+        title: "Add Active GitHub Profile URL",
+        detail: "Include your GitHub profile link (e.g. <code>github.com/username</code>) in your contact header to satisfy the Open Source audit.",
+        gain: "+8 pts"
+      });
+    }
+
+    if (!hasLinks) {
+      recommendations.push({
+        icon: "🔗",
+        title: "Include Live Demo or Repository Links",
+        detail: "Add live demo URLs or GitHub project repository links to eliminate the missing links deduction.",
+        gain: "+5 pts"
+      });
+    }
+
+    if (!hasIntern && !hasDevExp) {
+      recommendations.push({
+        icon: "💼",
+        title: "Highlight Software Engineering Title Keywords",
+        detail: "Use explicit software engineering title terms like <em>'Software Engineer Intern'</em> or <em>'Full-Stack Developer'</em> in section headers.",
+        gain: "+15 pts"
+      });
+    }
+
+    if (!/google summer of code|gsoc|maintainer|hackathon/i.test(resumeText)) {
+      recommendations.push({
+        icon: "🏆",
+        title: "Highlight Competitions & Open-Source Achievements",
+        detail: "Mention any hackathon awards, open-source pull requests, or technical competitions for maximum ATS tier-1 ranking.",
+        gain: "+10 pts"
+      });
+    }
+
     result.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
         <div>
@@ -726,23 +775,42 @@ function hydrateResume() {
           <span>✓ Matching Keywords (${present.length})</span>
           <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Found in your resume</span>
         </div>
-        <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; max-height: 120px; overflow-y: auto; padding: 0.25rem;">
+        <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; max-height: 110px; overflow-y: auto; padding: 0.25rem;">
           ${present.length ? present.map(term => `<span class="reason-tag" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(52, 211, 153, 0.3); color: #6ee7b7;">✓ ${escapeHtml(term)}</span>`).join('') : '<span style="font-size: 0.8rem; color: var(--text-muted);">No keyword matches detected yet.</span>'}
         </div>
       </div>
 
-      <div style="margin-bottom: 1rem;">
+      <div style="margin-bottom: 1.15rem;">
         <div style="font-size: 0.825rem; font-weight: 700; color: #fbbf24; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
           <span>⚠️ Missing / High Impact Keywords (${missing.length})</span>
           <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Consider adding to resume</span>
         </div>
-        <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; max-height: 140px; overflow-y: auto; padding: 0.25rem;">
+        <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; max-height: 110px; overflow-y: auto; padding: 0.25rem;">
           ${missing.length ? missing.map(term => `<span class="reason-tag" style="background: rgba(245, 158, 11, 0.12); border-color: rgba(251, 191, 36, 0.25); color: #fde047;">+ ${escapeHtml(term)}</span>`).join('') : '<span style="font-size: 0.8rem; color: #34d399;">Perfect! All key job terms covered.</span>'}
         </div>
       </div>
 
-      <div style="font-size: 0.775rem; color: var(--text-muted); background: rgba(255, 255, 255, 0.03); border-radius: 0.5rem; padding: 0.65rem 0.85rem; margin-top: 1rem;">
-        💡 <strong>Audit Tip:</strong> ${hasGithub ? '✓ GitHub link detected.' : '⚠️ Add your GitHub profile URL to earn +8 HackerRank points.'} ${hasLinks ? '✓ Live project links detected.' : '⚠️ Include live demo/app links to avoid missing links deduction (-5 pts).'}
+      <!-- Action Plan: Specific Changes Needed for Higher Score -->
+      <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 0.75rem; padding: 1.15rem; margin-top: 1.25rem;">
+        <div style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 800; color: #60a5fa; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
+          <span>🚀 Recommended Changes for Higher Score</span>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; background: rgba(59, 130, 246, 0.2); padding: 0.2rem 0.5rem; border-radius: 0.3rem; color: #93c5fd;">+${100 - totalHackerRank} PTS POSSIBLE</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          ${recommendations.length ? recommendations.map((rec, idx) => `
+            <div style="display: flex; align-items: flex-start; gap: 0.75rem; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.06); padding: 0.75rem 0.9rem; border-radius: 0.5rem;">
+              <span style="font-size: 1.2rem; line-height: 1;">${rec.icon}</span>
+              <div style="flex: 1; font-size: 0.825rem;">
+                <div style="font-weight: 700; color: #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
+                  <span>${idx + 1}. ${escapeHtml(rec.title)}</span>
+                  <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #34d399; font-weight: 800;">${rec.gain}</span>
+                </div>
+                <div style="color: var(--text-muted); margin-top: 0.25rem; line-height: 1.4;">${rec.detail}</div>
+              </div>
+            </div>
+          `).join('') : '<div style="font-size: 0.825rem; color: #34d399;">Your resume meets all top ATS and HackerRank criteria!</div>'}
+        </div>
       </div>
     `;
   });
