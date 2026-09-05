@@ -560,7 +560,7 @@ function resume() {
 function referrals() {
   const hasKey = Boolean(state.geminiApiKey);
   const trackedCompanies = Array.from(new Set([
-    "Stripe", "Amazon", "Google", "Meta", "Bloomberg", "Salesforce", "NCR Voyix",
+    "Stripe", "Amazon", "Google", "Meta", "Bloomberg", "Salesforce", "NCR Voyix", "HubSpot",
     ...state.jobs.map(j => j.company_name)
   ])).sort();
 
