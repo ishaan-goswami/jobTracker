@@ -3,36 +3,52 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>2027 New Grad Job Watcher — Software Engineering</title>
-  <meta name="description" content="Personal automated job-monitoring dashboard tracking 2027 new-grad and early-career software engineering roles.">
-  <link rel="stylesheet" href="styles.css?v=7">
+  <title>2027 SWE Radar — New Grad & Early Career Job Watcher</title>
+  <meta name="description" content="Automated job monitoring dashboard tracking 2027 new-grad and early-career software engineering roles at top tech companies.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
+  <div class="bg-grid"></div>
+  <div class="bg-glow-spot"></div>
+
   <div class="container">
     <header>
       <div class="header-brand">
-        <h1>2027 SWE Job Watcher</h1>
-        <p>Dec 2026 Graduate Target · Early 2027 Full-Time SWE Roles</p>
+        <div class="brand-title-row">
+          <h1>2027 SWE RADAR</h1>
+          <span class="cyber-chip">DEC 2026 GRAD</span>
+        </div>
+        <p>Targeting Early 2027 Full-Time SWE Graduate & Entry Level Positions</p>
       </div>
-      <div class="live-badge">
-        <span class="live-dot"></span>
-        <span>Automated Monitoring Active</span>
+
+      <div class="header-status">
+        <div class="live-badge">
+          <span class="live-dot-container">
+            <span class="live-dot-ring"></span>
+            <span class="live-dot"></span>
+          </span>
+          <span>AUTONOMOUS MONITOR ACTIVE</span>
+        </div>
       </div>
     </header>
 
     <nav id="nav" aria-label="Main Navigation">
-      <button data-view="overview" class="active">Overview</button>
-      <button data-view="jobs">Open Jobs (<span id="jobs-count-badge">0</span>)</button>
-      <button data-view="companies">Companies (<span id="companies-count-badge">0</span>)</button>
-      <button data-view="forecast">Opening Forecast</button>
-      <button data-view="resume">Resume Tailoring</button>
-      <button data-view="referrals">Referrals</button>
-      <button data-view="settings">Settings</button>
+      <button data-view="overview" class="active">⚡ Overview</button>
+      <button data-view="jobs">🔥 Open Roles (<span id="jobs-count-badge">0</span>)</button>
+      <button data-view="companies">🏢 Companies (<span id="companies-count-badge">0</span>)</button>
+      <button data-view="forecast">⏳ Opening Forecast</button>
+      <button data-view="resume">📄 Resume Tailor</button>
+      <button data-view="referrals">🤝 Referrals</button>
+      <button data-view="settings">⚙️ Settings</button>
     </nav>
 
     <main id="app" aria-live="polite"></main>
   </div>
 
-  <script src="app.js?v=7"></script>
+  <script src="app.js?v=8"></script>
 </body>
 </html>
+
