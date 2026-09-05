@@ -1,4 +1,3 @@
-const app = document.querySelector("#app");
 const state = {
   jobs: [],
   statuses: [],
@@ -6,7 +5,143 @@ const state = {
   activeView: "overview",
   searchQuery: "",
   matchFilter: "all",
+  forecastFilter: "all",
+  forecastSort: "soonest",
 };
+
+function getDynamicCountdown(item) {
+  const isCurrentlyOpen = (item.confidence || "").includes("Active") || (item.expected_opening_date || "").includes("🟢");
+  if (isCurrentlyOpen) {
+    return {
+      badgeClass: "active",
+      badgeText: "🟢 OPEN NOW",
+      daysText: "Currently Active",
+      sortScore: -1,
+    };
+  }
+
+  const startDateStr = item.target_start_date;
+  const endDateStr = item.target_end_date;
+  
+  if (!startDateStr) {
+    return {
+      badgeClass: "imminent",
+      badgeText: "⏳ Date TBD",
+      daysText: "Date TBD",
+      sortScore: 999,
+    };
+  }
+
+  const now = new Date();
+  const todayUtc = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+  
+  const [sY, sM, sD] = startDateStr.split("-").map(Number);
+  const startDate = Date.UTC(sY, sM - 1, sD);
+  
+  const [eY, eM, eD] = (endDateStr || startDateStr).split("-").map(Number);
+  const endDate = Date.UTC(eY, eM - 1, eD);
+
+  const msPerDay = 1000 * 60 * 60 * 24;
+  const daysStart = Math.ceil((startDate - todayUtc) / msPerDay);
+  const daysEnd = Math.ceil((endDate - todayUtc) / msPerDay);
+
+  if (daysStart <= 0 && daysEnd >= 0) {
+    return {
+      badgeClass: "imminent",
+      badgeText: `⚡ Active Window (Within ~${daysEnd}d)`,
+      daysText: `Expected any day within ${daysEnd} day${daysEnd !== 1 ? 's' : ''}`,
+      sortScore: 0,
+    };
+  } else if (daysStart > 0) {
+    const rangeStr = daysStart === daysEnd ? `~${daysStart} days` : `~${daysStart}–${daysEnd} days`;
+    return {
+      badgeClass: "upcoming",
+      badgeText: `⏳ Opens in ${rangeStr}`,
+      daysText: `Opening in roughly ${rangeStr}`,
+      sortScore: daysStart,
+    };
+  } else {
+    return {
+      badgeClass: "imminent",
+      badgeText: `⚡ Expected Any Day`,
+      daysText: `Opening period has arrived`,
+      sortScore: 0,
+    };
+  }
+}
+
+function forecast() {
+  let list = state.forecasts.map(f => ({ ...f, countdown: getDynamicCountdown(f) }));
+
+  if (state.forecastFilter === "active") {
+    list = list.filter(f => f.countdown.badgeClass === "active");
+  } else if (state.forecastFilter === "upcoming") {
+    list = list.filter(f => f.countdown.badgeClass !== "active");
+  }
+
+  if (state.forecastSort === "alphabetical") {
+    list.sort((a, b) => a.company_name.localeCompare(b.company_name));
+  } else {
+    // default: soonest opening
+    list.sort((a, b) => a.countdown.sortScore - b.countdown.sortScore);
+  }
+
+  const openCount = state.forecasts.filter(f => getDynamicCountdown(f).badgeClass === "active").length;
+  const upcomingCount = state.forecasts.filter(f => getDynamicCountdown(f).badgeClass !== "active").length;
+
+  return `
+    <div class="card-box">
+      <h3>Targeted 2027 New-Grad Role Opening Timeline</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+        Real-time dynamic countdowns and target opening dates for 2027 full-time software engineering university graduate programs.
+      </p>
+
+      <div class="filter-bar" style="margin-bottom: 1.5rem;">
+        <div class="chip-filters">
+          <button class="chip ${state.forecastFilter === 'all' ? 'active' : ''}" data-ffilter="all">All (${state.forecasts.length})</button>
+          <button class="chip ${state.forecastFilter === 'upcoming' ? 'active' : ''}" data-ffilter="upcoming">Upcoming Countdowns (${upcomingCount})</button>
+          <button class="chip ${state.forecastFilter === 'active' ? 'active' : ''}" data-ffilter="active">🟢 Open Now (${openCount})</button>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.825rem; color: var(--text-muted);">
+          <span>Sort by:</span>
+          <select id="forecastSortSelect" style="width: auto; padding: 0.35rem 0.65rem; font-size: 0.8rem;">
+            <option value="soonest" ${state.forecastSort !== 'alphabetical' ? 'selected' : ''}>⏳ Soonest Opening</option>
+            <option value="alphabetical" ${state.forecastSort === 'alphabetical' ? 'selected' : ''}>🔤 Company (A–Z)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem;">
+        ${list.length ? list.map(f => `
+          <div class="forecast-card" style="border-top: 3px solid ${f.confidence.includes('Confirmed') ? '#34d399' : (f.confidence.includes('Active') ? '#a78bfa' : '#60a5fa')};">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                <span class="company-tag company-${escapeHtml((f.company_id || f.company_name).toLowerCase())}">${escapeHtml(f.company_name)}</span>
+                <span class="forecast-countdown-badge ${f.countdown.badgeClass}">
+                  ${escapeHtml(f.countdown.badgeText)}
+                </span>
+              </div>
+              
+              <div style="color: #f1f5f9; font-weight: 700; font-size: 1.05rem; margin-top: 0.5rem;">
+                📅 Target: ${escapeHtml(f.expected_opening_date)}
+              </div>
+              
+              <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.4rem; line-height: 1.4;">
+                ${escapeHtml(f.historical_cycle)}
+              </div>
+            </div>
+
+            <div style="padding-top: 0.65rem; border-top: 1px solid rgba(255, 255, 255, 0.06); font-size: 0.775rem; color: var(--text-subtle); display: flex; justify-content: space-between;">
+              <span>Confidence: <strong style="color: var(--text-muted);">${escapeHtml(f.confidence)}</strong></span>
+              <span>Window: ${escapeHtml(f.expected_opening_window)}</span>
+            </div>
+          </div>
+        `).join('') : '<div class="notice-box">No forecast entries match your filter.</div>'}
+      </div>
+    </div>
+  `;
+}
+
 
 const STOP_WORDS = new Set([
   "and", "are", "for", "from", "have", "that", "the", "this", "with", "you", "your", "will", "our", "work", "team"
@@ -262,31 +397,7 @@ function companies() {
   `;
 }
 
-function forecast() {
-  const cards = state.forecasts.map(f => `
-    <div class="metric-card" style="border-top: 3px solid ${f.confidence.includes('Confirmed') ? '#34d399' : (f.confidence.includes('Active') ? '#a78bfa' : '#60a5fa')};">
-      <div style="margin-bottom: 0.4rem;">
-        <span class="company-tag company-${escapeHtml(f.company_id.toLowerCase())}">${escapeHtml(f.company_name)}</span>
-      </div>
-      <div style="color: #34d399; font-weight: 600; margin-top: 0.25rem;">📅 ${escapeHtml(f.expected_opening_date)}</div>
-      <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.35rem;">${escapeHtml(f.historical_cycle)}</div>
-      <div class="lbl" style="margin-top: 0.5rem;">Confidence: ${escapeHtml(f.confidence)}</div>
-    </div>
-  `).join('');
 
-  return `
-    <div class="card-box">
-      <h3>Targeted 2027 New-Grad Role Opening Timeline</h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
-        Exact targeted opening dates and historical cycle predictions for 2027 full-time SWE graduate roles.
-      </p>
-
-      <div class="metrics-grid">
-        ${cards || '<div class="notice-box">No forecast data loaded.</div>'}
-      </div>
-    </div>
-  `;
-}
 
 function resume() {
   const options = state.jobs.map((job, index) => (
@@ -513,6 +624,23 @@ function hydrateReferrals() {
   });
 }
 
+function hydrateForecastEvents() {
+  document.querySelectorAll(".chip[data-ffilter]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      state.forecastFilter = chip.dataset.ffilter;
+      render("forecast");
+    });
+  });
+
+  const select = document.querySelector("#forecastSortSelect");
+  if (select) {
+    select.addEventListener("change", (e) => {
+      state.forecastSort = e.target.value;
+      render("forecast");
+    });
+  }
+}
+
 function render(view) {
   state.activeView = view;
   
@@ -524,6 +652,7 @@ function render(view) {
   if (views[view]) {
     app.innerHTML = views[view]();
     if (view === "jobs") hydrateJobsEvents();
+    if (view === "forecast") hydrateForecastEvents();
     if (view === "resume") hydrateResume();
     if (view === "referrals") hydrateReferrals();
   }
