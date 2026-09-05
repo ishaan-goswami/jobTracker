@@ -159,3 +159,14 @@ companies:
   - United States
   include_keywords: []
   exclude_keywords: []
+- id: bloomberg
+  name: Bloomberg
+  enabled: true
+  careers_url: https://careers.bloomberg.com/job/search
+  source_type: unsupported
+  source_identifier: ''
+  locations:
+  - United States
+  include_keywords: []
+  exclude_keywords: []
+

@@ -164,6 +164,16 @@ HISTORICAL_OBSERVATIONS = [
         "historical_cycle": "Millennium Quantitative & SWE Campus hiring.",
         "confidence": "Medium",
     },
+    {
+        "company_id": "bloomberg",
+        "company_name": "Bloomberg",
+        "expected_opening_date": "Sept 8 – Sept 15, 2026",
+        "target_start_date": "2026-09-08",
+        "target_end_date": "2026-09-15",
+        "expected_opening_window": "Early September",
+        "historical_cycle": "Bloomberg Software Engineer (New Grad) roles open early September.",
+        "confidence": "Confirmed / Very High",
+    },
 ]
 
 

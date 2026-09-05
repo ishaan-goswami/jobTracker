@@ -407,6 +407,12 @@ nav button.active {
   color: #67e8f9;
 }
 
+.company-tag.company-bloomberg {
+  background: rgba(245, 158, 11, 0.28);
+  border: 1px solid rgba(245, 158, 11, 0.65);
+  color: #fde047;
+}
+
 .match-pill {
   padding: 0.3rem 0.75rem;
   border-radius: 9999px;
