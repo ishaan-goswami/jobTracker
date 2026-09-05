@@ -7,6 +7,7 @@ const state = {
   matchFilter: "all",
   forecastFilter: "all",
   forecastSort: "soonest",
+  geminiApiKey: localStorage.getItem("gemini_api_key") || "",
 };
 
 function getDynamicCountdown(item) {
@@ -557,36 +558,85 @@ function resume() {
 }
 
 function referrals() {
+  const hasKey = Boolean(state.geminiApiKey);
+
   return `
     <div class="card-box">
-      <h3>Referral Outreach Drafter</h3>
-      <div class="notice-box">
-        🔒 <strong>Local Data Protection:</strong> All referral contact details, names, and outreach history are stored strictly in local private files (<code>config/candidate_profile.yaml</code> and <code>private/referrals.json</code>) and are excluded from GitHub.
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+        <div>
+          <h3>🤝 AI Referral Outreach Drafter</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.2rem;">
+            Generate human-sounding, highly personalized outreach notes tailored to recruiters, alumni, and engineering connections using Google Gemini AI.
+          </p>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 0.775rem; background: ${hasKey ? 'rgba(16, 185, 129, 0.15)' : 'rgba(245, 158, 11, 0.15)'}; border: 1px solid ${hasKey ? 'rgba(52, 211, 153, 0.35)' : 'rgba(251, 191, 36, 0.35)'}; color: ${hasKey ? '#6ee7b7' : '#fde047'}; padding: 0.35rem 0.75rem; border-radius: 0.5rem; font-weight: 700;">
+          ${hasKey ? '✨ Gemini AI Engine: Connected' : '🔑 Gemini Key Optional'}
+        </div>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+      <!-- Gemini Key Connection Box -->
+      <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 0.75rem; padding: 1.15rem; margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem;">
+          <label for="geminiApiKeyInput" style="margin: 0; font-size: 0.875rem; color: #f1f5f9; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
+            <span>⚡ Connect Free Google Gemini AI Key</span>
+          </label>
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="font-size: 0.8rem; color: #60a5fa; text-decoration: underline;">
+            Get a free key in 5s at Google AI Studio ↗
+          </a>
+        </div>
+        <div style="display: flex; gap: 0.6rem; align-items: center;">
+          <input type="password" id="geminiApiKeyInput" placeholder="Paste your free Gemini API key (e.g. AIzaSy...)" value="${escapeHtml(state.geminiApiKey)}" style="font-family: var(--font-mono); font-size: 0.85rem; padding: 0.65rem 0.85rem; background: rgba(3, 7, 18, 0.85); border-color: rgba(255, 255, 255, 0.12); flex: 1;">
+          <button id="saveGeminiKeyBtn" class="btn-primary" style="font-size: 0.825rem; padding: 0.65rem 1.15rem;">
+            ${hasKey ? 'Update Key' : 'Save Key'}
+          </button>
+        </div>
+        <p style="font-size: 0.775rem; color: var(--text-subtle); margin-top: 0.5rem; line-height: 1.4;">
+          🔒 Stored strictly in your browser's local storage. Never committed to GitHub or sent to any third-party servers.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.75rem;">
         <div>
-          <label for="messageKind">Outreach Type</label>
-          <select id="messageKind">
-            <option value="connection">LinkedIn Connection Note</option>
-            <option value="referral">Initial Referral Request</option>
-            <option value="follow_up">Follow-Up Note</option>
-            <option value="thanks">Thank You Note</option>
+          <label for="messageKind" style="margin-top: 0;">Outreach Goal / Type</label>
+          <select id="messageKind" style="font-size: 0.9rem; padding: 0.75rem 0.9rem; background: rgba(3, 7, 18, 0.85);">
+            <option value="connection">LinkedIn Connection Note (< 300 Chars)</option>
+            <option value="referral">Direct Referral Request</option>
+            <option value="follow_up">Application Follow-Up Note</option>
+            <option value="thanks">Networking / Post-Interview Thank You</option>
           </select>
 
           <label for="recipientName">Recipient Name</label>
-          <input type="text" id="recipientName" placeholder="e.g. Alex">
+          <input type="text" id="recipientName" placeholder="e.g. Alex Chen" style="font-size: 0.9rem; padding: 0.75rem 0.9rem; background: rgba(3, 7, 18, 0.85);">
 
-          <label for="messageFacts">Specific Facts / Context to Mention</label>
-          <textarea id="messageFacts" rows="5" placeholder="e.g. Alumni connection, shared interest in AI infra, or application link..."></textarea>
+          <label for="recipientCompany">Company & Role (Optional)</label>
+          <input type="text" id="recipientCompany" placeholder="e.g. Senior Software Engineer at Stripe" style="font-size: 0.9rem; padding: 0.75rem 0.9rem; background: rgba(3, 7, 18, 0.85);">
 
-          <button id="draftMessage" class="btn-primary">Generate Draft</button>
+          <label for="messageFacts">Specific Facts / Personal Context to Mention</label>
+          <textarea id="messageFacts" rows="5" placeholder="e.g. Georgia Tech alumni connection, saw your recent post on high-throughput distributed systems, applying for 2027 SWE New Grad role..." style="font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.55; background: rgba(3, 7, 18, 0.85); color: #cbd5e1;"></textarea>
+
+          <label for="messageTone">Tone & Persona</label>
+          <select id="messageTone" style="font-size: 0.875rem; padding: 0.65rem 0.85rem; background: rgba(3, 7, 18, 0.85);">
+            <option value="warm_alumni">Warm & Alumni-Focused (Georgia Tech CS)</option>
+            <option value="professional_direct">Professional & Direct</option>
+            <option value="casual_concise">Casual & Quick DM</option>
+          </select>
+
+          <button id="draftMessage" class="btn-primary" style="width: 100%; justify-content: center; font-size: 0.95rem; padding: 0.8rem 1.5rem; margin-top: 1.25rem;">
+            ⚡ Generate AI Draft with Gemini
+          </button>
         </div>
 
         <div>
-          <h4 style="margin-bottom: 0.5rem; color: #f1f5f9;">Generated Local Message</h4>
-          <div id="messageDraft" style="background: var(--bg-main); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 0.5rem; min-height: 200px; font-size: 0.9rem; font-family: var(--font-sans);">
-            Drafts will appear here. No messages are sent automatically.
+          <h4 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #f1f5f9; margin-bottom: 0.85rem; display: flex; align-items: center; justify-content: space-between;">
+            <span>Generated Outreach Drafts</span>
+          </h4>
+
+          <div id="messageDraftResult" style="background: rgba(3, 7, 18, 0.85); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 0.85rem; min-height: 440px;">
+            <div style="text-align: center; color: var(--text-muted); padding: 4rem 1rem;">
+              <div style="font-size: 2.75rem; margin-bottom: 0.5rem;">💌</div>
+              <p style="font-weight: 600; color: #cbd5e1; font-size: 1rem;">Fill out the recipient details and click <strong>Generate AI Draft</strong></p>
+              <p style="font-size: 0.825rem; margin-top: 0.35rem; color: var(--text-subtle);">Creates unique, human-sounding outreach messages powered by Gemini AI.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -595,6 +645,8 @@ function referrals() {
 }
 
 function settings() {
+  const hasKey = Boolean(state.geminiApiKey);
+
   return `
     <div class="card-box">
       <h3>System Configuration & Privacy Settings</h3>
@@ -602,8 +654,27 @@ function settings() {
         Configuration details loaded from local <code>config/companies.yaml</code> and <code>config/filters.yaml</code>.
       </p>
 
+      <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 0.75rem; padding: 1.15rem; margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem;">
+          <label for="settingsGeminiKeyInput" style="margin: 0; font-size: 0.875rem; color: #f1f5f9; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
+            <span>🤖 Google Gemini AI Key Status</span>
+          </label>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: ${hasKey ? '#34d399' : '#fbbf24'}; font-weight: 700;">
+            ${hasKey ? '✓ Connected' : '⚠️ Not Connected'}
+          </span>
+        </div>
+        <div style="display: flex; gap: 0.6rem; align-items: center;">
+          <input type="password" id="settingsGeminiKeyInput" placeholder="Paste your Gemini API key..." value="${escapeHtml(state.geminiApiKey)}" style="font-family: var(--font-mono); font-size: 0.85rem; padding: 0.65rem 0.85rem; background: rgba(3, 7, 18, 0.85); border-color: rgba(255, 255, 255, 0.12); flex: 1;">
+          <button id="settingsSaveGeminiKeyBtn" class="btn-primary" style="font-size: 0.825rem; padding: 0.65rem 1.15rem;">
+            Save Key
+          </button>
+        </div>
+      </div>
+
       <pre>
 candidate:
+  school: Georgia Institute of Technology
+  degree: Bachelors/Masters (BS/MS) in Computer Science
   graduation_date: "2026-12"
   preferred_start_date: "2027-01"
   target_graduation_years: [2026]
@@ -825,25 +896,219 @@ function hydrateResume() {
   });
 }
 
-function hydrateReferrals() {
-  const button = document.querySelector("#draftMessage");
-  if (!button) return;
+async function callGeminiAPI(apiKey, prompt) {
+  const models = ["gemini-2.5-flash", "gemini-1.5-flash"];
+  let lastError = null;
 
-  button.addEventListener("click", () => {
-    const name = document.querySelector("#recipientName").value || "there";
-    const facts = document.querySelector("#messageFacts").value;
-    const kind = document.querySelector("#messageKind").value;
-    const context = "I'm a CS student graduating December 2026, looking for early-2027 new-grad software engineering roles.";
-    
-    const templates = {
-      connection: `Hi ${name}, ${context} ${facts} I'd love to connect!`,
-      referral: `Hi ${name}, ${context} ${facts} If you feel comfortable, would you be open to referring me for a 2027 SWE role? No pressure at all either way.`,
-      follow_up: `Hi ${name}, just following up on my earlier note regarding ${facts}. Thanks again for your time!`,
-      thanks: `Hi ${name}, thank you so much for your guidance and support with my application. I really appreciate it!`,
+  for (const model of models) {
+    try {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }]
+        })
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error?.message || `API HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (text) return text;
+    } catch (e) {
+      lastError = e;
+    }
+  }
+
+  throw lastError || new Error("Unable to reach Gemini API. Check network or API key.");
+}
+
+function hydrateReferrals() {
+  const saveBtn = document.querySelector("#saveGeminiKeyBtn");
+  const keyInput = document.querySelector("#geminiApiKeyInput");
+  if (saveBtn && keyInput) {
+    saveBtn.addEventListener("click", () => {
+      const val = keyInput.value.trim();
+      state.geminiApiKey = val;
+      localStorage.setItem("gemini_api_key", val);
+      render("referrals");
+    });
+  }
+
+  const draftBtn = document.querySelector("#draftMessage");
+  const resultBox = document.querySelector("#messageDraftResult");
+
+  if (!draftBtn || !resultBox) return;
+
+  draftBtn.addEventListener("click", async () => {
+    const name = document.querySelector("#recipientName")?.value.trim() || "Alex";
+    const company = document.querySelector("#recipientCompany")?.value.trim() || "";
+    const facts = document.querySelector("#messageFacts")?.value.trim() || "";
+    const kind = document.querySelector("#messageKind")?.value || "connection";
+    const tone = document.querySelector("#messageTone")?.value || "warm_alumni";
+
+    const kindLabels = {
+      connection: "LinkedIn Connection Note (< 300 Chars)",
+      referral: "Direct Referral Request",
+      follow_up: "Application Follow-Up Note",
+      thanks: "Networking / Post-Interview Thank You"
     };
 
-    document.querySelector("#messageDraft").textContent = templates[kind];
+    resultBox.innerHTML = `
+      <div style="text-align: center; color: #60a5fa; padding: 4rem 1rem;">
+        <div style="font-size: 2.25rem; margin-bottom: 0.75rem; display: inline-block;">⚡</div>
+        <p style="font-weight: 700; font-size: 1rem; color: #f1f5f9;">Generating Tailored Draft with Gemini AI...</p>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.35rem;">Crafting custom outreach variations for ${escapeHtml(name)}</p>
+      </div>
+    `;
+
+    if (state.geminiApiKey) {
+      try {
+        const promptText = `You are an expert career strategist and technical recruiter helping a candidate draft a professional, compelling, highly authentic outreach message.
+
+Candidate Background:
+- Candidate Name: Ishaan Goswami
+- University: Georgia Institute of Technology (GT)
+- Degree: Bachelors/Masters (BS/MS) in Computer Science (GPA 4.0)
+- Target: 2027 Full-Time Software Engineering New Grad & Entry Level Roles
+
+Target Recipient Details:
+- Recipient Name: ${name}
+- Target Role & Company: ${company || "Software Engineer / Tech Professional"}
+- Outreach Category: ${kindLabels[kind]}
+- User Specific Context & Facts to Mention: ${facts || "No specific details provided beyond alumni / tech connection"}
+- Desired Tone & Style: ${tone}
+
+Strict Instructions:
+1. IF Outreach Category is "LinkedIn Connection Note (< 300 Chars)", Option 1 MUST be strictly under 280 characters total so it fits inside LinkedIn's invitation limit.
+2. Avoid cringey sales fluff, generic opening clichés like "I hope this email finds you well", or robotic templates.
+3. Make it sound genuine, sharp, polite, and human.
+4. Output EXACTLY 2 distinct options in this clear format:
+
+[OPTION 1: SHORT & DIRECT (Ideal for DMs & Connection Notes)]
+(Your Option 1 text here)
+
+[OPTION 2: DETAILED & PERSONALIZED (Ideal for Email & InMail)]
+(Your Option 2 text here)`;
+
+        const rawAiText = await callGeminiAPI(state.geminiApiKey, promptText);
+
+        // Parse options
+        let opt1 = rawAiText;
+        let opt2 = "";
+        if (rawAiText.includes("[OPTION 2:")) {
+          const parts = rawAiText.split(/\[OPTION 2:[^\]]*\]/i);
+          opt1 = parts[0].replace(/\[OPTION 1:[^\]]*\]/i, "").trim();
+          opt2 = parts[1] ? parts[1].trim() : "";
+        }
+
+        resultBox.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(52, 211, 153, 0.3); border-radius: 0.65rem; padding: 1.15rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                <span style="font-family: var(--font-heading); font-size: 0.875rem; font-weight: 800; color: #6ee7b7;">OPTION 1: SHORT & DIRECT (DMs / LinkedIn)</span>
+                <button class="copy-btn btn-primary" data-target="opt1-text" style="font-size: 0.75rem; padding: 0.3rem 0.65rem;">📋 Copy</button>
+              </div>
+              <div id="opt1-text" style="font-size: 0.875rem; color: #f1f5f9; line-height: 1.55; white-space: pre-wrap; background: rgba(3, 7, 18, 0.6); padding: 0.85rem; border-radius: 0.4rem; font-family: var(--font-sans); border: 1px solid rgba(255, 255, 255, 0.05);">${escapeHtml(opt1)}</div>
+            </div>
+
+            ${opt2 ? `
+              <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(96, 165, 250, 0.3); border-radius: 0.65rem; padding: 1.15rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                  <span style="font-family: var(--font-heading); font-size: 0.875rem; font-weight: 800; color: #60a5fa;">OPTION 2: DETAILED & PERSONALIZED (Email / InMail)</span>
+                  <button class="copy-btn btn-primary" data-target="opt2-text" style="font-size: 0.75rem; padding: 0.3rem 0.65rem;">📋 Copy</button>
+                </div>
+                <div id="opt2-text" style="font-size: 0.875rem; color: #f1f5f9; line-height: 1.55; white-space: pre-wrap; background: rgba(3, 7, 18, 0.6); padding: 0.85rem; border-radius: 0.4rem; font-family: var(--font-sans); border: 1px solid rgba(255, 255, 255, 0.05);">${escapeHtml(opt2)}</div>
+              </div>
+            ` : ''}
+          </div>
+        `;
+
+        document.querySelectorAll(".copy-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const el = document.getElementById(btn.dataset.target);
+            if (el) {
+              navigator.clipboard.writeText(el.innerText);
+              btn.textContent = "✓ Copied!";
+              setTimeout(() => { btn.textContent = "📋 Copy"; }, 2000);
+            }
+          });
+        });
+        return;
+      } catch (err) {
+        console.error("Gemini API Error:", err);
+      }
+    }
+
+    // Fallback if no API key or API call failed
+    const ctx = facts ? `I noticed ${facts}.` : "I came across your profile and wanted to connect!";
+    const compStr = company ? ` at ${company}` : "";
+    
+    let opt1Fallback = "";
+    let opt2Fallback = "";
+
+    if (kind === "connection") {
+      opt1Fallback = `Hi ${name}, I'm a CS student at Georgia Tech graduating Dec 2026. ${ctx} I'd love to connect!`;
+      opt2Fallback = `Hi ${name}, I saw your work${compStr} and wanted to reach out. As a Georgia Tech CS student preparing for 2027 SWE roles, ${facts || "I'd love to follow your work and learn from your journey."} Hope to connect!`;
+    } else if (kind === "referral") {
+      opt1Fallback = `Hi ${name}, I'm applying for the 2027 New Grad SWE role${compStr}. ${ctx} If you're open to it, would you be willing to refer my application? Happy to share my resume!`;
+      opt2Fallback = `Hi ${name},\n\nI hope you're having a great week! I'm a Georgia Tech CS BS/MS student graduating Dec 2026. ${ctx}\n\nI'm currently applying for 2027 New Grad Software Engineer positions${compStr}. Given your background, I would really appreciate any advice or a potential referral if you feel comfortable. No pressure at all either way!\n\nBest,\nIshaan`;
+    } else {
+      opt1Fallback = `Hi ${name}, following up on my application for the 2027 SWE role${compStr}. ${ctx} Thanks for your time!`;
+      opt2Fallback = `Hi ${name},\n\nThank you so much for your time and guidance regarding ${company || "the SWE role"}. ${ctx}\n\nBest regards,\nIshaan`;
+    }
+
+    resultBox.innerHTML = `
+      <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); padding: 0.85rem 1rem; border-radius: 0.6rem; font-size: 0.825rem; color: #fde047; margin-bottom: 1.15rem;">
+        🔑 <strong>Connect Gemini API:</strong> Add your free Google Gemini key above to generate 100% unique, human-like AI outreach responses instantly! Below are smart context-aware drafts:
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 1.15rem;">
+        <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 0.65rem; padding: 1.15rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+            <span style="font-family: var(--font-heading); font-size: 0.875rem; font-weight: 800; color: #6ee7b7;">OPTION 1: CONCISE (DMs / LinkedIn)</span>
+            <button class="copy-btn btn-primary" data-target="fb1-text" style="font-size: 0.75rem; padding: 0.3rem 0.65rem;">📋 Copy</button>
+          </div>
+          <div id="fb1-text" style="font-size: 0.875rem; color: #f1f5f9; line-height: 1.55; white-space: pre-wrap; background: rgba(3, 7, 18, 0.6); padding: 0.85rem; border-radius: 0.4rem; font-family: var(--font-sans);">${escapeHtml(opt1Fallback)}</div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 0.65rem; padding: 1.15rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+            <span style="font-family: var(--font-heading); font-size: 0.875rem; font-weight: 800; color: #60a5fa;">OPTION 2: FULL NOTE (Email / InMail)</span>
+            <button class="copy-btn btn-primary" data-target="fb2-text" style="font-size: 0.75rem; padding: 0.3rem 0.65rem;">📋 Copy</button>
+          </div>
+          <div id="fb2-text" style="font-size: 0.875rem; color: #f1f5f9; line-height: 1.55; white-space: pre-wrap; background: rgba(3, 7, 18, 0.6); padding: 0.85rem; border-radius: 0.4rem; font-family: var(--font-sans);">${escapeHtml(opt2Fallback)}</div>
+        </div>
+      </div>
+    `;
+
+    document.querySelectorAll(".copy-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const el = document.getElementById(btn.dataset.target);
+        if (el) {
+          navigator.clipboard.writeText(el.innerText);
+          btn.textContent = "✓ Copied!";
+          setTimeout(() => { btn.textContent = "📋 Copy"; }, 2000);
+        }
+      });
+    });
   });
+}
+
+function hydrateSettingsEvents() {
+  const saveBtn = document.querySelector("#settingsSaveGeminiKeyBtn");
+  const keyInput = document.querySelector("#settingsGeminiKeyInput");
+  if (saveBtn && keyInput) {
+    saveBtn.addEventListener("click", () => {
+      const val = keyInput.value.trim();
+      state.geminiApiKey = val;
+      localStorage.setItem("gemini_api_key", val);
+      render("settings");
+    });
+  }
 }
 
 function hydrateForecastEvents() {
@@ -877,6 +1142,7 @@ function render(view) {
     if (view === "forecast") hydrateForecastEvents();
     if (view === "resume") hydrateResume();
     if (view === "referrals") hydrateReferrals();
+    if (view === "settings") hydrateSettingsEvents();
   }
 }
 
