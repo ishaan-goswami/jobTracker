@@ -144,7 +144,37 @@ function forecast() {
 
 
 const STOP_WORDS = new Set([
-  "and", "are", "for", "from", "have", "that", "the", "this", "with", "you", "your", "will", "our", "work", "team"
+  "a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any", "are", "aren't", "as", "at",
+  "be", "because", "been", "before", "being", "below", "between", "both", "but", "by", "can", "can't", "cannot",
+  "could", "couldn't", "did", "didn't", "do", "does", "doesn't", "doing", "don't", "down", "during", "each",
+  "few", "for", "from", "further", "had", "hadn't", "has", "hasn't", "have", "haven't", "having", "he", "he'd",
+  "he'll", "he's", "her", "here", "here's", "hers", "herself", "him", "himself", "his", "how", "how's", "i",
+  "i'd", "i'll", "i'm", "i've", "if", "in", "into", "is", "isn't", "it", "it's", "its", "itself", "let's", "me",
+  "more", "most", "mustn't", "my", "myself", "no", "nor", "not", "of", "off", "on", "once", "only", "or", "other",
+  "ought", "our", "ours", "ourselves", "out", "over", "own", "same", "shan't", "she", "she'd", "she'll", "she's",
+  "should", "shouldn't", "so", "some", "such", "than", "that", "that's", "the", "their", "theirs", "them",
+  "themselves", "then", "there", "there's", "these", "they", "they'd", "they'll", "they're", "they've", "this",
+  "those", "through", "to", "too", "under", "until", "up", "very", "was", "wasn't", "we", "we'd", "we'll", "we're",
+  "we've", "were", "weren't", "what", "what's", "when", "when's", "where", "where's", "which", "while", "who",
+  "who's", "whom", "why", "why's", "with", "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're",
+  "you've", "your", "yours", "yourself", "yourselves",
+  "about", "company", "stripe", "google", "amazon", "meta", "bloomberg", "team", "teams", "work", "working",
+  "role", "who", "what", "where", "make", "easier", "cheaper", "first", "many", "much", "well", "also", "like",
+  "just", "help", "world", "people", "year", "years", "day", "days", "time", "way", "ways", "new", "our", "us",
+  "one", "two", "three", "best", "great", "high", "good", "will", "want", "looking", "think", "place", "places",
+  "strong", "about", "minimum", "requirements", "qualification", "qualifications", "preferred", "degree",
+  "strong", "h2", "h3", "h4", "div", "span", "p", "li", "ul", "ol", "nbsp", "quot", "href", "amp"
+]);
+
+const KNOWN_TECH_TERMS = new Set([
+  "java", "python", "c++", "c#", "ruby", "javascript", "typescript", "scala", "go", "golang", "rust", "swift",
+  "kotlin", "sql", "html", "css", "react", "node", "express", "next.js", "vue", "angular", "django", "flask",
+  "fastapi", "spring", "rails", "aws", "gcp", "azure", "kubernetes", "docker", "terraform", "git", "github",
+  "api", "apis", "graphql", "rest", "grpc", "microservices", "frontend", "backend", "fullstack", "infrastructure",
+  "distributed", "concurrency", "multithreading", "algorithms", "data structures", "system design", "database",
+  "postgresql", "mysql", "mongodb", "redis", "kafka", "ai", "ml", "machine learning", "deep learning", "nlp",
+  "llm", "security", "cryptography", "testing", "unit testing", "ci/cd", "linux", "unix", "code review",
+  "computer science", "bachelor's", "master's", "side projects", "classwork", "agency", "collaborative"
 ]);
 
 function escapeHtml(value) {
@@ -159,18 +189,24 @@ function escapeHtml(value) {
 
 function stripHtml(htmlStr) {
   if (!htmlStr) return "";
-  let text = String(htmlStr)
+  let text = String(htmlStr);
+  for (let i = 0; i < 2; i++) {
+    text = text
+      .replace(/&lt;/gi, "<")
+      .replace(/&gt;/gi, ">")
+      .replace(/&quot;/gi, '"')
+      .replace(/&#39;/gi, "'")
+      .replace(/&nbsp;/gi, " ")
+      .replace(/&amp;/gi, "&");
+  }
+  text = text
     .replace(/<br\s*[\/]?>/gi, "\n")
     .replace(/<\/(p|div|h[1-6]|li|tr)>/gi, "\n")
     .replace(/<li[^>]*>/gi, "• ")
     .replace(/<[^>]+>/g, "")
-    .replace(/&nbsp;/gi, " ")
-    .replace(/&amp;/gi, "&")
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;/gi, "'")
-    .replace(/&lt;/gi, "<")
-    .replace(/&gt;/gi, ">");
-  return text.replace(/\n\s*\n/g, "\n\n").trim();
+    .replace(/\n\s*\n/g, "\n\n")
+    .trim();
+  return text;
 }
 
 function formatDate(isoStr) {
@@ -186,16 +222,30 @@ function formatDate(isoStr) {
 function keywords(text) {
   const plainText = stripHtml(text);
   const seen = new Set();
-  const htmlTagTokens = new Set(["h1", "h2", "h3", "h4", "h5", "h6", "strong", "em", "p", "li", "ul", "ol", "div", "span", "br", "href", "amp", "nbsp", "quot", "http", "https", "www", "com"]);
-  return Array.from(String(plainText).matchAll(/[A-Za-z][A-Za-z0-9+#.-]{2,}/g))
-    .map((match) => match[0])
-    .filter((word) => {
-      const key = word.toLowerCase();
-      if (STOP_WORDS.has(key) || htmlTagTokens.has(key) || seen.has(key) || key.length < 3) return false;
-      seen.add(key);
-      return true;
-    })
-    .slice(0, 80);
+  const rawTokens = plainText.split(/[\s,;:()/\\–—•"'\`\[\]]+/);
+  
+  const extracted = [];
+  for (let raw of rawTokens) {
+    let clean = raw.replace(/^[^a-zA-Z0-9+#.-]+|[^a-zA-Z0-9+#.-]+$/g, "");
+    if (!clean) continue;
+    const lower = clean.toLowerCase();
+    
+    if (STOP_WORDS.has(lower) || seen.has(lower)) continue;
+    if (clean.length < 3 && !["go", "c++", "c#", "ai", "ml", "ui", "ux", "ci", "cd"].includes(lower)) continue;
+    
+    seen.add(lower);
+    extracted.push(clean);
+  }
+
+  extracted.sort((a, b) => {
+    const aTech = KNOWN_TECH_TERMS.has(a.toLowerCase());
+    const bTech = KNOWN_TECH_TERMS.has(b.toLowerCase());
+    if (aTech && !bTech) return -1;
+    if (!aTech && bTech) return 1;
+    return 0;
+  });
+
+  return extracted.slice(0, 60);
 }
 
 async function load() {

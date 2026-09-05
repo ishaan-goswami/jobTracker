@@ -1,7 +1,7 @@
 import httpx
 
 from ..models import CompanyConfig, RawJob, SourceResult
-from .base import JobSource
+from .base import JobSource, clean_html
 
 PARSER_VERSION = "ashby.v1"
 
@@ -27,7 +27,7 @@ class AshbySource(JobSource):
                         title=item["title"],
                         official_url=job_url,
                         location=item.get("location"),
-                        description=item.get("descriptionHtml") or item.get("descriptionPlain"),
+                        description=clean_html(item.get("descriptionHtml") or item.get("descriptionPlain")),
                         team=item.get("team"),
                         employment_type=item.get("employmentType"),
                     )

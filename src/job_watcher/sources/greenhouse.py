@@ -1,5 +1,5 @@
 import httpx
-from .base import JobSource
+from .base import JobSource, clean_html
 from ..models import CompanyConfig, RawJob, SourceResult
 
 PARSER_VERSION = "greenhouse.v1"
@@ -25,7 +25,7 @@ class GreenhouseSource(JobSource):
                         title=item["title"],
                         official_url=item["absolute_url"],
                         location=item.get("location", {}).get("name"),
-                        description=item.get("content"),
+                        description=clean_html(item.get("content")),
                     )
                 )
             except (KeyError, TypeError, ValueError) as exc:
