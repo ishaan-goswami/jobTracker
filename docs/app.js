@@ -665,15 +665,18 @@ function hydrateResume() {
     const missing = terms.filter((term) => !resumeText.includes(term.toLowerCase()));
     const rate = terms.length ? Math.round((present.length / terms.length) * 100) : 0;
 
-    // HackerRank Scoring Rules
+    // HackerRank & ATS Scoring Rules
     const hasGithub = /github\.com\/[a-z0-9_-]+/i.test(source.value);
     const hasLinks = /https?:\/\/|github\.com|demo|app\./i.test(source.value);
     const hasIntern = /intern|co-op|coop/i.test(resumeText);
     const hasDevExp = /software engineer|developer|full-time/i.test(resumeText);
     const hasFounder = /founder|co-founder|early employee/i.test(resumeText);
+    const hasDegree = /bachelor|master|bs\/ms|bs|ms|b\.s\.|m\.s\.|computer science/i.test(resumeText);
+    const hasCompetitionsOrOS = /google summer of code|gsoc|maintainer|hackathon|competition|contest|award|winner|pull request|\bpr\b|open[- ]source|contributor|fellowship|1st place|first place|top \d+|finalist/i.test(resumeText);
 
     let osScore = hasGithub ? 8 : 0;
     if (/google summer of code|gsoc/i.test(resumeText)) osScore += 20;
+    if (hasCompetitionsOrOS) osScore += 7;
     osScore = Math.min(35, osScore);
 
     let projScore = 15;
@@ -687,7 +690,7 @@ function hydrateResume() {
     prodScore = Math.min(25, prodScore);
 
     const skillsScore = Math.min(10, Math.max(5, Math.round(rate / 10)));
-    let bonus = (hasGithub ? 2 : 0) + (source.value.includes("linkedin.com") ? 1 : 0) + (hasFounder ? 3 : 0);
+    let bonus = (hasGithub ? 2 : 0) + (source.value.includes("linkedin.com") ? 1 : 0) + (hasFounder ? 3 : 0) + (hasDegree ? 2 : 0);
     bonus = Math.min(20, bonus);
 
     let deductions = 0;
@@ -736,7 +739,7 @@ function hydrateResume() {
       });
     }
 
-    if (!/google summer of code|gsoc|maintainer|hackathon/i.test(resumeText)) {
+    if (!hasCompetitionsOrOS) {
       recommendations.push({
         icon: "🏆",
         title: "Highlight Competitions & Open-Source Achievements",
