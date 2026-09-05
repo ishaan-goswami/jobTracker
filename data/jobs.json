@@ -12,8 +12,8 @@
     "source_url": "https://stripe.com/jobs/search",
     "source_type": "greenhouse",
     "posted_at": null,
-    "discovered_at": "2026-09-05T23:49:04.935174Z",
-    "last_seen_at": "2026-09-05T23:49:04.935174Z",
+    "discovered_at": "2026-09-05T23:51:47.945142Z",
+    "last_seen_at": "2026-09-05T23:51:47.945142Z",
     "is_open": true,
     "match_score": 100.0,
     "match_reasons": [
@@ -37,8 +37,8 @@
     "source_url": "https://www.google.com/about/careers/applications/jobs/results/",
     "source_type": "google",
     "posted_at": null,
-    "discovered_at": "2026-09-05T23:49:04.935174Z",
-    "last_seen_at": "2026-09-05T23:49:04.935174Z",
+    "discovered_at": "2026-09-05T23:51:47.945142Z",
+    "last_seen_at": "2026-09-05T23:51:47.945142Z",
     "is_open": true,
     "match_score": 100.0,
     "match_reasons": [
@@ -63,8 +63,8 @@
     "source_url": "https://www.google.com/about/careers/applications/jobs/results/",
     "source_type": "google",
     "posted_at": null,
-    "discovered_at": "2026-09-05T23:49:04.935174Z",
-    "last_seen_at": "2026-09-05T23:49:04.935174Z",
+    "discovered_at": "2026-09-05T23:51:47.945142Z",
+    "last_seen_at": "2026-09-05T23:51:47.945142Z",
     "is_open": true,
     "match_score": 100.0,
     "match_reasons": [
@@ -89,8 +89,8 @@
     "source_url": "https://www.google.com/about/careers/applications/jobs/results/",
     "source_type": "google",
     "posted_at": null,
-    "discovered_at": "2026-09-05T23:49:04.935174Z",
-    "last_seen_at": "2026-09-05T23:49:04.935174Z",
+    "discovered_at": "2026-09-05T23:51:47.945142Z",
+    "last_seen_at": "2026-09-05T23:51:47.945142Z",
     "is_open": true,
     "match_score": 90.0,
     "match_reasons": [
@@ -114,8 +114,8 @@
     "source_url": "https://careers.roblox.com/",
     "source_type": "greenhouse",
     "posted_at": null,
-    "discovered_at": "2026-09-05T23:49:04.935174Z",
-    "last_seen_at": "2026-09-05T23:49:04.935174Z",
+    "discovered_at": "2026-09-05T23:51:47.945142Z",
+    "last_seen_at": "2026-09-05T23:51:47.945142Z",
     "is_open": true,
     "match_score": 90.0,
     "match_reasons": [
@@ -125,6 +125,55 @@
       "Early-career wording in description"
     ],
     "fingerprint": "12161570465042f261affec6317a5601bd37de4c55c173acbde97be69bf8b125"
+  },
+  {
+    "id": "R0137283",
+    "company_id": "paypal",
+    "company_name": "PayPal",
+    "title": "Cybersecurity Engineer - Recent Graduate",
+    "location": "2 Locations",
+    "description": "Cybersecurity Engineer - Recent Graduate at PayPal in 2 Locations",
+    "team": null,
+    "employment_type": null,
+    "official_url": "https://paypal.wd1.myworkdayjobs.com/jobs/job/San-Jose-California-United-States-of-America/Cybersecurity-Engineer---Recent-Graduate_R0137283",
+    "source_url": "https://paypal.wd1.myworkdayjobs.com/jobs",
+    "source_type": "workday",
+    "posted_at": null,
+    "discovered_at": "2026-09-05T23:51:47.945142Z",
+    "last_seen_at": "2026-09-05T23:51:47.945142Z",
+    "is_open": true,
+    "match_score": 70.0,
+    "match_reasons": [
+      "United States location",
+      "Explicit new-graduate title",
+      "Early-career wording in description"
+    ],
+    "fingerprint": "8c48a61cf55ba59900204c7c434e53f46ccb62a992dcafa4b82b00102a2450fb"
+  },
+  {
+    "id": "R0137237",
+    "company_id": "paypal",
+    "company_name": "PayPal",
+    "title": "Software Engineer - Recent Graduate",
+    "location": "3 Locations",
+    "description": "Software Engineer - Recent Graduate at PayPal in 3 Locations",
+    "team": null,
+    "employment_type": null,
+    "official_url": "https://paypal.wd1.myworkdayjobs.com/jobs/job/San-Jose-California-United-States-of-America/Software-Engineer---Recent-Graduate_R0137237",
+    "source_url": "https://paypal.wd1.myworkdayjobs.com/jobs",
+    "source_type": "workday",
+    "posted_at": null,
+    "discovered_at": "2026-09-05T23:51:47.945142Z",
+    "last_seen_at": "2026-09-05T23:51:47.945142Z",
+    "is_open": true,
+    "match_score": 100.0,
+    "match_reasons": [
+      "United States location",
+      "Relevant software-engineering title",
+      "Explicit new-graduate title",
+      "Early-career wording in description"
+    ],
+    "fingerprint": "3affd2e1b42b16c2a1a3a4b41e026779dcae6049ce9f3864407d3150b2428830"
   },
   {
     "id": "google-111182182432547526-software-engineer-compilers-runtimes-and-toolchains-early-career",

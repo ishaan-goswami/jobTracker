@@ -4,6 +4,7 @@ from .generic_html import GenericHTMLSource
 from .google import GoogleSource
 from .greenhouse import GreenhouseSource
 from .lever import LeverSource
+from .workday import WorkdaySource
 
 SOURCES = {
     "amazon": AmazonSource,
@@ -12,4 +13,5 @@ SOURCES = {
     "greenhouse": GreenhouseSource,
     "lever": LeverSource,
     "generic_html": GenericHTMLSource,
+    "workday": WorkdaySource,
 }

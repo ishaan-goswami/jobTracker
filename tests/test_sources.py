@@ -9,6 +9,7 @@ from job_watcher.models import CompanyConfig
 from job_watcher.sources.amazon import AmazonSource
 from job_watcher.sources.ashby import AshbySource
 from job_watcher.sources.greenhouse import GreenhouseSource
+from job_watcher.sources.workday import WorkdaySource
 
 FIXTURES = Path(__file__).parent / "fixtures" / "sources"
 

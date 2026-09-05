@@ -202,9 +202,9 @@ companies:
 - id: paypal
   name: PayPal
   enabled: true
-  careers_url: https://www.paypal.com/us/webapps/mpp/jobs
-  source_type: unsupported
-  source_identifier: ''
+  careers_url: https://paypal.wd1.myworkdayjobs.com/jobs
+  source_type: workday
+  source_identifier: paypal/jobs
   locations:
   - United States
   include_keywords: []
