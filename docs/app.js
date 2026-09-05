@@ -157,6 +157,22 @@ function escapeHtml(value) {
   })[char]);
 }
 
+function stripHtml(htmlStr) {
+  if (!htmlStr) return "";
+  let text = String(htmlStr)
+    .replace(/<br\s*[\/]?>/gi, "\n")
+    .replace(/<\/(p|div|h[1-6]|li|tr)>/gi, "\n")
+    .replace(/<li[^>]*>/gi, "• ")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">");
+  return text.replace(/\n\s*\n/g, "\n\n").trim();
+}
+
 function formatDate(isoStr) {
   if (!isoStr) return "Recently";
   try {
@@ -168,12 +184,14 @@ function formatDate(isoStr) {
 }
 
 function keywords(text) {
+  const plainText = stripHtml(text);
   const seen = new Set();
-  return Array.from(String(text).matchAll(/[A-Za-z][A-Za-z0-9+#.-]{2,}/g))
+  const htmlTagTokens = new Set(["h1", "h2", "h3", "h4", "h5", "h6", "strong", "em", "p", "li", "ul", "ol", "div", "span", "br", "href", "amp", "nbsp", "quot", "http", "https", "www", "com"]);
+  return Array.from(String(plainText).matchAll(/[A-Za-z][A-Za-z0-9+#.-]{2,}/g))
     .map((match) => match[0])
     .filter((word) => {
       const key = word.toLowerCase();
-      if (STOP_WORDS.has(key) || seen.has(key)) return false;
+      if (STOP_WORDS.has(key) || htmlTagTokens.has(key) || seen.has(key) || key.length < 3) return false;
       seen.add(key);
       return true;
     })
@@ -401,34 +419,54 @@ function companies() {
 
 function resume() {
   const options = state.jobs.map((job, index) => (
-    `<option value="${index}">${escapeHtml(job.company_name)} - ${escapeHtml(job.title)}</option>`
+    `<option value="${index}">${escapeHtml(job.company_name)} — ${escapeHtml(job.title)} (${escapeHtml(job.location || 'US')})</option>`
   )).join("");
 
   return `
     <div class="card-box">
-      <h3>Resume Tailoring & Keyword Alignment</h3>
-      <div class="notice-box">
-        🔒 <strong>Strict Grounding Guarantee:</strong> This tool only highlights existing matching skills and missing JD keywords. It <em>never fabricates experience or invents unverified achievements</em>.
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+        <div>
+          <h3>📄 Resume Tailoring & Keyword Alignment Evaluator</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.2rem;">
+            Cross-reference your resume against official job descriptions to optimize ATS match rate & HackerRank scorecard.
+          </p>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 0.775rem; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); color: #60a5fa; padding: 0.35rem 0.75rem; border-radius: 0.5rem; font-weight: 700;">
+          🔒 LOCAL IN-BROWSER EVALUATION
+        </div>
+      </div>
+
+      <div class="notice-box" style="margin-bottom: 1.5rem;">
+        🔒 <strong>Strict Grounding Guarantee:</strong> This tool highlights real matching skills and missing JD keywords. It <em>never fabricates unverified experience</em>. All job descriptions are auto-cleaned into readable plaintext.
       </div>
       
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.75rem;">
         <div>
-          <label for="resumeJob">Discovered Matching Role</label>
-          <select id="resumeJob">${options || "<option>No jobs available</option>"}</select>
+          <label for="resumeJob" style="margin-top: 0;">Target Role</label>
+          <select id="resumeJob" style="font-size: 0.9rem; padding: 0.75rem 0.9rem; background: rgba(3, 7, 18, 0.85);">${options || "<option>No active jobs available</option>"}</select>
 
-          <label for="jobDescription">Job Description Text</label>
-          <textarea id="jobDescription" rows="8" placeholder="Job description content will auto-populate here..."></textarea>
+          <label for="jobDescription">Target Job Description (Cleaned Plaintext)</label>
+          <textarea id="jobDescription" rows="9" placeholder="Job description will auto-populate cleanly here..." style="font-family: var(--font-sans); font-size: 0.85rem; line-height: 1.55; color: #cbd5e1; background: rgba(3, 7, 18, 0.85); border-color: rgba(255, 255, 255, 0.1);"></textarea>
 
-          <label for="resumeSource">Paste LaTeX / Plaintext Resume</label>
-          <textarea id="resumeSource" rows="10" placeholder="Paste your LaTeX resume source code here..."></textarea>
+          <label for="resumeSource">Your Resume (LaTeX Source / Plaintext)</label>
+          <textarea id="resumeSource" rows="10" placeholder="Paste your LaTeX resume or plain text resume content here..." style="font-family: var(--font-mono); font-size: 0.825rem; line-height: 1.45; color: #a5b4fc; background: rgba(3, 7, 18, 0.85); border-color: rgba(255, 255, 255, 0.1);"></textarea>
 
-          <button id="analyzeResume" class="btn-primary">Analyze Alignment in Browser</button>
+          <button id="analyzeResume" class="btn-primary" style="width: 100%; justify-content: center; font-size: 0.95rem; padding: 0.8rem 1.5rem; margin-top: 1.25rem;">
+            ⚡ Run Alignment Analysis & HackerRank Audit
+          </button>
         </div>
 
         <div>
-          <h4 style="margin-bottom: 0.5rem; color: #f1f5f9;">Alignment Analysis</h4>
-          <div id="resumeResult" style="background: var(--bg-main); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 0.5rem; min-height: 250px; font-size: 0.9rem;">
-            Select a job and click <strong>Analyze Alignment</strong> to see verified keyword coverage.
+          <h4 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #f1f5f9; margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>📊 Live Alignment Scorecard</span>
+          </h4>
+
+          <div id="resumeResult" style="background: rgba(3, 7, 18, 0.85); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 0.85rem; min-height: 480px;">
+            <div style="text-align: center; color: var(--text-muted); padding: 4rem 1rem;">
+              <div style="font-size: 2.75rem; margin-bottom: 0.5rem;">🎯</div>
+              <p style="font-weight: 600; color: #cbd5e1; font-size: 1rem;">Select a role and click <strong>Run Alignment Analysis</strong></p>
+              <p style="font-size: 0.825rem; margin-top: 0.35rem; color: var(--text-subtle);">Calculates keyword coverage % and HackerRank ATS scoring.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -531,7 +569,8 @@ function hydrateResume() {
 
   const fillDescription = () => {
     const job = state.jobs[Number(select.value)];
-    description.value = job?.description || "";
+    const cleanDesc = stripHtml(job?.description || "");
+    description.value = cleanDesc;
   };
 
   select.addEventListener("change", fillDescription);
@@ -576,28 +615,54 @@ function hydrateResume() {
     const totalHackerRank = Math.max(0, Math.min(100, osScore + projScore + prodScore + skillsScore + bonus - deductions));
 
     result.innerHTML = `
-      <p style="margin-bottom: 0.75rem;"><strong>Keyword Alignment:</strong> <span style="font-size: 1.25rem; font-weight: 800; color: #60a5fa;">${rate}%</span></p>
-      
-      <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 0.5rem; padding: 0.85rem; margin-bottom: 1rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <strong style="color: #f8fafc; font-size: 1rem;">HackerRank ATS Scorecard</strong>
-          <span style="font-size: 1.2rem; font-weight: 800; color: ${totalHackerRank >= 70 ? '#34d399' : '#fbbf24'};">${totalHackerRank} / 100 pts</span>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+        <div>
+          <div style="font-size: 0.775rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Keyword Match Rate</div>
+          <div style="font-family: var(--font-mono); font-size: 2.5rem; font-weight: 900; color: ${rate >= 60 ? '#34d399' : '#60a5fa'}; line-height: 1;">${rate}%</div>
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.65rem; font-size: 0.8rem; color: #cbd5e1;">
-          <div>• Open Source: <strong>${osScore}/35</strong></div>
-          <div>• Self Projects: <strong>${projScore}/30</strong></div>
-          <div>• Production Exp: <strong>${prodScore}/25</strong></div>
-          <div>• Tech Skills: <strong>${skillsScore}/10</strong></div>
-          <div>• Bonus Points: <strong style="color: #34d399;">+${bonus}</strong></div>
-          <div>• Deductions: <strong style="color: #f87171;">-${deductions}</strong></div>
+
+        <div style="text-align: right;">
+          <div style="font-size: 0.775rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">HackerRank ATS Score</div>
+          <div style="font-family: var(--font-mono); font-size: 2.5rem; font-weight: 900; color: ${totalHackerRank >= 70 ? '#34d399' : (totalHackerRank >= 50 ? '#fbbf24' : '#f87171')}; line-height: 1;">${totalHackerRank} <span style="font-size: 0.9rem; color: var(--text-muted);">/ 100</span></div>
         </div>
       </div>
 
-      <p style="margin-bottom: 0.5rem; color: #34d399;"><strong>✓ Verified Matching Keywords (${present.length}):</strong><br>${escapeHtml(present.slice(0, 25).join(", ") || "None detected")}</p>
-      <p style="margin-bottom: 0.5rem; color: #fbbf24;"><strong>⚠️ Unsupported / Missing Keywords (${missing.length}):</strong><br>${escapeHtml(missing.slice(0, 25).join(", ") || "None detected")}</p>
-      
-      <div class="notice-box" style="margin-top: 1rem; font-size: 0.8rem;">
-        HackerRank Rule: Includes <strong>${hasGithub ? '✓ GitHub URL detected' : '⚠️ No GitHub URL detected'}</strong> & <strong>${hasLinks ? '✓ Active Links detected' : '⚠️ Missing links penalty (-5 pts)'}</strong>.
+      <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 0.75rem; padding: 1rem; margin-bottom: 1.25rem;">
+        <div style="font-family: var(--font-mono); font-size: 0.775rem; font-weight: 700; color: #a5b4fc; margin-bottom: 0.65rem; text-transform: uppercase; letter-spacing: 0.04em;">
+          HackerRank Score Breakdown
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-size: 0.8rem; font-family: var(--font-mono);">
+          <div style="background: rgba(255, 255, 255, 0.03); padding: 0.4rem 0.65rem; border-radius: 0.4rem;">• Open Source: <strong>${osScore}/35</strong></div>
+          <div style="background: rgba(255, 255, 255, 0.03); padding: 0.4rem 0.65rem; border-radius: 0.4rem;">• Projects: <strong>${projScore}/30</strong></div>
+          <div style="background: rgba(255, 255, 255, 0.03); padding: 0.4rem 0.65rem; border-radius: 0.4rem;">• Production Exp: <strong>${prodScore}/25</strong></div>
+          <div style="background: rgba(255, 255, 255, 0.03); padding: 0.4rem 0.65rem; border-radius: 0.4rem;">• Tech Skills: <strong>${skillsScore}/10</strong></div>
+          <div style="background: rgba(16, 185, 129, 0.1); padding: 0.4rem 0.65rem; border-radius: 0.4rem; color: #34d399;">• Bonus: <strong>+${bonus} pts</strong></div>
+          <div style="background: rgba(244, 63, 94, 0.1); padding: 0.4rem 0.65rem; border-radius: 0.4rem; color: #f87171;">• Deductions: <strong>-${deductions} pts</strong></div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1.15rem;">
+        <div style="font-size: 0.825rem; font-weight: 700; color: #34d399; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+          <span>✓ Matching Keywords (${present.length})</span>
+          <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Found in your resume</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; max-height: 120px; overflow-y: auto; padding: 0.25rem;">
+          ${present.length ? present.map(term => `<span class="reason-tag" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(52, 211, 153, 0.3); color: #6ee7b7;">✓ ${escapeHtml(term)}</span>`).join('') : '<span style="font-size: 0.8rem; color: var(--text-muted);">No keyword matches detected yet.</span>'}
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <div style="font-size: 0.825rem; font-weight: 700; color: #fbbf24; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+          <span>⚠️ Missing / High Impact Keywords (${missing.length})</span>
+          <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Consider adding to resume</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; max-height: 140px; overflow-y: auto; padding: 0.25rem;">
+          ${missing.length ? missing.map(term => `<span class="reason-tag" style="background: rgba(245, 158, 11, 0.12); border-color: rgba(251, 191, 36, 0.25); color: #fde047;">+ ${escapeHtml(term)}</span>`).join('') : '<span style="font-size: 0.8rem; color: #34d399;">Perfect! All key job terms covered.</span>'}
+        </div>
+      </div>
+
+      <div style="font-size: 0.775rem; color: var(--text-muted); background: rgba(255, 255, 255, 0.03); border-radius: 0.5rem; padding: 0.65rem 0.85rem; margin-top: 1rem;">
+        💡 <strong>Audit Tip:</strong> ${hasGithub ? '✓ GitHub link detected.' : '⚠️ Add your GitHub profile URL to earn +8 HackerRank points.'} ${hasLinks ? '✓ Live project links detected.' : '⚠️ Include live demo/app links to avoid missing links deduction (-5 pts).'}
       </div>
     `;
   });
