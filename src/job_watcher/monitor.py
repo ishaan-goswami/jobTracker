@@ -118,10 +118,17 @@ def run(data_dir: Path = ROOT / "data") -> list[Job]:
         except Exception as exc:  # isolated failure is recorded, not hidden
             statuses.append(_status_for_exception(company, now, exc).model_dump(mode="json"))
     new = upsert_jobs(data_dir / "jobs.json", [job.model_dump(mode="json") for job in all_jobs])
-    write_json(
-        data_dir / "seen_jobs.json",
-        [job["fingerprint"] for job in read_json(data_dir / "jobs.json", [])],
-    )
+    all_jobs_json = read_json(data_dir / "jobs.json", [])
+    seen_fps = [job["fingerprint"] for job in all_jobs_json]
+
+    write_json(data_dir / "seen_jobs.json", seen_fps)
     write_json(data_dir / "check_status.json", statuses)
+
+    docs_dir = data_dir.parent / "docs" / "data"
+    if docs_dir.exists():
+        write_json(docs_dir / "jobs.json", all_jobs_json)
+        write_json(docs_dir / "seen_jobs.json", seen_fps)
+        write_json(docs_dir / "check_status.json", statuses)
+
     generate_forecasts(data_dir)
     return [Job.model_validate(job) for job in new]
