@@ -5,14 +5,14 @@
     "expected_opening_date": "Sept 8 \u2013 Sept 10, 2026",
     "target_start_date": "2026-09-08",
     "target_end_date": "2026-09-10",
-    "days_until_start": 3,
-    "days_until_end": 5,
-    "status_label": "\u23f3 Opens in ~3\u20135 days",
-    "countdown_text": "Estimated opening in 3\u20135 days",
+    "days_until_start": 2,
+    "days_until_end": 4,
+    "status_label": "\u23f3 Opens in ~2\u20134 days",
+    "countdown_text": "Estimated opening in 2\u20134 days",
     "expected_opening_window": "Next Week (Early Sept)",
     "historical_cycle": "DoorDash SWE New Grad roles open early September.",
     "confidence": "Confirmed / Very High",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "figma",
@@ -20,14 +20,14 @@
     "expected_opening_date": "Sept 14, 2026",
     "target_start_date": "2026-09-14",
     "target_end_date": "2026-09-14",
-    "days_until_start": 9,
-    "days_until_end": 9,
-    "status_label": "\u23f3 Opens in ~9 days",
-    "countdown_text": "Estimated opening in 9 days",
+    "days_until_start": 8,
+    "days_until_end": 8,
+    "status_label": "\u23f3 Opens in ~8 days",
+    "countdown_text": "Estimated opening in 8 days",
     "expected_opening_window": "Mid September",
     "historical_cycle": "Figma University / New Grad roles open mid-September.",
     "confidence": "Confirmed / Very High",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "google",
@@ -42,7 +42,7 @@
     "expected_opening_window": "Open Now",
     "historical_cycle": "Dec 2026 Grad / 2027 Early Career SWE postings.",
     "confidence": "Active / Discovered",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "meta",
@@ -50,14 +50,14 @@
     "expected_opening_date": "Sept 8 \u2013 Oct 1, 2026",
     "target_start_date": "2026-09-08",
     "target_end_date": "2026-10-01",
-    "days_until_start": 3,
-    "days_until_end": 26,
-    "status_label": "\u23f3 Opens in ~3\u201326 days",
-    "countdown_text": "Estimated opening in 3\u201326 days",
+    "days_until_start": 2,
+    "days_until_end": 25,
+    "status_label": "\u23f3 Opens in ~2\u201325 days",
+    "countdown_text": "Estimated opening in 2\u201325 days",
     "expected_opening_window": "September \u2013 October",
     "historical_cycle": "University Graduate roles open early September.",
     "confidence": "High",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "stripe",
@@ -72,7 +72,7 @@
     "expected_opening_window": "Open Now",
     "historical_cycle": "Stripe new-grad and early career positions.",
     "confidence": "Active / Discovered",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "openai",
@@ -80,14 +80,14 @@
     "expected_opening_date": "Sept 15 \u2013 Oct 15, 2026",
     "target_start_date": "2026-09-15",
     "target_end_date": "2026-10-15",
-    "days_until_start": 10,
-    "days_until_end": 40,
-    "status_label": "\u23f3 Opens in ~10\u201340 days",
-    "countdown_text": "Estimated opening in 10\u201340 days",
+    "days_until_start": 9,
+    "days_until_end": 39,
+    "status_label": "\u23f3 Opens in ~9\u201339 days",
+    "countdown_text": "Estimated opening in 9\u201339 days",
     "expected_opening_window": "Q3/Q4 2026",
     "historical_cycle": "OpenAI early career positions.",
     "confidence": "Medium",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "anthropic",
@@ -95,14 +95,14 @@
     "expected_opening_date": "Sept 15 \u2013 Oct 15, 2026",
     "target_start_date": "2026-09-15",
     "target_end_date": "2026-10-15",
-    "days_until_start": 10,
-    "days_until_end": 40,
-    "status_label": "\u23f3 Opens in ~10\u201340 days",
-    "countdown_text": "Estimated opening in 10\u201340 days",
+    "days_until_start": 9,
+    "days_until_end": 39,
+    "status_label": "\u23f3 Opens in ~9\u201339 days",
+    "countdown_text": "Estimated opening in 9\u201339 days",
     "expected_opening_window": "Q3/Q4 2026",
     "historical_cycle": "Anthropic early career positions.",
     "confidence": "Medium",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "amazon",
@@ -110,14 +110,14 @@
     "expected_opening_date": "Active / Rolling",
     "target_start_date": "2026-09-01",
     "target_end_date": "2026-12-31",
-    "days_until_start": -4,
-    "days_until_end": 117,
+    "days_until_start": -5,
+    "days_until_end": 116,
     "status_label": "\u26a1 Window Active Now",
-    "countdown_text": "Expected any day (within 117 days)",
+    "countdown_text": "Expected any day (within 116 days)",
     "expected_opening_window": "Currently Open",
     "historical_cycle": "SDE I & University Graduate positions posted continuously.",
     "confidence": "Active",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "databricks",
@@ -125,14 +125,14 @@
     "expected_opening_date": "Sept 15 \u2013 Oct 15, 2026",
     "target_start_date": "2026-09-15",
     "target_end_date": "2026-10-15",
-    "days_until_start": 10,
-    "days_until_end": 40,
-    "status_label": "\u23f3 Opens in ~10\u201340 days",
-    "countdown_text": "Estimated opening in 10\u201340 days",
+    "days_until_start": 9,
+    "days_until_end": 39,
+    "status_label": "\u23f3 Opens in ~9\u201339 days",
+    "countdown_text": "Estimated opening in 9\u201339 days",
     "expected_opening_window": "Q3/Q4 2026",
     "historical_cycle": "University recruiting opens early autumn.",
     "confidence": "Medium",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "uber",
@@ -140,14 +140,14 @@
     "expected_opening_date": "Sept 10 \u2013 Sept 25, 2026",
     "target_start_date": "2026-09-10",
     "target_end_date": "2026-09-25",
-    "days_until_start": 5,
-    "days_until_end": 20,
-    "status_label": "\u23f3 Opens in ~5\u201320 days",
-    "countdown_text": "Estimated opening in 5\u201320 days",
+    "days_until_start": 4,
+    "days_until_end": 19,
+    "status_label": "\u23f3 Opens in ~4\u201319 days",
+    "countdown_text": "Estimated opening in 4\u201319 days",
     "expected_opening_window": "Early Autumn",
     "historical_cycle": "Uber University / Early Career roles.",
     "confidence": "High",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "linkedin",
@@ -155,14 +155,14 @@
     "expected_opening_date": "Sept 15 \u2013 Oct 10, 2026",
     "target_start_date": "2026-09-15",
     "target_end_date": "2026-10-10",
-    "days_until_start": 10,
-    "days_until_end": 35,
-    "status_label": "\u23f3 Opens in ~10\u201335 days",
-    "countdown_text": "Estimated opening in 10\u201335 days",
+    "days_until_start": 9,
+    "days_until_end": 34,
+    "status_label": "\u23f3 Opens in ~9\u201334 days",
+    "countdown_text": "Estimated opening in 9\u201334 days",
     "expected_opening_window": "Early Autumn",
     "historical_cycle": "LinkedIn Entry-level / New Grad SWE roles.",
     "confidence": "High",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "hubspot",
@@ -170,14 +170,14 @@
     "expected_opening_date": "Sept 10 \u2013 Sept 25, 2026",
     "target_start_date": "2026-09-10",
     "target_end_date": "2026-09-25",
-    "days_until_start": 5,
-    "days_until_end": 20,
-    "status_label": "\u23f3 Opens in ~5\u201320 days",
-    "countdown_text": "Estimated opening in 5\u201320 days",
+    "days_until_start": 4,
+    "days_until_end": 19,
+    "status_label": "\u23f3 Opens in ~4\u201319 days",
+    "countdown_text": "Estimated opening in 4\u201319 days",
     "expected_opening_window": "Early Autumn",
     "historical_cycle": "HubSpot Graduate Software Engineering roles.",
     "confidence": "High",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "ramp",
@@ -185,14 +185,14 @@
     "expected_opening_date": "Sept 15 \u2013 Oct 15, 2026",
     "target_start_date": "2026-09-15",
     "target_end_date": "2026-10-15",
-    "days_until_start": 10,
-    "days_until_end": 40,
-    "status_label": "\u23f3 Opens in ~10\u201340 days",
-    "countdown_text": "Estimated opening in 10\u201340 days",
+    "days_until_start": 9,
+    "days_until_end": 39,
+    "status_label": "\u23f3 Opens in ~9\u201339 days",
+    "countdown_text": "Estimated opening in 9\u201339 days",
     "expected_opening_window": "Q3/Q4 2026",
     "historical_cycle": "Ramp New Grad / Early Career engineering roles.",
     "confidence": "Medium",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "tiktok",
@@ -200,14 +200,14 @@
     "expected_opening_date": "Sept 12 \u2013 Oct 5, 2026",
     "target_start_date": "2026-09-12",
     "target_end_date": "2026-10-05",
-    "days_until_start": 7,
-    "days_until_end": 30,
-    "status_label": "\u23f3 Opens in ~7\u201330 days",
-    "countdown_text": "Estimated opening in 7\u201330 days",
+    "days_until_start": 6,
+    "days_until_end": 29,
+    "status_label": "\u23f3 Opens in ~6\u201329 days",
+    "countdown_text": "Estimated opening in 6\u201329 days",
     "expected_opening_window": "Early Autumn",
     "historical_cycle": "TikTok Early Career / Campus recruitment.",
     "confidence": "High",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "netflix",
@@ -215,14 +215,14 @@
     "expected_opening_date": "Sept 20 \u2013 Nov 1, 2026",
     "target_start_date": "2026-09-20",
     "target_end_date": "2026-11-01",
-    "days_until_start": 15,
-    "days_until_end": 57,
-    "status_label": "\u23f3 Opens in ~15\u201357 days",
-    "countdown_text": "Estimated opening in 15\u201357 days",
+    "days_until_start": 14,
+    "days_until_end": 56,
+    "status_label": "\u23f3 Opens in ~14\u201356 days",
+    "countdown_text": "Estimated opening in 14\u201356 days",
     "expected_opening_window": "Autumn Window",
     "historical_cycle": "Netflix New Grad & Early Career roles.",
     "confidence": "Medium",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "millennium-management",
@@ -230,14 +230,14 @@
     "expected_opening_date": "Sept 10 \u2013 Oct 15, 2026",
     "target_start_date": "2026-09-10",
     "target_end_date": "2026-10-15",
-    "days_until_start": 5,
-    "days_until_end": 40,
-    "status_label": "\u23f3 Opens in ~5\u201340 days",
-    "countdown_text": "Estimated opening in 5\u201340 days",
+    "days_until_start": 4,
+    "days_until_end": 39,
+    "status_label": "\u23f3 Opens in ~4\u201339 days",
+    "countdown_text": "Estimated opening in 4\u201339 days",
     "expected_opening_window": "Early Autumn",
     "historical_cycle": "Millennium Quantitative & SWE Campus hiring.",
     "confidence": "Medium",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "bloomberg",
@@ -245,14 +245,14 @@
     "expected_opening_date": "Sept 8 \u2013 Sept 15, 2026",
     "target_start_date": "2026-09-08",
     "target_end_date": "2026-09-15",
-    "days_until_start": 3,
-    "days_until_end": 10,
-    "status_label": "\u23f3 Opens in ~3\u201310 days",
-    "countdown_text": "Estimated opening in 3\u201310 days",
+    "days_until_start": 2,
+    "days_until_end": 9,
+    "status_label": "\u23f3 Opens in ~2\u20139 days",
+    "countdown_text": "Estimated opening in 2\u20139 days",
     "expected_opening_window": "Early September",
     "historical_cycle": "Bloomberg Software Engineer (New Grad) roles open early September.",
     "confidence": "Confirmed / Very High",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "airbnb",
@@ -260,14 +260,14 @@
     "expected_opening_date": "Sept 12 \u2013 Sept 28, 2026",
     "target_start_date": "2026-09-12",
     "target_end_date": "2026-09-28",
-    "days_until_start": 7,
-    "days_until_end": 23,
-    "status_label": "\u23f3 Opens in ~7\u201323 days",
-    "countdown_text": "Estimated opening in 7\u201323 days",
+    "days_until_start": 6,
+    "days_until_end": 22,
+    "status_label": "\u23f3 Opens in ~6\u201322 days",
+    "countdown_text": "Estimated opening in 6\u201322 days",
     "expected_opening_window": "Mid September",
     "historical_cycle": "Airbnb New Grad & University SWE positions.",
     "confidence": "High",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "coinbase",
@@ -275,14 +275,14 @@
     "expected_opening_date": "Sept 15 \u2013 Oct 10, 2026",
     "target_start_date": "2026-09-15",
     "target_end_date": "2026-10-10",
-    "days_until_start": 10,
-    "days_until_end": 35,
-    "status_label": "\u23f3 Opens in ~10\u201335 days",
-    "countdown_text": "Estimated opening in 10\u201335 days",
+    "days_until_start": 9,
+    "days_until_end": 34,
+    "status_label": "\u23f3 Opens in ~9\u201334 days",
+    "countdown_text": "Estimated opening in 9\u201334 days",
     "expected_opening_window": "Early Autumn",
     "historical_cycle": "Coinbase New Grad & Early Career engineering roles.",
     "confidence": "Medium",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "datadog",
@@ -290,14 +290,14 @@
     "expected_opening_date": "Sept 10 \u2013 Sept 25, 2026",
     "target_start_date": "2026-09-10",
     "target_end_date": "2026-09-25",
-    "days_until_start": 5,
-    "days_until_end": 20,
-    "status_label": "\u23f3 Opens in ~5\u201320 days",
-    "countdown_text": "Estimated opening in 5\u201320 days",
+    "days_until_start": 4,
+    "days_until_end": 19,
+    "status_label": "\u23f3 Opens in ~4\u201319 days",
+    "countdown_text": "Estimated opening in 4\u201319 days",
     "expected_opening_window": "Early Autumn",
     "historical_cycle": "Datadog Graduate & Early Career Software Engineer postings.",
     "confidence": "High",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "paypal",
@@ -312,7 +312,7 @@
     "expected_opening_window": "Open Now",
     "historical_cycle": "PayPal Campus & Early Career hiring.",
     "confidence": "Active / Discovered",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   },
   {
     "company_id": "roblox",
@@ -327,6 +327,6 @@
     "expected_opening_window": "Open Now",
     "historical_cycle": "Roblox Early Career & New Grad Software Engineer postings.",
     "confidence": "Active / Discovered",
-    "last_updated": "2026-09-05T23:53:38.742483+00:00"
+    "last_updated": "2026-09-06T01:38:41.376775+00:00"
   }
 ]
