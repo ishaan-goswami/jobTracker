@@ -53,8 +53,8 @@ companies:
   name: DoorDash
   enabled: true
   careers_url: https://careersatdoordash.com/
-  source_type: unsupported
-  source_identifier: ''
+  source_type: greenhouse
+  source_identifier: doordashusa
   locations:
   - United States
   include_keywords: []
