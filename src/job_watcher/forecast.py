@@ -7,12 +7,12 @@ HISTORICAL_OBSERVATIONS = [
     {
         "company_id": "doordash",
         "company_name": "DoorDash",
-        "expected_opening_date": "Sept 8 – Sept 10, 2026",
+        "expected_opening_date": "⚡ IMMINENT (Dropping By Sept 11–13, 2026)",
         "target_start_date": "2026-09-08",
-        "target_end_date": "2026-09-10",
-        "expected_opening_window": "Next Week (Early Sept)",
-        "historical_cycle": "DoorDash SWE New Grad roles open early September.",
-        "confidence": "Confirmed / Very High",
+        "target_end_date": "2026-09-13",
+        "expected_opening_window": "This Week (Confirmed Official Drop)",
+        "historical_cycle": "Official DoorDash UR Announcement: 2027 University (New Grad & Intern) roles going live by end of this week.",
+        "confidence": "Confirmed Official Announcement",
     },
     {
         "company_id": "figma",
