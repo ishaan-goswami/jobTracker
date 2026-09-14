@@ -501,9 +501,7 @@ function companies() {
 
 
 function resume() {
-  const options = state.jobs.map((job, index) => (
-    `<option value="${index}">${escapeHtml(job.company_name)} — ${escapeHtml(job.title)} (${escapeHtml(job.location || 'US')})</option>`
-  )).join("");
+  const defaultDesc = state.jobs.length ? stripHtml(state.jobs[0].description || "") : "";
 
   return `
     <div class="card-box">
@@ -511,7 +509,7 @@ function resume() {
         <div>
           <h3>📄 Resume Tailoring & Keyword Alignment Evaluator</h3>
           <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.2rem;">
-            Cross-reference your resume against official job descriptions to optimize ATS match rate & HackerRank scorecard.
+            Cross-reference your resume against target job descriptions to optimize ATS match rate & HackerRank scorecard.
           </p>
         </div>
         <div style="font-family: var(--font-mono); font-size: 0.775rem; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); color: #60a5fa; padding: 0.35rem 0.75rem; border-radius: 0.5rem; font-weight: 700;">
@@ -520,21 +518,18 @@ function resume() {
       </div>
 
       <div class="notice-box" style="margin-bottom: 1.5rem;">
-        🔒 <strong>Strict Grounding Guarantee:</strong> This tool highlights real matching skills and missing JD keywords. It <em>never fabricates unverified experience</em>. All job descriptions are auto-cleaned into readable plaintext.
+        🔒 <strong>Strict Grounding Guarantee:</strong> Highlights real matching skills and missing JD keywords without fabricating unverified experience.
       </div>
       
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.75rem;">
         <div>
-          <label for="resumeJob" style="margin-top: 0;">Target Role</label>
-          <select id="resumeJob" style="font-size: 0.9rem; padding: 0.75rem 0.9rem; background: rgba(3, 7, 18, 0.85);">${options || "<option>No active jobs available</option>"}</select>
-
-          <label for="jobDescription">Target Job Description (Cleaned Plaintext)</label>
-          <textarea id="jobDescription" rows="9" placeholder="Job description will auto-populate cleanly here..." style="font-family: var(--font-sans); font-size: 0.85rem; line-height: 1.55; color: #cbd5e1; background: rgba(3, 7, 18, 0.85); border-color: rgba(255, 255, 255, 0.1);"></textarea>
+          <label for="jobDescription" style="margin-top: 0;">Target Job Description (Plaintext)</label>
+          <textarea id="jobDescription" rows="9" placeholder="Paste target job description here to analyze keyword alignment..." style="font-family: var(--font-sans); font-size: 0.85rem; line-height: 1.55; color: #cbd5e1; background: rgba(3, 7, 18, 0.85); border-color: rgba(255, 255, 255, 0.1);">${escapeHtml(defaultDesc)}</textarea>
 
           <label for="resumeSource">Your Resume (LaTeX Source / Plaintext)</label>
           <textarea id="resumeSource" rows="10" placeholder="Paste your LaTeX resume or plain text resume content here..." style="font-family: var(--font-mono); font-size: 0.825rem; line-height: 1.45; color: #a5b4fc; background: rgba(3, 7, 18, 0.85); border-color: rgba(255, 255, 255, 0.1);"></textarea>
 
-          <button id="analyzeResume" class="btn-primary" style="width: 100%; justify-content: center; font-size: 0.95rem; padding: 0.8rem 1.5rem; margin-top: 1.25rem;">
+          <button id="analyzeResume" class="btn-primary" style="width: 100%; justify-content: center; font-size: 0.95rem; padding: 0.85rem 1.5rem; margin-top: 1.25rem;">
             ⚡ Run Alignment Analysis & HackerRank Audit
           </button>
         </div>
@@ -546,9 +541,9 @@ function resume() {
 
           <div id="resumeResult" style="background: rgba(3, 7, 18, 0.85); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 0.85rem; min-height: 480px;">
             <div style="text-align: center; color: var(--text-muted); padding: 4rem 1rem;">
-              <div style="font-size: 2.75rem; margin-bottom: 0.5rem;">🎯</div>
-              <p style="font-weight: 600; color: #cbd5e1; font-size: 1rem;">Select a role and click <strong>Run Alignment Analysis</strong></p>
-              <p style="font-size: 0.825rem; margin-top: 0.35rem; color: var(--text-subtle);">Calculates keyword coverage % and HackerRank ATS scoring.</p>
+              <div style="font-size: 2.75rem; margin-bottom: 0.5rem;">📄</div>
+              <p style="font-weight: 600; color: #cbd5e1; font-size: 1rem;">Paste your resume and click <strong>Run Alignment Analysis</strong></p>
+              <p style="font-size: 0.825rem; margin-top: 0.35rem; color: var(--text-subtle);">Generates your circular percentage score & HackerRank ATS breakdown.</p>
             </div>
           </div>
         </div>
@@ -765,24 +760,54 @@ function hydrateJobsEvents() {
   });
 }
 
+function renderCircularGauge(score, label, colorHex, strokeId) {
+  const radius = 48;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (score / 100) * circumference;
+
+  return `
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); padding: 1.25rem 1rem; border-radius: 0.85rem; flex: 1; min-width: 140px; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
+      <div style="position: relative; width: 120px; height: 120px;">
+        <svg width="120" height="120" viewBox="0 0 120 120" style="transform: rotate(-90deg); filter: drop-shadow(0 0 8px ${colorHex}55);">
+          <defs>
+            <linearGradient id="${strokeId}" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="${colorHex}" />
+              <stop offset="100%" stop-color="#38bdf8" />
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="60" r="${radius}" stroke="rgba(255, 255, 255, 0.08)" stroke-width="10" fill="none" />
+          <circle cx="60" cy="60" r="${radius}" stroke="url(#${strokeId})" stroke-width="10" fill="none"
+            stroke-dasharray="${circumference}" stroke-dashoffset="${strokeDashoffset}"
+            stroke-linecap="round" style="transition: stroke-dashoffset 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);" />
+        </svg>
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+          <span style="font-family: var(--font-mono); font-size: 1.85rem; font-weight: 900; color: ${colorHex}; line-height: 1; text-shadow: 0 0 12px ${colorHex}66;">${score}%</span>
+        </div>
+      </div>
+      <div style="font-size: 0.775rem; color: #cbd5e1; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.75rem; text-align: center;">${label}</div>
+    </div>
+  `;
+}
+
 function hydrateResume() {
-  const select = document.querySelector("#resumeJob");
   const description = document.querySelector("#jobDescription");
   const source = document.querySelector("#resumeSource");
   const result = document.querySelector("#resumeResult");
+  const analyzeBtn = document.querySelector("#analyzeResume");
 
-  if (!select || !description || !source || !result) return;
+  if (!description || !source || !result || !analyzeBtn) return;
 
-  const fillDescription = () => {
-    const job = state.jobs[Number(select.value)];
-    const cleanDesc = stripHtml(job?.description || "");
-    description.value = cleanDesc;
-  };
+  analyzeBtn.addEventListener("click", () => {
+    if (!source.value.trim()) {
+      result.innerHTML = `
+        <div style="text-align: center; color: #f87171; padding: 3rem 1rem; background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.25); border-radius: 0.75rem;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚠️</div>
+          <p style="font-weight: 700;">Please paste your resume content in the text box first.</p>
+        </div>
+      `;
+      return;
+    }
 
-  select.addEventListener("change", fillDescription);
-  fillDescription();
-
-  document.querySelector("#analyzeResume").addEventListener("click", () => {
     const terms = keywords(description.value);
     const resumeText = source.value.toLowerCase();
     const present = terms.filter((term) => resumeText.includes(term.toLowerCase()));
@@ -822,6 +847,9 @@ function hydrateResume() {
     if (/todo list|calculator app/i.test(resumeText)) deductions += 3;
 
     const totalHackerRank = Math.max(0, Math.min(100, osScore + projScore + prodScore + skillsScore + bonus - deductions));
+
+    const rateColor = rate >= 70 ? '#34d399' : (rate >= 50 ? '#fbbf24' : '#f87171');
+    const hrColor = totalHackerRank >= 70 ? '#34d399' : (totalHackerRank >= 50 ? '#fbbf24' : '#f87171');
 
     // Generate Actionable Recommendations for Higher Score
     const recommendations = [];
@@ -873,16 +901,9 @@ function hydrateResume() {
     }
 
     result.innerHTML = `
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-        <div>
-          <div style="font-size: 0.775rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Keyword Match Rate</div>
-          <div style="font-family: var(--font-mono); font-size: 2.5rem; font-weight: 900; color: ${rate >= 60 ? '#34d399' : '#60a5fa'}; line-height: 1;">${rate}%</div>
-        </div>
-
-        <div style="text-align: right;">
-          <div style="font-size: 0.775rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">HackerRank ATS Score</div>
-          <div style="font-family: var(--font-mono); font-size: 2.5rem; font-weight: 900; color: ${totalHackerRank >= 70 ? '#34d399' : (totalHackerRank >= 50 ? '#fbbf24' : '#f87171')}; line-height: 1;">${totalHackerRank} <span style="font-size: 0.9rem; color: var(--text-muted);">/ 100</span></div>
-        </div>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+        ${renderCircularGauge(rate, "Keyword Match", rateColor, "gradRate")}
+        ${renderCircularGauge(totalHackerRank, "HackerRank ATS", hrColor, "gradHR")}
       </div>
 
       <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 0.75rem; padding: 1rem; margin-bottom: 1.25rem;">
