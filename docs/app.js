@@ -161,7 +161,7 @@ const STOP_WORDS = new Set([
   "who's", "whom", "why", "why's", "with", "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're",
   "you've", "your", "yours", "yourself", "yourselves", "still", "still'", "world's", "world", "replatforming",
 
-  // Non-technical prose, marketing, and corporate culture words
+  // Non-technical prose, marketing, culture, soft skills, and generic recruiter filler
   "stripe", "google", "amazon", "meta", "bloomberg", "company", "companies", "business", "businesses",
   "growth", "economic", "economy", "prosperity", "conditions", "improving", "focused", "programmable", "financial",
   "services", "rethinking", "principles", "start", "scale", "million", "millions", "trillion", "trillions",
@@ -184,7 +184,7 @@ const STOP_WORDS = new Set([
   "consensus", "minimum", "requirements", "qualification", "qualifications", "preferred", "degree",
   "field", "obtained", "summer", "equivalent", "professional", "internship", "side", "classwork",
   "mostly", "believe", "learned", "fundamentals", "general", "knowledge", "present", "previous",
-  "internships", "collaboratively", "multi-person", "coding", "setting", "ability", "unfamiliar", "systems",
+  "internships", "collaboratively", "collaborative", "multi-person", "coding", "setting", "ability", "unfamiliar", "systems",
   "form", "subject", "experts", "clear", "written", "communication", "skills", "explain",
   "stakeholders", "members", "leverage", "tools", "accelerate", "development", "critical", "thinking",
   "judgement", "review", "refine", "validate", "outputs", "one", "specialized", "balanced",
@@ -193,6 +193,12 @@ const STOP_WORDS = new Set([
   "unblock", "oneself", "ask", "help", "strong", "h2", "h3", "h4", "div", "span", "p", "li", "ul", "ol",
   "nbsp", "quot", "href", "amp", "looking", "move", "want", "great", "place", "builder", "energized",
   "building", "without", "right", "work", "like", "time", "creating", "around",
+  "whether", "closely", "inviting", "share", "strongest", "possible", "match", "intern", "interns", "embedded",
+  "mentor", "mentors", "mentorship", "teammate", "teammates", "feature", "features", "internal", "external",
+  "user-facing", "collaboration", "interest", "interests", "year", "years", "day", "days", "times",
+  "bring", "brings", "bringing", "take", "takes", "taking", "give", "gives", "giving", "make", "makes",
+  "showing", "find", "finds", "finding", "wants", "need", "needs", "workplace", "grow", "growth",
+  "support", "supportive", "environment", "joining", "join", "culture", "across", "value", "values",
 
   // Legal, EEO, ADA accommodation, compliance, and corporate disclaimer filler words
   "will", "please", "apply", "participate", "interview", "essential", "function", "functions", "receive",
@@ -216,7 +222,7 @@ const KNOWN_TECH_TERMS = new Set([
   "postgresql", "mysql", "mongodb", "redis", "kafka", "ai", "ml", "machine learning", "deep learning", "nlp",
   "llm", "security", "cryptography", "testing", "unit testing", "ci/cd", "linux", "unix", "code review",
   "computer science", "bachelor", "bachelor's", "master", "master's", "phd", "side projects", "classwork",
-  "collaborative", "production", "production systems", "large codebases"
+  "production", "production systems", "large codebases"
 ]);
 
 function escapeHtml(value) {
@@ -288,7 +294,6 @@ function keywords(text) {
   const rawTokens = reqText.split(/[\s,;:()/\\–—•"'\`\[\]]+/);
   const seen = new Set();
   const techMatches = [];
-  const domainMatches = [];
 
   for (let raw of rawTokens) {
     let clean = raw.replace(/^[^a-zA-Z0-9+#-]+|[^a-zA-Z0-9+#-]+$/g, "").replace(/\.+$|\,+$|:+$|;+$/g, "");
@@ -302,13 +307,10 @@ function keywords(text) {
     if (KNOWN_TECH_TERMS.has(lower)) {
       seen.add(lower);
       techMatches.push(clean);
-    } else if (clean.length >= 4 && !STOP_WORDS.has(lower)) {
-      seen.add(lower);
-      domainMatches.push(clean);
     }
   }
 
-  return [...techMatches, ...domainMatches].slice(0, 35);
+  return techMatches.slice(0, 35);
 }
 
 async function load() {
