@@ -217,12 +217,11 @@ const KNOWN_TECH_TERMS = new Set([
   "java", "python", "c++", "c#", "ruby", "javascript", "typescript", "scala", "go", "golang", "rust", "swift",
   "kotlin", "sql", "html", "css", "react", "node", "express", "next.js", "vue", "angular", "django", "flask",
   "fastapi", "spring", "rails", "aws", "gcp", "azure", "kubernetes", "docker", "terraform", "git", "github",
-  "api", "apis", "graphql", "rest", "grpc", "microservices", "frontend", "backend", "fullstack", "infrastructure",
+  "api", "apis", "graphql", "rest", "grpc", "microservices", "frontend", "backend", "fullstack",
   "distributed", "concurrency", "multithreading", "algorithms", "data structures", "system design", "database",
   "postgresql", "mysql", "mongodb", "redis", "kafka", "ai", "ml", "machine learning", "deep learning", "nlp",
   "llm", "security", "cryptography", "testing", "unit testing", "ci/cd", "linux", "unix", "code review",
-  "computer science", "bachelor", "bachelor's", "master", "master's", "phd", "side projects", "classwork",
-  "production", "production systems", "large codebases"
+  "computer science", "bachelor", "bachelor's", "master", "master's", "phd"
 ]);
 
 function escapeHtml(value) {
