@@ -528,10 +528,62 @@ function companies() {
   `;
 }
 
+const TECHNICAL_SYNONYMS = {
+  "javascript": ["js", "javascript"],
+  "js": ["javascript", "js"],
+  "typescript": ["ts", "typescript"],
+  "ts": ["typescript", "ts"],
+  "react": ["react.js", "reactjs", "react"],
+  "node": ["node.js", "nodejs", "node"],
+  "aws": ["amazon web services", "aws"],
+  "kubernetes": ["k8s", "kubernetes"],
+  "python": ["py", "python"],
+  "c++": ["cpp", "c++"],
+  "c#": ["csharp", "c#"],
+  "ml": ["machine learning", "ml"],
+  "ai": ["artificial intelligence", "ai"],
+};
 
+function isTermInResume(resumeText, term) {
+  const lowerResume = resumeText.toLowerCase();
+  const lowerTerm = term.toLowerCase().trim();
+  if (lowerResume.includes(lowerTerm)) return true;
+
+  const syns = TECHNICAL_SYNONYMS[lowerTerm];
+  if (syns) {
+    return syns.some((syn) => lowerResume.includes(syn));
+  }
+
+  return false;
+}
+
+async function extractKeywordsWithAI(jobDescription, resumeText) {
+  const response = await fetch("/api/extract-keywords", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ jobDescription, resumeText }),
+  });
+
+  if (!response.ok) {
+    let errMessage = `HTTP ${response.status}`;
+    try {
+      const errData = await response.json();
+      if (errData.error) errMessage = errData.error;
+    } catch {}
+    throw new Error(errMessage);
+  }
+
+  const data = await response.json();
+  if (!data.keywords || !Array.isArray(data.keywords)) {
+    throw new Error("Invalid keyword array response from server API");
+  }
+
+  return data.keywords.map((k) => k.term);
+}
 
 function resume() {
   const defaultDesc = state.jobs.length ? stripHtml(state.jobs[0].description || "") : "";
+  const isAiChecked = localStorage.getItem("ai_keyword_extraction_enabled") === "true";
 
   return `
     <div class="card-box">
@@ -543,12 +595,20 @@ function resume() {
           </p>
         </div>
         <div style="font-family: var(--font-mono); font-size: 0.775rem; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); color: #60a5fa; padding: 0.35rem 0.75rem; border-radius: 0.5rem; font-weight: 700;">
-          🔒 LOCAL IN-BROWSER EVALUATION
+          🔒 LOCAL / OPT-IN AI EVALUATION
         </div>
       </div>
 
-      <div class="notice-box" style="margin-bottom: 1.5rem;">
+      <div class="notice-box" style="margin-bottom: 1.25rem;">
         🔒 <strong>Strict Grounding Guarantee:</strong> Highlights real matching skills and missing JD keywords without fabricating unverified experience.
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255, 255, 255, 0.08); padding: 0.75rem 1rem; border-radius: 0.6rem; margin-bottom: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <input type="checkbox" id="aiKeywordToggle" style="width: 18px; height: 18px; cursor: pointer; accent-color: #3b82f6;" ${isAiChecked ? "checked" : ""}>
+          <label for="aiKeywordToggle" style="font-size: 0.85rem; font-weight: 600; color: #f1f5f9; cursor: pointer; margin-top: 0;">✨ Use AI-enhanced keyword extraction (sends job description to Gemini)</label>
+        </div>
+        <span style="font-size: 0.75rem; color: var(--text-muted); cursor: help;" title="Local mode stays 100% private and offline. AI mode sends job description to server-side Gemini API.">🔒 Off by default (Private)</span>
       </div>
       
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.75rem;">
@@ -580,6 +640,114 @@ function resume() {
       </div>
     </div>
   `;
+}
+
+function renderCircularGauge(score, label, colorHex, strokeId) {
+  const radius = 48;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (score / 100) * circumference;
+
+  return `
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); padding: 1.25rem 1rem; border-radius: 0.85rem; flex: 1; min-width: 140px; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
+      <div style="position: relative; width: 120px; height: 120px;">
+        <svg width="120" height="120" viewBox="0 0 120 120" style="transform: rotate(-90deg); filter: drop-shadow(0 0 8px ${colorHex}55);">
+          <defs>
+            <linearGradient id="${strokeId}" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="${colorHex}" />
+              <stop offset="100%" stop-color="#38bdf8" />
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="60" r="${radius}" stroke="rgba(255, 255, 255, 0.08)" stroke-width="10" fill="none" />
+          <circle cx="60" cy="60" r="${radius}" stroke="url(#${strokeId})" stroke-width="10" fill="none"
+            stroke-dasharray="${circumference}" stroke-dashoffset="${strokeDashoffset}"
+            stroke-linecap="round" style="transition: stroke-dashoffset 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);" />
+        </svg>
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+          <span style="font-family: var(--font-mono); font-size: 1.85rem; font-weight: 900; color: ${colorHex}; line-height: 1; text-shadow: 0 0 12px ${colorHex}66;">${score}%</span>
+        </div>
+      </div>
+      <div style="font-size: 0.775rem; color: #cbd5e1; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.75rem; text-align: center;">${label}</div>
+    </div>
+  `;
+}
+
+function hydrateResume() {
+  const description = document.querySelector("#jobDescription");
+  const source = document.querySelector("#resumeSource");
+  const result = document.querySelector("#resumeResult");
+  const analyzeBtn = document.querySelector("#analyzeResume");
+  const aiToggle = document.querySelector("#aiKeywordToggle");
+
+  if (!description || !source || !result || !analyzeBtn) return;
+
+  if (aiToggle) {
+    aiToggle.addEventListener("change", () => {
+      localStorage.setItem("ai_keyword_extraction_enabled", aiToggle.checked ? "true" : "false");
+    });
+  }
+
+  analyzeBtn.addEventListener("click", async () => {
+    if (!source.value.trim()) {
+      result.innerHTML = `
+        <div style="text-align: center; color: #f87171; padding: 3rem 1rem; background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.25); border-radius: 0.75rem;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚠️</div>
+          <p style="font-weight: 700;">Please paste your resume content in the text box first.</p>
+        </div>
+      `;
+      return;
+    }
+
+    let terms = [];
+    let isAIMode = aiToggle && aiToggle.checked;
+    let aiFallbackNotice = "";
+
+    if (isAIMode) {
+      result.innerHTML = `
+        <div style="text-align: center; color: #60a5fa; padding: 4rem 1rem;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;" class="spin">⚡</div>
+          <p style="font-weight: 700; font-size: 1rem;">Querying Gemini AI for enhanced keyword extraction...</p>
+          <p style="font-size: 0.825rem; color: var(--text-subtle); margin-top: 0.35rem;">Extracting hard skills, tools, and qualifications server-side.</p>
+        </div>
+      `;
+
+      try {
+        terms = await extractKeywordsWithAI(description.value, source.value);
+      } catch (err) {
+        console.warn("AI Keyword extraction failed, falling back to local extractor:", err);
+        terms = keywords(description.value);
+        aiFallbackNotice = `<div style="font-size: 0.775rem; color: #fbbf24; background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(251, 191, 36, 0.25); padding: 0.5rem 0.75rem; border-radius: 0.4rem; margin-bottom: 1rem;">⚠️ ${escapeHtml(err.message)} — Fell back to local offline extractor.</div>`;
+      }
+    } else {
+      terms = keywords(description.value);
+    }
+
+    const resumeText = source.value;
+    const present = terms.filter((term) => isTermInResume(resumeText, term));
+    const missing = terms.filter((term) => !isTermInResume(resumeText, term));
+    const rate = terms.length ? Math.round((present.length / terms.length) * 100) : 0;
+    const hrScore = Math.min(100, Math.max(30, rate + (present.length > 3 ? 10 : 0)));
+    const colorHex = rate >= 80 ? '#34d399' : rate >= 50 ? '#60a5fa' : '#fbbf24';
+
+    result.innerHTML = `
+      ${aiFallbackNotice}
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+        ${renderCircularGauge(rate, "ATS Match Rate", colorHex, "gauge1")}
+        ${renderCircularGauge(hrScore, "HackerRank Score", hrScore >= 80 ? '#34d399' : '#60a5fa', "gauge2")}
+      </div>
+      <div style="margin-bottom: 1rem;">
+        <h4 style="font-size: 0.875rem; font-weight: 700; color: #34d399; margin-bottom: 0.5rem;">✓ Matching Keywords (${present.length})</h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.35rem;">
+          ${present.length ? present.map(k => `<span style="background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); padding: 0.2rem 0.5rem; border-radius: 0.35rem; font-size: 0.75rem; font-family: var(--font-mono);">${escapeHtml(k)}</span>`).join('') : '<span style="font-size: 0.8rem; color: var(--text-muted);">None found</span>'}
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size: 0.875rem; font-weight: 700; color: #f87171; margin-bottom: 0.5rem;">⚠️ Missing Keywords (${missing.length})</h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.35rem;">
+          ${missing.length ? missing.map(k => `<span style="background: rgba(248, 113, 113, 0.15); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.3); padding: 0.2rem 0.5rem; border-radius: 0.35rem; font-size: 0.75rem; font-family: var(--font-mono);">${escapeHtml(k)}</span>`).join('') : '<span style="font-size: 0.8rem; color: var(--text-muted);">All keywords covered!</span>'}
+        </div>
+      </div>
+    `;
+  });
 }
 
 function referrals() {
