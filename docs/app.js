@@ -192,7 +192,19 @@ const STOP_WORDS = new Set([
   "alongside", "peers", "high", "complex", "obstacles", "independently", "knowing", "precisely",
   "unblock", "oneself", "ask", "help", "strong", "h2", "h3", "h4", "div", "span", "p", "li", "ul", "ol",
   "nbsp", "quot", "href", "amp", "looking", "move", "want", "great", "place", "builder", "energized",
-  "building", "without", "right", "work", "like", "time", "creating", "around"
+  "building", "without", "right", "work", "like", "time", "creating", "around",
+
+  // Legal, EEO, ADA accommodation, compliance, and corporate disclaimer filler words
+  "will", "please", "apply", "participate", "interview", "essential", "function", "functions", "receive",
+  "benefits", "privileges", "employment", "require", "requires", "required", "reach", "modifications", "holding",
+  "examples", "example", "include", "includes", "including", "limited", "tasks", "task", "extent", "successfully",
+  "individual", "individuals", "disability", "disabilities", "provided", "reasonable", "accommodation", "accommodations",
+  "equal", "opportunity", "employer", "protected", "veteran", "veterans", "applicant", "applicants", "candidate",
+  "candidates", "status", "race", "color", "religion", "sex", "gender", "orientation", "identity", "national", "origin",
+  "age", "ancestry", "creed", "marital", "citizenship", "medical", "dental", "vision", "401k", "time-off", "vacation",
+  "pto", "salary", "range", "pay", "base", "compensation", "location", "locations", "relocation", "sponsorship",
+  "authorization", "authorized", "policy", "policies", "state", "federal", "laws", "law", "regulations",
+  "compliance", "affirmative", "action", "eeo", "eeoc", "disclaimer", "notice", "ext", "email", "mail", "contact"
 ]);
 
 const KNOWN_TECH_TERMS = new Set([
@@ -249,12 +261,29 @@ function formatDate(isoStr) {
   }
 }
 
+function cleanJobDescriptionForKeywords(text) {
+  let plainText = stripHtml(text);
+
+  // 1. Remove email addresses & web links
+  plainText = plainText
+    .replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, " ")
+    .replace(/https?:\/\/\S+|www\.\S+/g, " ");
+
+  // 2. Filter out paragraphs/lines containing legal, EEO, or ADA disclaimer boilerplate
+  const boilerplateRegex = /reasonable accommodation|equal opportunity|disability|disabilities|protected veteran|essential function|affirmative action|accommodations|eeo|pay transparency|salary range|base pay|compensation range|medical, dental|health insurance|benefits package|race, color|gender identity|sexual orientation|accommodations-ext/i;
+
+  const lines = plainText.split(/\n+/);
+  const cleanLines = lines.filter((line) => !boilerplateRegex.test(line));
+  const filteredText = cleanLines.join("\n");
+
+  // 3. Focus keyword extraction starting from Requirements / Qualifications / Responsibilities / Skills sections if present
+  const sectionMatch = filteredText.match(/(minimum requirements|preferred qualifications|requirements|qualifications|responsibilities|skills|tech stack|what you'll do|what we're looking for|about the role)/i);
+
+  return sectionMatch ? filteredText.slice(sectionMatch.index) : filteredText;
+}
+
 function keywords(text) {
-  const plainText = stripHtml(text);
-  
-  // Slicing exclusively starting from technical requirements & qualifications sections
-  const reqMatch = plainText.match(/(minimum requirements|preferred qualifications|requirements|qualifications|responsibilities|tech stack)/i);
-  const reqText = reqMatch ? plainText.slice(reqMatch.index) : plainText;
+  const reqText = cleanJobDescriptionForKeywords(text);
 
   const rawTokens = reqText.split(/[\s,;:()/\\–—•"'\`\[\]]+/);
   const seen = new Set();
@@ -265,7 +294,8 @@ function keywords(text) {
     let clean = raw.replace(/^[^a-zA-Z0-9+#-]+|[^a-zA-Z0-9+#-]+$/g, "").replace(/\.+$|\,+$|:+$|;+$/g, "");
     if (!clean) continue;
     if (/^\d+$/.test(clean)) continue;
-    
+    if (clean.includes("@") || clean.includes(".com") || clean.includes(".org") || clean.includes(".net")) continue;
+
     const lower = clean.toLowerCase();
     if (STOP_WORDS.has(lower) || seen.has(lower)) continue;
 
