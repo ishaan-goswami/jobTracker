@@ -120,11 +120,24 @@ class AppHandler(SimpleHTTPRequestHandler):
             self.send_response(404)
             self.end_headers()
 
-def run_server(port=8080):
+class ReusableHTTPServer(HTTPServer):
+    allow_reuse_address = True
+
+def run_server(port=None):
+    if port is None:
+        port = int(os.environ.get("PORT", "8080"))
     server_address = ("", port)
-    httpd = HTTPServer(server_address, AppHandler)
-    print(f"🚀 Serving 2027 SWE Radar with API support at http://localhost:{port}")
-    httpd.serve_forever()
+    try:
+        httpd = ReusableHTTPServer(server_address, AppHandler)
+        print(f"🚀 Serving 2027 SWE Radar with API support at http://localhost:{port}")
+        httpd.serve_forever()
+    except OSError as err:
+        if err.errno == 48:
+            print(f"⚠️ Port {port} is already in use by another running server instance.")
+            print(f"👉 You can access the live dashboard right now at http://localhost:{port}")
+            print(f"👉 Or run on a different port: PORT=8081 python server.py")
+        else:
+            raise
 
 if __name__ == "__main__":
     run_server()
