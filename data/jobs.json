@@ -12,8 +12,8 @@
     "source_url": "https://stripe.com/jobs/search",
     "source_type": "greenhouse",
     "posted_at": null,
-    "discovered_at": "2026-09-14T21:47:20.647828Z",
-    "last_seen_at": "2026-09-14T21:47:20.647828Z",
+    "discovered_at": "2026-09-15T00:02:56.100336Z",
+    "last_seen_at": "2026-09-15T00:02:56.100336Z",
     "is_open": true,
     "match_score": 100.0,
     "match_reasons": [
@@ -37,8 +37,8 @@
     "source_url": "https://www.google.com/about/careers/applications/jobs/results/",
     "source_type": "google",
     "posted_at": null,
-    "discovered_at": "2026-09-14T21:47:20.647828Z",
-    "last_seen_at": "2026-09-14T21:47:20.647828Z",
+    "discovered_at": "2026-09-15T00:02:56.100336Z",
+    "last_seen_at": "2026-09-15T00:02:56.100336Z",
     "is_open": true,
     "match_score": 100.0,
     "match_reasons": [
@@ -63,8 +63,8 @@
     "source_url": "https://www.google.com/about/careers/applications/jobs/results/",
     "source_type": "google",
     "posted_at": null,
-    "discovered_at": "2026-09-14T21:47:20.647828Z",
-    "last_seen_at": "2026-09-14T21:47:20.647828Z",
+    "discovered_at": "2026-09-15T00:02:56.100336Z",
+    "last_seen_at": "2026-09-15T00:02:56.100336Z",
     "is_open": true,
     "match_score": 100.0,
     "match_reasons": [
@@ -89,8 +89,8 @@
     "source_url": "https://www.google.com/about/careers/applications/jobs/results/",
     "source_type": "google",
     "posted_at": null,
-    "discovered_at": "2026-09-14T21:47:20.647828Z",
-    "last_seen_at": "2026-09-14T21:47:20.647828Z",
+    "discovered_at": "2026-09-15T00:02:56.100336Z",
+    "last_seen_at": "2026-09-15T00:02:56.100336Z",
     "is_open": true,
     "match_score": 90.0,
     "match_reasons": [
@@ -114,8 +114,8 @@
     "source_url": "https://careers.roblox.com/",
     "source_type": "greenhouse",
     "posted_at": null,
-    "discovered_at": "2026-09-14T21:47:20.647828Z",
-    "last_seen_at": "2026-09-14T21:47:20.647828Z",
+    "discovered_at": "2026-09-15T00:02:56.100336Z",
+    "last_seen_at": "2026-09-15T00:02:56.100336Z",
     "is_open": true,
     "match_score": 90.0,
     "match_reasons": [
@@ -139,8 +139,8 @@
     "source_url": "https://careersatdoordash.com/",
     "source_type": "greenhouse",
     "posted_at": null,
-    "discovered_at": "2026-09-14T21:47:20.647828Z",
-    "last_seen_at": "2026-09-14T21:47:20.647828Z",
+    "discovered_at": "2026-09-15T00:02:56.100336Z",
+    "last_seen_at": "2026-09-15T00:02:56.100336Z",
     "is_open": true,
     "match_score": 65.0,
     "match_reasons": [
@@ -163,8 +163,8 @@
     "source_url": "https://careersatdoordash.com/",
     "source_type": "greenhouse",
     "posted_at": null,
-    "discovered_at": "2026-09-14T21:47:20.647828Z",
-    "last_seen_at": "2026-09-14T21:47:20.647828Z",
+    "discovered_at": "2026-09-15T00:02:56.100336Z",
+    "last_seen_at": "2026-09-15T00:02:56.100336Z",
     "is_open": true,
     "match_score": 80.0,
     "match_reasons": [
@@ -174,6 +174,56 @@
       "Matches December 2026 / 2027 start timing"
     ],
     "fingerprint": "c920af2dd9ca8703239f0f369e82a1ffa3ec152eeb2be0e01fe42fd83b98ea41"
+  },
+  {
+    "id": "55150071-fce8-48f5-aea4-14ed78b83511",
+    "company_id": "openai",
+    "company_name": "OpenAI",
+    "title": "Software Engineer, Applied Emerging Talent (2027)",
+    "location": "San Francisco",
+    "description": "About the Team\nThe Applied team works across research, engineering, product, and design to bring OpenAI\u2019s technology to the world. We seek to learn from deployment and broadly distribute the benefits of AI, while ensuring that this powerful tool is used responsibly and safely. We aim to make our innovative tools globally accessible, transcending geographic, economic, or platform barriers. Our commitment is to facilitate the use of AI to enhance lives, fostered by rigorous insights into how people use our products.\n\nAbout the Role\nWe are seeking Software Engineers (Emerging Talent) to join our Applied Engineering team. You\u2019ll work in a highly iterative, collaborative, fast-paced environment to bring our technology to millions of users around the world, and ensure it\u2019s delivered with safety and reliability in mind. We value engineers who are self-starters, care deeply about the end user experience, and take pride in building products to solve customer needs.\n\n In this role, you will:\n\u2022 Own the development of new customer-facing ChatGPT and OpenAI API features and product experiences end-to-end\n\n\u2022 Talk to users to understand their problems and design solutions to address them\n\n\u2022 Collaborate with a cross-functional team of engineers, researchers, product managers, designers, and operations folks to create cutting-edge products\n\n\u2022 Optimize applications for speed and scale\n\n\u2022 Create a diverse and inclusive culture that makes all feel welcome.\n\nYour background looks something like:\n\u2022 Bachelor's or Master\u2019s degree in Computer Science, Computer Engineering, relevant technical field, or equivalent practical experience\n\n\u2022 0-1 years of experience in software engineering or a relevant field\n\n\u2022 Proficiency with JavaScript, React, and some backend languages (we use Python)\n\n\u2022 Some experience with relational databases like Postgres/MySQL\n\n\u2022 Interest in AI/ML (direct experience not required)\n\n\u2022 Ability to move fast in an environment where things are sometimes loosely defined and may have competing priorities or deadlines\n\nAbout OpenAI\nOpenAI is an AI research and deployment company dedicated to ensuring that general-purpose artificial intelligence benefits all of humanity. We push the boundaries of the capabilities of AI systems and seek to safely deploy them to the world through our products. AI is an extremely powerful tool that must be created with safety and human needs at its core, and to achieve our mission, we must encompass and value the many different perspectives, voices, and experiences that form the full spectrum of humanity.\u00a0\nWe are an equal opportunity employer, and we do not discriminate on the basis of race, religion, color, national origin, sex, sexual orientation, age, veteran status, disability, genetic information, or other applicable legally protected characteristic. \nFor additional information, please see OpenAI\u2019s Affirmative Action and Equal Employment Opportunity Policy Statement.\nBackground checks for applicants will be administered in accordance with applicable law, and qualified applicants with arrest or conviction records will be considered for employment consistent with those laws, including the San Francisco Fair Chance Ordinance, the Los Angeles County Fair Chance Ordinance for Employers, and the California Fair Chance Act, for US-based candidates. For unincorporated Los Angeles County workers: we reasonably believe that criminal history may have a direct, adverse and negative relationship with the following job duties, potentially resulting in the withdrawal of a conditional offer of employment: protect computer hardware entrusted to you from theft, loss or damage; return all computer hardware in your possession (including the data contained therein) upon termination of employment or end of assignment; and maintain the confidentiality of proprietary, confidential, and non-public information. In addition, job duties require access to secure and protected information technology systems and related data security obligations.\nTo notify OpenAI that you believe this job posting is non-compliant, please submit a report through this form. No response will be provided to inquiries unrelated to job posting compliance.\nWe are committed to providing reasonable accommodations to applicants with disabilities, and requests can be made via this link.\nOpenAI Global Applicant Privacy Policy\nAt OpenAI, we believe artificial intelligence has the potential to help people solve immense global challenges, and we want the upside of AI to be widely shared. Join us in shaping the future of technology.",
+    "team": "Emerging Talent",
+    "employment_type": "FullTime",
+    "official_url": "https://jobs.ashbyhq.com/openai/55150071-fce8-48f5-aea4-14ed78b83511",
+    "source_url": "https://openai.com/careers/search/",
+    "source_type": "ashby",
+    "posted_at": null,
+    "discovered_at": "2026-09-15T00:02:56.100336Z",
+    "last_seen_at": "2026-09-15T00:02:56.100336Z",
+    "is_open": true,
+    "match_score": 100.0,
+    "match_reasons": [
+      "United States location",
+      "Relevant software-engineering title",
+      "Early-career / MTS title",
+      "Early-career wording in description",
+      "0\u20132 years experience"
+    ],
+    "fingerprint": "686578a85d2af01bec23c2d5bd024d7a88bfc84425e958b5b98e4fca8bc9050e"
+  },
+  {
+    "id": "8163709",
+    "company_id": "doordash",
+    "company_name": "DoorDash",
+    "title": "Software Engineer I, Entry-Level (Graduation Date: Fall 2026-Summer 2027) - US",
+    "location": "Los Angeles, CA; New York, NY; San Francisco, CA; Sunnyvale, CA; Seattle, WA",
+    "description": "About the Team\n\nDoorDash, Deliveroo, and Wolt are one global team building the future of local commerce. Our products power millions of interactions between consumers, merchants, and couriers every day, in cities around the world. Together, we\u2019re combining global scale with deep local understanding to deliver what\u2019s next. At DoorDash, you may collaborate with teammates, systems, and leaders across all three brands.\u00a0We\u2019re looking for students completing a bachelor\u2019s or master\u2019s degree to begin their engineering careers with DoorDash. You\u2019ll help build and operate reliable, scalable technology that improves the experiences of consumers, merchants, and delivery partners across our global platform.\u00a0Our Engineering team tackles complex technical challenges across a global, three-sided marketplace -\u00a0 from creating intuitive product experiences to designing the infrastructure and backend systems that help local commerce thrive.\n\nYou\u2019re excited about this opportunity because you will\u2026\n\nYou\u2019ll work alongside a mentor, manager, and experienced engineers while contributing to real products and systems. As you build your technical knowledge, you\u2019ll take on increasing ownership and see how your work affects the people and businesses using our platform. Here\u2019s what your day-to-day might look like:\n\n\u2022 Develop, maintain, and ship production-ready software with support from your mentor and team\n\n\u2022 Write clean, testable code and contribute to code reviews, version control, and engineering best practices\n\n\u2022 Learn the systems and technical areas your work contributes to, including how they operate at scale\n\n\u2022 Apply feedback and coaching to strengthen your technical skills and problem-solving approach\n\n\u2022 Collaborate with engineers and cross-functional partners to solve problems for consumers, merchants, and delivery partners\n\nWe\u2019re excited about you because you have\u2026\n\n\u2022 A bachelor\u2019s or master\u2019s degree in Computer Science or a related discipline, graduating between Fall 2026 and Summer 2027\n\n\u2022 At least two previous software engineering internships or equivalent practical experience, with no more than two years of full-time professional experience\n\n\u2022 Experience using at least one object-oriented programming language, such as Python, Java, or Kotlin\n\n\u2022 A solid understanding of algorithms and data structures\n\n\u2022 Experience working with databases and technologies such as SQL\n\n\u2022 Experience writing clean code, using version control, and creating unit tests\n\nNice to Have\n\n\u2022 Curiosity about using AI-powered tools to support software development, problem-solving, and learning, alongside an understanding of how to evaluate their outputs and use them responsibly\n\n\u2022 Experience analyzing and improving the efficiency, scalability, or stability of software systems\n\n\u2022 Interest in developing, releasing, and operating large-scale web applications\n\n\u2022 Familiarity with systems monitoring, live deployments, or continuous integration\n\n\u2022 Experience solving real-time technology problems\n\n\u2022 Familiarity with service-oriented architecture, API development, or systems design\n\nWhy You\u2019ll Love It Here\n\nYou\u2019ll begin your career by contributing to technology used in the real world every day, with mentorship and support from experienced engineers. As your skills grow, so will the scope of the problems you can own. You\u2019ll learn how large-scale systems behave in production, see the impact of what you build, and work with teammates across different disciplines, countries, and brands.\n\nWhat We Offer\n\n\u2022 Premium healthcare and comprehensive health benefits\n\n\u2022 Wellness expense reimbursement\n\n\u2022 Paid parental leave\n\n\u2022 Benefits and perks designed to support your health, wellbeing, and development\n\nCompensation\n\nThe successful candidate\u2019s starting pay will fall within the pay range listed below and is determined based on job-related factors including, but not limited to, skills, experience, qualifications, work location, and market conditions. Base salary is localized according to an employee\u2019s work location. Ranges are market-dependent and may be modified in the future.\n\nIn addition to base salary, the compensation for this role includes opportunities for equity grants. Talk to your recruiter for more information.\n\nDoorDash cares about you and your overall well-being. That\u2019s why we offer a comprehensive benefits package to all regular employees, which includes a 401(k) plan with employer matching, 16 weeks of paid parental leave, wellness benefits, commuter benefits match, paid time off and paid sick leave in compliance with applicable laws (e.g. Colorado Healthy Families and Workplaces Act). DoorDash also offers medical, dental, and vision benefits, 11 paid holidays, disability and basic life insurance, family-forming assistance, and a mental health program, among others.\n\nTo learn more about our benefits, visit our careers page here.\n\nSee below for paid time off details:\n\n\u2022 For salaried roles: flexible paid time off/vacation, plus 80 hours of paid sick time per year.\n\n\u2022 For hourly roles: vacation accrued at about 1 hour for every 25.97 hours worked (e.g. about 6.7 hours/month if working 40 hours/week; about 3.4 hours/month if working 20 hours/week), and paid sick time accrued at 1 hour for every 30 hours worked (e.g. about 5.8 hours/month if working 40 hours/week; about 2.9 hours/month if working 20 hours/week).\n\nThe national base pay range for this position within the United States, including Illinois and Colorado.\n$107,400\u2014$158,000 USD\n\nAbout DoorDash\n\nAt DoorDash, our mission to empower local economies shapes how our team members move quickly, learn, and reiterate in order to make impactful decisions that display empathy for our range of users\u2014from Dashers to merchant partners to consumers. We are a technology and logistics company that started by enabling door-to-door delivery, and we are looking for team members who can help us go from a company that is known as the place you order food to a company that people turn to for any and all goods.\n\nDoorDash is growing rapidly and changing constantly, which gives our team members the opportunity to share their unique perspectives, solve new challenges, and own their careers. We're committed to supporting employees\u2019 happiness, healthiness, and overall well-being by providing comprehensive benefits and perks including premium healthcare, wellness expense reimbursement, paid parental leave and more.\n\nOur Commitment to Diversity and Inclusion\n\nWe\u2019re committed to growing and empowering a more inclusive community within our company, industry, and cities. That\u2019s why we hire and cultivate diverse teams of people from all backgrounds, experiences, and perspectives. We believe that true innovation happens when everyone has room at the table and the tools, resources, and opportunity to excel.\n\nStatement of Non-Discrimination: In keeping with our beliefs and goals, no employee or applicant will face discrimination or harassment based on: race, color, ancestry, national origin, religion, age, gender, marital/domestic partner status, sexual orientation, gender identity or expression, disability status, or veteran status. Above and beyond discrimination and harassment based on \u201cprotected categories,\u201d we also strive to prevent other subtler forms of inappropriate behavior (i.e., stereotyping) from ever gaining a foothold in our office. Whether blatant or hidden, barriers to success have no place at DoorDash. We value a diverse workforce \u2013 people who identify as women, non-binary or gender non-conforming, LGBTQIA+, American Indian or Native Alaskan, Black or African American, Hispanic or Latinx, Native Hawaiian or Other Pacific Islander, differently-abled, caretakers and parents, and veterans are strongly encouraged to apply. Thank you to the Level Playing Field Institute for this statement of non-discrimination.\n\nPursuant to the San Francisco Fair Chance Ordinance, Los Angeles Fair Chance Initiative for Hiring Ordinance, and any other state or local hiring regulations, we will consider for employment any qualified applicant, including those with arrest and conviction records, in a manner consistent with the applicable regulation.\n\nIf you need any accommodations, please inform your recruiting contact upon initial connection.\n\nNotice to Applicants for Jobs Located in NYC or Remote Jobs Associated With Office in NYC Only\n\nWe used Covey as part of our hiring and/or promotional process for jobs in NYC and certain features may qualify it as an AEDT in NYC. As part of the hiring and/or promotion process, we provided Covey with job requirements and candidate submitted applications. We began using Covey Scout for Inbound from August 21, 2023, through December 21, 2023.\u00a0 We resumed using Covey Scout for Inbound again on June 29, 2024, and ceased using Covey Scout for Inbound on April 30, 2026.\n\nThe Covey tool has been reviewed by an independent auditor. Results of the audit may be viewed here:\u00a0https://getcovey.com/nyc-local-law-144.\n\nBeware of recruitment scams: DASH Brands will never ask you to pay money or share sensitive financial information during hiring \u2014 learn more about DASH Brands' legitimate recruiting process at careersatdoordash.com/recruitment-scam-awareness.",
+    "team": null,
+    "employment_type": null,
+    "official_url": "https://job-boards.greenhouse.io/doordashusa/jobs/8163709",
+    "source_url": "https://careersatdoordash.com/",
+    "source_type": "greenhouse",
+    "posted_at": null,
+    "discovered_at": "2026-09-15T00:02:56.100336Z",
+    "last_seen_at": "2026-09-15T00:02:56.100336Z",
+    "is_open": true,
+    "match_score": 65.0,
+    "match_reasons": [
+      "United States location",
+      "Relevant software-engineering title",
+      "Early-career / MTS title"
+    ],
+    "fingerprint": "246901c59b6eee7e93515c8fd562a80cbd7a3eca21145f6055ff275c9b75993d"
   },
   {
     "id": "R0137283",
